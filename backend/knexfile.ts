@@ -57,7 +57,8 @@ const config: { [key: string]: Knex.Config } = {
       database: process.env.POSTGRES_DB,
 			user: process.env.POSTGRES_USER,
 			password: process.env.POSTGRES_PASSWORD,
-			host: process.env.POSTGRES_HOS
+			host: "localhost",
+      port: 5430
     },
     pool: {
       min: 2,

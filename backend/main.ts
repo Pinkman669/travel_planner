@@ -6,7 +6,8 @@ import  Knex  from "knex";
 dotenv.config()
 
 const knexConfigs = require("./knexfile");
-const knexConfig = knexConfigs[process.env.NODE_ENV || "development"];
+const configMode = process.env.NODE_ENV || "development";
+const knexConfig = knexConfigs[configMode];
 export const knex = Knex(knexConfig);
 
 const app = express();
