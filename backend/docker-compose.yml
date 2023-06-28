@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  todolist:
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: travel_planner
+      POSTGRES_HOST: postgres
+      NODE_ENV: production
+      PORT: 8080
+    depends_on:
+      - postgres
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: 'pinkman669/travel_planner:latest'
+    ports:
+      - '8080:8080'
+  postgres:
+    image: 'postgres:15'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: travel_planner
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data

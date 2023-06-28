@@ -1,5 +1,13 @@
 import express from "express";
 import { Request, Response } from "express";
+import dotenv from 'dotenv'
+import  Knex  from "knex";
+
+dotenv.config()
+
+const knexConfigs = require("./knexfile");
+const knexConfig = knexConfigs[process.env.NODE_ENV || "development"];
+export const knex = Knex(knexConfig);
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
