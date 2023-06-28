@@ -14,7 +14,7 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
-    image: 'pinkman669/travel_planner:latest'
+    image: 'pinkman667/travel_planner:latest'
     ports:
       - '8080:8080'
   postgres:
