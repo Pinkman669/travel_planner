@@ -28,7 +28,7 @@
   "scripts": {
     "start": "ts-node main.ts",
     "dev": "ts-node-dev main.ts",
-    "test": ""
+    "test": "jest"
   },
   "devDependencies": {
   }
