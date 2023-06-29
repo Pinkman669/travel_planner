@@ -1,0 +1,9 @@
+.App{
+    background-color: #BDE3FF;
+    min-height: 100vh;
+}
+
+.container-fluid{
+    max-width: 1280px;
+    min-height: 100vh;
+}
