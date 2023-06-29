@@ -1,0 +1,92 @@
+name: travel-planner
+
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+jobs:
+  test-server:
+    runs-on: ubuntu-latest
+    container: node:lts-alpine
+    steps:
+      - uses: actions/checkout@v3
+      - working-directory: backend
+        run: |
+          yarn install
+          yarn test
+
+  build-server:
+    needs: test-server
+    runs-on: ubuntu-latest
+    container: docker:20.10.21-alpine3.16
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Docker Build and Push
+        working-directory: backend
+        run: |
+          docker build -t teckyio/todolist:latest .
+          docker push teckyio/todolist:latest
+
+  build-react:
+    runs-on: ubuntu-latest
+    container: node:lts-alpine
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build frondend project
+        working-directory: frontend
+        env:
+          REACT_APP_API_SERVER: https://server.tecky.hk
+          REACT_APP_FACEBOOK_APP_ID: ${{ secrets.REACT_APP_FACEBOOK_APP_ID }}
+        run: |
+          yarn install
+          yarn test
+          yarn run build
+      - name: Archive react built files
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: frontend/build
+
+  deploy-server:
+    needs: build-server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executing remote ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: server.tecky.hk
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ubuntu
+          script: |
+            cd todolist
+            docker compose pull
+            docker compose up -d
+            docker image prune -f 
+  deploy-react:
+    needs: build-react
+    runs-on: ubuntu-latest
+    container: python:3.6
+    steps:
+      - uses: actions/checkout@v3
+      - name: Restore frontend files
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: frontend/build
+      - name: Deploy to s3 and cloudfront
+        working-directory: frontend
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-southeast-1
+        run: |
+          pip install awscli
+          aws s3 sync ./build s3://react.tecky.hk --delete
+          aws cloudfront create-invalidation --distribution-id E1JDVZ4RDZWPRX --paths "/*"
