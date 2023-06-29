@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get("/", function (req: Request, res: Response) {
-  res.end("Hello World!!!!!");
+  res.end("backend testing");
 });
 
 const PORT = 8080;
