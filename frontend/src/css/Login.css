@@ -29,7 +29,11 @@
     margin-top: 15px;
 }
 
+#sign-up-link-div{
+    margin-top: 30px;
+}
+
 #sign-up-link{
-    margin-top: 20px;
     font-weight: bolder;
+    color: black;
 }

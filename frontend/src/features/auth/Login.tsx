@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Button, Form } from "react-bootstrap";
 import { IconBrandGoogle, IconBrandFacebookFilled } from '@tabler/icons-react';
 import '../../css/Login.css';
+import { Link } from 'react-router-dom';
 
 interface FormState {
     email: string;
@@ -56,8 +57,8 @@ export default function Login() {
                             <IconBrandFacebookFilled />
                         </button>
                     </div>
-                    <div>
-                        <div id='sign-up-link'>Create an account now</div>
+                    <div id='sign-up-link-div'>
+                        <Link to='/sign-up' id='sign-up-link'>Create an account now</Link>
                     </div>
             </div>
         </div>
