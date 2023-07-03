@@ -3,6 +3,8 @@ import { checkPassword, hashPassword } from "../hash";
 import { Request, Response } from "express";
 import { User } from '../services/models'
 import { logger } from "../logger";
+import jwtSimple from "jwt-simple";
+import jwt from "../jwt";
 
 
 export class AuthController{
@@ -38,7 +40,14 @@ export class AuthController{
             if (!result){
                 throw new Error('Email or password not match')
             }
-            res.status(200).json({success: true, msg: "Login succeeded"})
+            const payload = {
+                id: userInfo.id,
+                name: userInfo.name,
+                birthday: userInfo.birthday,
+                email: userInfo.email
+            }
+            const token = jwtSimple.encode(payload, jwt.jwtSecret)
+            res.status(200).json({token: token})
         }catch(e){
             logger.error(`[ER002] login failed ${e}`)
             res.status(400).json({success: false, msg: `[ER002] login failed ${e}`})
