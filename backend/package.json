@@ -10,6 +10,7 @@
     "@types/formidable": "^2.0.6",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.2",
+    "@types/permit": "^0.2.2",
     "@types/pg": "^8.10.2",
     "bcryptjs": "^2.4.3",
     "date-fns": "^2.30.0",
@@ -18,7 +19,9 @@
     "express-session": "^1.17.3",
     "formidable": "^3.4.0",
     "jest": "^29.5.0",
+    "jwt-simple": "^0.5.6",
     "knex": "^2.4.2",
+    "permit": "^0.2.4",
     "pg": "^8.11.1",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
@@ -29,7 +32,10 @@
   "scripts": {
     "start": "ts-node main.ts",
     "dev": "ts-node-dev main.ts",
-    "test": "jest"
+    "test": "jest",
+    "format": "prettier --write ."
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "prettier": "2.8.8"
+  }
 }

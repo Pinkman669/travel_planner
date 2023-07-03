@@ -4,10 +4,10 @@ export class AuthService{
     constructor(private knex: Knex){}
 
     async userInfo(email: string){
-        const user = await this.knex
+        const user = (await this.knex
             .select('*')
             .from('users')
-            .where('email', email)
+            .where('email', email))[0]
         return user
     }
 

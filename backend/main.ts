@@ -5,6 +5,7 @@ import  Knex  from "knex";
 import { AuthService } from "./services/authService";
 import { AuthController } from "./controllers/authController";
 import { authRouter } from "./Router";
+import { User } from "./services/models";
 
 dotenv.config()
 
@@ -12,6 +13,14 @@ const knexConfigs = require("./knexfile");
 const configMode = process.env.NODE_ENV || "development";
 const knexConfig = knexConfigs[configMode];
 export const knex = Knex(knexConfig);
+
+declare global {
+  namespace Express{
+    interface Request{
+      user?: Omit<User,'password'>
+    }
+  }
+}
 
 export const authService = new AuthService(knex)
 export const authController = new AuthController(authService)
