@@ -17,7 +17,7 @@ export default function SignUp() {
         birthday: Date | string;
     }
 
-    const { register, handleSubmit, reset, formState, setError } = useForm<FormState>({
+    const { register, handleSubmit, reset, formState } = useForm<FormState>({
         defaultValues: {
             email: "",
             password: "",

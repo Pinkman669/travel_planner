@@ -5,7 +5,6 @@ import { Button } from "react-bootstrap";
 import { logout } from "../auth/AuthSlice";
 
 export default function Home(){
-    const navigate = useNavigate()
 	const dispatch = useAppDispatch()
     return (
         <div>

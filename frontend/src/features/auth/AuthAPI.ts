@@ -36,6 +36,7 @@ export async function localSignUp(
 
     const result = await res.json()
     if (res.status === 200){
+        console.log(result)
         return true
     } else{
         return false
