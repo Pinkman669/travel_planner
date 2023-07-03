@@ -6,6 +6,7 @@ import { AuthService } from "./services/authService";
 import { AuthController } from "./controllers/authController";
 import { authRouter } from "./Router";
 import { User } from "./services/models";
+import cors from 'cors'
 
 dotenv.config()
 
@@ -26,6 +27,7 @@ export const authService = new AuthService(knex)
 export const authController = new AuthController(authService)
 
 const app = express();
+app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

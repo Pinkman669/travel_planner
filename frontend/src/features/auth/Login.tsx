@@ -3,7 +3,10 @@ import { useForm } from 'react-hook-form'
 import { Button, Form } from "react-bootstrap";
 import { IconBrandGoogle, IconBrandFacebookFilled } from '@tabler/icons-react';
 import '../../css/Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { localLogin } from './AuthAPI';
+import { login } from "./AuthSlice";
+import { useAppDispatch } from '../../redux/hooks';
 
 interface FormState {
     email: string;
@@ -11,6 +14,9 @@ interface FormState {
 }
 
 export default function Login() {
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
     const { register, handleSubmit, reset, formState } = useForm<FormState>({
         defaultValues: {
             email: "",
@@ -24,8 +30,16 @@ export default function Login() {
         }
     }, [formState, reset]);
 
-    function submit(data: FormState) {
+    async function submit(data: FormState) {
         console.log("submit form data:", data);
+        const result = await localLogin(data.email, data.password)
+        if (result.success){
+            dispatch(login(result.name))
+            console.log('login succeeded')
+            navigate('/')
+        } else{
+            console.log('login failed')
+        }
     }
 
     return (

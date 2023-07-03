@@ -5,6 +5,7 @@ import '../../css/SignUp.css'
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
 import { Link } from "react-router-dom";
+import { localSignUp } from "./AuthAPI";
 
 
 export default function SignUp() {
@@ -13,14 +14,14 @@ export default function SignUp() {
         email: string;
         password: string;
         confirmPassword: string;
-        birthday: string;
+        birthday: Date | string;
     }
 
     const { register, handleSubmit, reset, formState, setError } = useForm<FormState>({
         defaultValues: {
             email: "",
             password: "",
-            birthday: "",
+            birthday: '',
             confirmPassword: "",
             name: ""
         },
@@ -32,8 +33,14 @@ export default function SignUp() {
         }
     }, [formState, reset]);
 
-    function submit(data: FormState) {
+    async function submit(data: FormState) {
         console.log(data)
+        const result = await localSignUp(data.email, data.password, data.name, data.birthday as Date)
+        if (result){
+            console.log('sign up success')
+        } else{
+            console.log('sign up fail')
+        }
     }
 
     return (
