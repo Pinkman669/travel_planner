@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import dotenv from 'dotenv'
 import  Knex  from "knex";
 import { AuthService } from "./services/authService";
+import { AuthController } from "./controllers/authController";
+import { authRouter } from "./Router";
 
 dotenv.config()
 
@@ -12,6 +14,7 @@ const knexConfig = knexConfigs[configMode];
 export const knex = Knex(knexConfig);
 
 export const authService = new AuthService(knex)
+export const authController = new AuthController(authService)
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
