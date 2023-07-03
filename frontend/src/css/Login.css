@@ -30,10 +30,14 @@
 }
 
 #sign-up-link-div{
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 #sign-up-link{
     font-weight: bolder;
     color: black;
+}
+
+.margin-block{
+    margin: 15px
 }

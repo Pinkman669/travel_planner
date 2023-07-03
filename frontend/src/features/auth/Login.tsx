@@ -11,7 +11,7 @@ interface FormState {
 }
 
 export default function Login() {
-    const { register, handleSubmit, watch, reset, formState } = useForm<FormState>({
+    const { register, handleSubmit, reset, formState } = useForm<FormState>({
         defaultValues: {
             email: "",
             password: ""
@@ -57,6 +57,7 @@ export default function Login() {
                             <IconBrandFacebookFilled />
                         </button>
                     </div>
+                    <p className='margin-block'>OR</p>
                     <div id='sign-up-link-div'>
                         <Link to='/sign-up' id='sign-up-link'>Create an account now</Link>
                     </div>
