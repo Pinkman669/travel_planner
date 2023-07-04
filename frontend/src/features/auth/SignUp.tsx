@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
 import { Link } from "react-router-dom";
 import { localSignUp } from "./AuthAPI";
+import { ToastContainer, toast } from 'react-toastify';
+import { notify } from '../utils/utils'
 
 
 export default function SignUp() {
@@ -34,12 +36,11 @@ export default function SignUp() {
     }, [formState, reset]);
 
     async function submit(data: FormState) {
-        console.log(data)
         const result = await localSignUp(data.email, data.password, data.name, data.birthday as Date)
         if (result){
-            console.log('sign up success')
+            notify(result, 'Account created')
         } else{
-            console.log('sign up fail')
+            notify(result, 'Sign up failed')
         }
     }
 
@@ -50,7 +51,7 @@ export default function SignUp() {
                 <Form id='login-form' onSubmit={handleSubmit(submit)}>
                     <Form.Group className="sign-up-row">
                         <Form.Label>Your Name</Form.Label>
-                        <Form.Control type="password" {...register("name", { required: "Name cannot be empty" })} />
+                        <Form.Control type="text" {...register("name", { required: "Name cannot be empty" })} />
                         {
                             formState.errors.name &&
                             <Alert className="error-msg animate__fadeIn animate__animated" variant="warning">
@@ -124,6 +125,18 @@ export default function SignUp() {
                 <div id='login-link-div'>
                     <Link to='/' id='login-link'>I have an account already!</Link>
                 </div>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={2000}
+                    hideProgressBar={true}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
             </div>
         </div>
     )

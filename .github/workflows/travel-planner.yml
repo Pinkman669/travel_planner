@@ -66,8 +66,8 @@ jobs:
           script: |
             cd api.travel_planner
             docker compose pull
-            docker compose up -d
             docker image prune -f 
+            docker compose up -d
   deploy-react:
     needs: build-react
     runs-on: ubuntu-latest
