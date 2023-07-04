@@ -5,7 +5,7 @@ import '../../css/SignUp.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
 import { localSignUp } from "./AuthAPI";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { notify } from '../utils/utils'
 
 
