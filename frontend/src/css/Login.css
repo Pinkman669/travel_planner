@@ -1,0 +1,43 @@
+.login-form-div{
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-form{
+    min-width: 50%;
+}
+
+#social-login-div{
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.social-login-btn{
+    margin: 0 5px;
+    border: 2px solid black;
+    padding: 5px 7px;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+.submit-btn{
+    margin-top: 15px;
+}
+
+#sign-up-link-div{
+    margin-top: 10px;
+}
+
+#sign-up-link{
+    font-weight: bolder;
+    color: black;
+}
+
+.margin-block{
+    margin: 15px
+}
