@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<void> {
         table.time('time')
         table.string('location')
         table.string('business_hours')
-        table.integer('phone')
+        table.string('phone')
         table.string('website')
         table.integer('budget')
         table.integer('expense')
