@@ -63,7 +63,7 @@ export default function SignUp() {
                         <Form.Control type="text" {...register("email",
                             {
                                 required: "Please enter a valid email address",
-                                pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/gi
+                                pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/gi
                             })} />
                         {
                             formState.errors.email &&
