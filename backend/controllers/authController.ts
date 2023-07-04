@@ -46,7 +46,7 @@ export class AuthController{
                 birthday: userInfo.birthday,
                 email: userInfo.email
             }
-            const token = jwtSimple.encode(payload, jwt.jwtSecret)
+            const token = jwtSimple.encode(payload, jwt.jwtSecret + '')
             res.status(200).json({token: token, name: userInfo.name})
         }catch(e){
             logger.error(`[ER002] login failed ${e}`)

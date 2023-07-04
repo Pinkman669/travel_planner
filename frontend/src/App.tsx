@@ -6,6 +6,7 @@ import Login from './features/auth/Login';
 import SignUp from './features/auth/SignUp';
 import Home from './features/home/Home';
 import { AuthGuard } from './features/auth/AuthGuard';
+import { FacebookCallback } from './features/auth/FacebookCallback';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path='/sign-up' element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path='/facebook-callback' element={<FacebookCallback />}></Route>
         <Route element={<AuthGuard />}>
           <Route path='/' element={<Home />}></Route>
           <Route path='*' element={<Home />}></Route>
