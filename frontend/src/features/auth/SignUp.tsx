@@ -3,9 +3,10 @@ import { Alert, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import '../../css/SignUp.css'
 import 'react-toastify/dist/ReactToastify.css';
-import 'animate.css';
 import { Link } from "react-router-dom";
 import { localSignUp } from "./AuthAPI";
+import { ToastContainer } from 'react-toastify';
+import { notify } from '../utils/utils'
 
 
 export default function SignUp() {
@@ -34,12 +35,11 @@ export default function SignUp() {
     }, [formState, reset]);
 
     async function submit(data: FormState) {
-        console.log(data)
         const result = await localSignUp(data.email, data.password, data.name, data.birthday as Date)
         if (result){
-            console.log('sign up success')
+            notify(result, 'Account created')
         } else{
-            console.log('sign up fail')
+            notify(result, 'Sign up failed')
         }
     }
 
@@ -49,8 +49,8 @@ export default function SignUp() {
                 <h2>Sign Up</h2>
                 <Form id='login-form' onSubmit={handleSubmit(submit)}>
                     <Form.Group className="sign-up-row">
-                        <Form.Label>Your Name</Form.Label>
-                        <Form.Control type="password" {...register("name", { required: "Name cannot be empty" })} />
+                        <Form.Label className="sign-up-labels">Your Name</Form.Label>
+                        <Form.Control type="text" {...register("name", { required: "Name cannot be empty" })} />
                         {
                             formState.errors.name &&
                             <Alert className="error-msg animate__fadeIn animate__animated" variant="warning">
@@ -59,11 +59,11 @@ export default function SignUp() {
                         }
                     </Form.Group>
                     <Form.Group className="sign-up-row">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label className="sign-up-labels">Email</Form.Label>
                         <Form.Control type="text" {...register("email",
                             {
                                 required: "Please enter a valid email address",
-                                pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/gi
+                                pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/gi
                             })} />
                         {
                             formState.errors.email &&
@@ -74,7 +74,7 @@ export default function SignUp() {
                     </Form.Group>
 
                     <Form.Group className="sign-up-row">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label className="sign-up-labels">Password</Form.Label>
                         <Form.Control type="password" {...register("password",
                             {
                                 required: "Password must contain at least 10 characters",
@@ -89,7 +89,7 @@ export default function SignUp() {
                     </Form.Group>
 
                     <Form.Group className="sign-up-row">
-                        <Form.Label>Confirm your password</Form.Label>
+                        <Form.Label className="sign-up-labels">Confirm your password</Form.Label>
                         <Form.Control type="password" {...register("confirmPassword",
                             {
                                 required: "Password not match",
@@ -104,7 +104,7 @@ export default function SignUp() {
                     </Form.Group>
 
                     <Form.Group className="sign-up-row">
-                        <Form.Label>Your Birthday</Form.Label>
+                        <Form.Label className="sign-up-labels">Your Birthday</Form.Label>
                         <Form.Control type="date" {...register("birthday",
                             {
                                 required: "Birthday cannot be empty",
@@ -124,6 +124,18 @@ export default function SignUp() {
                 <div id='login-link-div'>
                     <Link to='/' id='login-link'>I have an account already!</Link>
                 </div>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={2000}
+                    hideProgressBar={true}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
             </div>
         </div>
     )

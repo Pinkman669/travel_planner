@@ -6,6 +6,16 @@
     align-items: center;
 }
 
+h2{
+    font-family: 'Fasthand', cursive;
+    font-size: 48px;
+}
+
+.sign-up-labels{
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+}
+
 .sign-up-row {
     position: relative;
 }
