@@ -6,6 +6,20 @@
     align-items: center;
 }
 
+h2{
+    font-family: 'Fasthand', cursive;
+    font-size: 48px;
+}
+
+.login-labels{
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+}
+
+.makasar-font{
+    font-family: 'Noto Serif Makasar', serif;
+}
+
 #login-form{
     min-width: 50%;
 }
