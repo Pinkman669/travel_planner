@@ -13,20 +13,22 @@ export function FacebookCallback(){
 
     useEffect(() =>{
         const searchParams = new URLSearchParams(window.location.search)
-        const code = searchParams.get('code') || ''
+        const code = searchParams.get('code') || '';
 
-        void async function(){
+        (async function(){
             const data = await facebookLogin(code)
             if (data){
                 dispatch(login(data.name))
             } else{
                 notify(false, 'Login failed')
             }
-        }
+        })()
     }, [dispatch])
 
     if (isAuthenticated){
         navigate('/')
+    } else{
+        console.log('login failed')
     }
 
     return <h3>Redirecting...</h3>

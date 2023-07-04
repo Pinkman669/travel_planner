@@ -12,7 +12,7 @@ export class AuthService{
     }
 
     async signUp(name: string, email: string, password: string, birthday: Date){
-        await this.knex
+        const user = (await this.knex
             .insert({
                 'name': name,
                 'email': email,
@@ -20,5 +20,7 @@ export class AuthService{
                 'birthday': birthday
             })
             .into('users')
+            .returning('*'))[0]
+        return user
     }
 }
