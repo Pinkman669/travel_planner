@@ -4,7 +4,6 @@ import Places from "./PlaceSearch";
 import "../css/googleMap.css";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
-type DirectionsResult = google.maps.DirectionsResult;
 type MapOptions = google.maps.MapOptions;
 
 export function Map() {
@@ -27,24 +26,23 @@ export function Map() {
       <div className="container">
         <div className="schedule-container">schedule</div>
         <div className="control-container">
-          <div className="search-container">
-            <Places
-              setLocation={(position) => {
-                setLocation(position);
-                mapRef.current?.panTo(position);
-              }}
-            />
-          </div>
-
           <GoogleMap
-            zoom={13}
-            center={center}
-            mapContainerClassName="map-container"
-            options={options}
-            onLoad={onLoad}
-          >
+              zoom={13}
+              center={center}
+              mapContainerClassName="map-container"
+              options={options}
+              onLoad={onLoad}
+            >
             {location && <Marker position={location}  />}
           </GoogleMap>
+          <Places
+            setLocation={(position) => {
+              setLocation(position);
+              mapRef.current?.panTo(position);
+            }}
+          />
+  
+          
           <div className="places-info-container">
 
           </div>
