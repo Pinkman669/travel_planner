@@ -7,11 +7,15 @@ type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 export function Map() {
-  
   const [location, setLocation] = useState<LatLngLiteral>();
-  const mapRef = useRef<GoogleMap>();
-  const onLoad = useCallback((map: any) => (mapRef.current = map), []);
-  const center = useMemo<LatLngLiteral>(() => ({ lat: 43.4722893, lng: -80.5474325 }), []); 
+  const mapRef = useRef<google.maps.Map>();
+  const onLoad = useCallback((map: google.maps.Map) => {
+    mapRef.current = map;
+  }, []);
+  const center = useMemo<LatLngLiteral>(
+    () => ({ lat: 43.4722893, lng: -80.5474325 }),
+    []
+  );
   const options = useMemo<MapOptions>(
     () => ({
       mapId: "cb967ffe6985ef4e", // the style of the map
@@ -23,30 +27,24 @@ export function Map() {
 
   if (process.env.REACT_APP_MAP_DISPLAY === "1") {
     return (
-      <div className="container">
-        <div className="schedule-container">schedule</div>
-        <div className="control-container">
-          <GoogleMap
-              zoom={13}
-              center={center}
-              mapContainerClassName="map-container"
-              options={options}
-              onLoad={onLoad}
-            >
-            {location && <Marker position={location}  />}
-          </GoogleMap>
-          <Places
-            setLocation={(position) => {
-              setLocation(position);
-              mapRef.current?.panTo(position);
-            }}
-          />
-  
-          
-          <div className="places-info-container">
+      <div className="search-page">
+        <GoogleMap
+          zoom={13}
+          center={center}
+          mapContainerClassName="map-container"
+          options={options}
+          onLoad={onLoad}
+        >
+          {location && <Marker position={location} />}
+        </GoogleMap>
+        <Places
+          setLocation={(position) => {
+            setLocation(position);
+            mapRef.current?.panTo(position);
+          }}
+        />
 
-          </div>
-        </div>
+        <div className="places-info-container"></div>
       </div>
     );
   } else {

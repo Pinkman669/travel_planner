@@ -27,11 +27,11 @@ export default function Places({ setLocation }: PlacesProps) {
   } = usePlacesAutocomplete();
 
 
-  const handleSelect = async (address: string) => {
-    setValue(address, false);
+  const handleSelect = async (placeId: string) => {
+    setValue(placeId, false);
     clearSuggestions();
     
-    const results =await getGeocode({address});
+    const results =await getGeocode({placeId});
     const {lat, lng} =await getLatLng(results[0]);
     setLocation({lat, lng});
     
@@ -50,7 +50,7 @@ export default function Places({ setLocation }: PlacesProps) {
         <ComboboxList>
           {status === "OK" &&
             data.map(({ place_id, description }) => (
-              <ComboboxOption key={place_id} value={description} />
+              <ComboboxOption key={place_id} value={place_id}>{description}</ComboboxOption>
             ))}
         </ComboboxList>
       </ComboboxPopover>
