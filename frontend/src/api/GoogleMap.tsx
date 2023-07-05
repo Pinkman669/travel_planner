@@ -1,6 +1,6 @@
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
-import Places from "./place";
+import Places from "./PlaceSearch";
 import "../css/googleMap.css";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
@@ -45,6 +45,9 @@ export function Map() {
           >
             {location && <Marker position={location}  />}
           </GoogleMap>
+          <div className="places-info-container">
+
+          </div>
         </div>
       </div>
     );
