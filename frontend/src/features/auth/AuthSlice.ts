@@ -8,7 +8,7 @@ interface AuthState{
 
 const initialState : AuthState = {
     isAuthenticated: localStorage.getItem('token') !== null,
-    name: null
+    name: localStorage.getItem('username') || null
 }
 
 export const authSlice = createSlice({
@@ -17,6 +17,7 @@ export const authSlice = createSlice({
     reducers: {
         login: (state, action: PayloadAction<string>) =>{
             state.name = action.payload
+            localStorage.setItem('username', state.name)
             state.isAuthenticated = true
         },
         logout: (state) =>{

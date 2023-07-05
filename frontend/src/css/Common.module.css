@@ -1,0 +1,39 @@
+.mainContainer{
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border-radius: 20px;
+    background-color: #BDE3FF;
+    padding: 15px;
+}
+
+.tripHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 50px;
+}
+
+#username{
+    font-size: 24px;
+
+}
+
+.addTripItems{
+    width: 220px;
+    height: 180px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addTripBtn{
+    background-color: inherit;
+    height: 100%;
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+}
