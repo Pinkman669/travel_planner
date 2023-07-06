@@ -8,6 +8,11 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+
+
+
 // import { GoogleMap } from '@react-google-maps/api';
 // import {Map} from './api/GoogleMap';
 
@@ -23,7 +28,9 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
-          <App />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <App />
+          </LocalizationProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </ QueryClientProvider >
       </BrowserRouter>

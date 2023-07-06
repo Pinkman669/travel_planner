@@ -7,6 +7,7 @@ import SignUp from './features/auth/SignUp';
 import Home from './features/home/Home';
 import { AuthGuard } from './features/auth/AuthGuard';
 import { FacebookCallback } from './features/auth/FacebookCallback';
+import { ToastContainer } from 'react-toastify';
 // import MapPage from './api/map';
 
 function App() {
@@ -22,7 +23,20 @@ function App() {
           <Route path='*' element={<Home />}></Route>
         </Route>
       </Routes>
-    </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </div >
   );
 }
 

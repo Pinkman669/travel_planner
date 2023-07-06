@@ -36,4 +36,38 @@
     width: 100%;
     border: none;
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addTripModal{
+    background-color: #FFC7C2;
+    border-radius: 20px;
+}
+
+.addTripInputs{
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid black;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.addTripDate{
+    margin: 10px 0;
+}
+
+.addTripInputs:focus{
+    background-color: transparent;
+}
+
+.dateInput{
+    margin: 12px 0;
+}
+
+.boxSize{
+    width: 500px;
+    height: 500px
 }
