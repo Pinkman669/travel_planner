@@ -7,8 +7,9 @@ import SignUp from './features/auth/SignUp';
 import Home from './features/home/Home';
 import { AuthGuard } from './features/auth/AuthGuard';
 import { FacebookCallback } from './features/auth/FacebookCallback';
+import MapPage from './api/map';
 import { ToastContainer } from 'react-toastify';
-// import MapPage from './api/map';
+
 
 function App() {
   return (
