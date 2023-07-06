@@ -9,7 +9,8 @@ export class TripService{
             'location': location,
             'start_date': startDate,
             'end_date': endDate,
-            'user_id': userId
+            'user_id': userId,
+            'active': true
         })
         .into('trips')
     }
@@ -21,5 +22,13 @@ export class TripService{
             .where('user_id', userId)
             .andWhere('active', true)
         return result
+    }
+
+    async removeTrip(tripId: number){
+        await this.knex.update({
+            'active': false
+        })
+        .from('trips')
+        .where('id', tripId)
     }
 }

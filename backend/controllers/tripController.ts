@@ -35,4 +35,18 @@ export class TripController{
             res.status(400).json({success: false, msg: '[ERR005] Failed to fetch trips'})
         }
     }
+
+    removeTrip = async(req: Request, res: Response) =>{
+        try{
+            const tripId = Number(req.params.tripId)
+            if (!tripId){
+                throw new Error('TripID missing')
+            }
+            await this.tripService.removeTrip(tripId)
+            res.status(200).json({success: true})
+        }catch(e){
+            logger.error(`[ERR006] ${e}`)
+            res.status(400).json({success: false})
+        }
+    }
 }

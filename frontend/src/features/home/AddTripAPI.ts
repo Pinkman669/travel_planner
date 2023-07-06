@@ -59,7 +59,6 @@ export async function removeTrip(tripId: number){
         }
     })
 
-    const result = await res.json()
     if (res.status === 200){
         return true
     } else{

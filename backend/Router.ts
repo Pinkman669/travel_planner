@@ -17,6 +17,7 @@ export function tripRouter(){
 
     route.get('/getTrip/:userId', isLoggedIn, tripController.getTrips)
     route.post('/addTrip', isLoggedIn, tripController.addTrip)
+    route.put('/removeTrip/:tripId', isLoggedIn, tripController.removeTrip)
 
     return route
 }

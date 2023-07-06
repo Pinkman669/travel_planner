@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout } from "../auth/AuthSlice";
-import styles from "../../css/Common.module.css"
-import { IconPlus } from "@tabler/icons-react";
+import styles from "../../css/Home.module.css"
+import { IconPlus, IconX } from "@tabler/icons-react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useForm } from "react-hook-form";
-import { addTrip, useTripItems } from "./AddTripAPI";
+import { addTrip, useTripItems, removeTrip } from "./AddTripAPI";
 import { notify } from "../utils/utils";
 import TripItem from './TripItem'
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { differenceInDays } from 'date-fns'
+import '../../css/Custom-BS.css'
 
 interface FormState {
     tripName: string;
@@ -25,6 +27,7 @@ export default function Home() {
     const tripItemInfo = useTripItems(userId as number)
 
     const [showModal, setShowModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [startDate, setStartDate] = useState<Date | null>(null)
     const { register, handleSubmit, reset, formState } = useForm<FormState>({
         defaultValues: {
@@ -34,30 +37,55 @@ export default function Home() {
         },
     });
 
+    useEffect(() =>{
+        if (formState.isSubmitSuccessful){
+            reset(formState.defaultValues)
+            handleModal()
+            setStartDate(null)
+        }
+    }, [formState, reset])
+
     const onSubmit = useMutation(
         async (data: { location: string, numberOfDays: number, tripName: string, startDate: Date, userId: number }) => {
+            console.log('hi')
             return await addTrip(data.location, data.numberOfDays, data.tripName, data.startDate, data.userId)
         },
-            {
-                onSuccess: () => {
-                    queryClient.invalidateQueries(['tripItems'])
-                    notify(true, 'Added Trip')
-                },
-                onError: () =>{
-                    notify(false, 'Add trip failed')
-                }
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries(['tripItems'])
+                notify(true, 'Added Trip')
+            },
+            onError: () => {
+                notify(false, 'Add trip failed')
             }
-        )
+        }
+    )
+
+    const onRemoveTrip = useMutation(
+        async (data: { tripId: number, tripName: string }) => {
+            return await removeTrip(data.tripId)
+        },
+        {
+            onSuccess: (success, data) => {
+                queryClient.invalidateQueries(['tripItems'])
+                notify(true, `Removed Trip ${data.tripName}`)
+            },
+            onError: () => {
+                notify(false, 'Trip remove failed')
+            }
+        }
+    )
 
     async function submit(data: FormState) {
-        console.log(data, startDate)
-        if (formState.isSubmitted) {
-            onSubmit.mutate({ location: data.location, numberOfDays: data.numberOfDays as number, tripName: data.tripName, startDate: startDate as Date, userId: userId as number })
-        }
+        onSubmit.mutate({
+            location: data.location, numberOfDays: data.numberOfDays as number,
+            tripName: data.tripName, startDate: startDate as Date, userId: userId as number
+        })
     }
 
-    async function reMoveTripItem(tripId: number){
-        
+    function calculatePeriod(startDate: Date, endDate: Date){
+        const result = differenceInDays(startDate, endDate)
+        return result
     }
 
     const handleModal = () => {
@@ -65,6 +93,13 @@ export default function Home() {
             setShowModal(false)
         } else {
             setShowModal(true)
+        }
+    }
+    const handleDeleteConfirmModal = () => {
+        if (showDeleteModal) {
+            setShowDeleteModal(false)
+        } else {
+            setShowDeleteModal(true)
         }
     }
 
@@ -75,16 +110,23 @@ export default function Home() {
                 <Button variant="light" onClick={() => dispatch(logout())}>Logout</Button>
             </div>
             <div className={styles.mainContainer}>
+                {
+                    tripItemInfo.map((item) => (
+                        <TripItem
+                            showDeleteModal={showDeleteModal} onRemove={() => {
+                                onRemoveTrip.mutate({ tripId: item.id, tripName: item.name })
+                                handleDeleteConfirmModal()
+                            }}
+                            key={item.id} tripName={item.name} location={item.location}
+                            period={calculatePeriod(new Date(item.end_date), new Date(item.start_date))} onShowDeleteModal={handleDeleteConfirmModal}
+                        />
+                    ))
+                }
                 <div className={styles.addTripItems}>
                     <button onClick={handleModal} className={styles.addTripBtn}>
                         <IconPlus />
                     </button>
                 </div>
-                {
-                    tripItemInfo.map((item) => (
-                        <TripItem key={item.id} tripName={item.name} location={item.location} period={1} onRemove={()=> reMoveTripItem(item.id)}/>
-                    ))
-                }
             </div>
 
             {/* modal */}
@@ -94,12 +136,10 @@ export default function Home() {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 onHide={handleModal}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Add Trip Info
-                    </Modal.Title>
-                </Modal.Header>
+            >   
+                <div>
+                    <button className={styles.iconBtn} onClick={handleModal}><IconX /></button>
+                </div>
                 <Modal.Body>
                     <div>
                         <Form id='login-form' onSubmit={handleSubmit(submit)}>
@@ -120,15 +160,12 @@ export default function Home() {
                                 <Form.Control className={styles.addTripInputs} type="text" {...register("location")} />
                             </Form.Group>
 
-                            <Button className='submit-btn' variant="primary" type="submit">
+                            <Button className='submit-btn' variant="dark" type="submit">
                                 Submit
                             </Button>
                         </Form>
                     </div>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={handleModal}>Close</Button>
-                </Modal.Footer>
             </Modal>
         </div>
     )
