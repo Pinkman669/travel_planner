@@ -15,6 +15,7 @@ export function authRouter(){
 export function tripRouter(){
     const route = express.Router()
 
+    route.get('/getTrip/:userId', isLoggedIn, tripController.getTrips)
     route.post('/addTrip', isLoggedIn, tripController.addTrip)
 
     return route

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout } from "../auth/AuthSlice";
 import styles from "../../css/Common.module.css"
@@ -6,22 +6,24 @@ import { IconPlus } from "@tabler/icons-react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useForm } from "react-hook-form";
-import '../../css/Custom-mantine.css'
-import { start } from "repl";
-import { addTrip } from "./AddTripAPI";
+import { addTrip, useTripItems } from "./AddTripAPI";
 import { notify } from "../utils/utils";
+import TripItem from './TripItem'
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+interface FormState {
+    tripName: string;
+    numberOfDays: number | null;
+    location: string;
+}
 
 export default function Home() {
-    interface FormState{
-        tripName: string;
-        numberOfDays: number|null;
-        location: string;
-    }
-
+    const queryClient = useQueryClient()
     const dispatch = useAppDispatch()
     const username = useAppSelector(state => state.auth.name)
-    
+    const userId = useAppSelector(state => state.auth.userId)
+    const tripItemInfo = useTripItems(userId as number)
+
     const [showModal, setShowModal] = useState(false)
     const [startDate, setStartDate] = useState<Date | null>(null)
     const { register, handleSubmit, reset, formState } = useForm<FormState>({
@@ -32,14 +34,30 @@ export default function Home() {
         },
     });
 
+    const onSubmit = useMutation(
+        async (data: { location: string, numberOfDays: number, tripName: string, startDate: Date, userId: number }) => {
+            return await addTrip(data.location, data.numberOfDays, data.tripName, data.startDate, data.userId)
+        },
+            {
+                onSuccess: () => {
+                    queryClient.invalidateQueries(['tripItems'])
+                    notify(true, 'Added Trip')
+                },
+                onError: () =>{
+                    notify(false, 'Add trip failed')
+                }
+            }
+        )
+
     async function submit(data: FormState) {
         console.log(data, startDate)
-        const result = await addTrip(data.location, data.numberOfDays as number, data.tripName, startDate as Date)
-        if (result){
-            notify(result, 'Added Trip')
-        } else{
-            notify(result, 'Add trip failed')
+        if (formState.isSubmitted) {
+            onSubmit.mutate({ location: data.location, numberOfDays: data.numberOfDays as number, tripName: data.tripName, startDate: startDate as Date, userId: userId as number })
         }
+    }
+
+    async function reMoveTripItem(tripId: number){
+        
     }
 
     const handleModal = () => {
@@ -62,6 +80,11 @@ export default function Home() {
                         <IconPlus />
                     </button>
                 </div>
+                {
+                    tripItemInfo.map((item) => (
+                        <TripItem key={item.id} tripName={item.name} location={item.location} period={1} onRemove={()=> reMoveTripItem(item.id)}/>
+                    ))
+                }
             </div>
 
             {/* modal */}
@@ -85,7 +108,7 @@ export default function Home() {
                                 <Form.Control className={styles.addTripInputs} type="text" {...register("tripName")} />
                             </Form.Group>
 
-                            <DatePicker className={styles.addTripDate} value={startDate} onChange={(newDate)=> {setStartDate(newDate)}} label='Start Date'/>
+                            <DatePicker className={styles.addTripDate} value={startDate} onChange={(newDate) => { setStartDate(newDate) }} label='Start Date' />
 
                             <Form.Group>
                                 <Form.Label className='login-labels'>Number of days</Form.Label>

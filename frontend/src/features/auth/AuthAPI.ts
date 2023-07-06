@@ -12,7 +12,7 @@ export async function localLogin(email: string, password: string){
     const result = await res.json()
     if (res.status === 200){
         localStorage.setItem('token', result.token)
-        return {name: result.name, success: true }
+        return {name: result.name, userId: result.userId ,success: true }
     } else{
         return {success: false}
     }

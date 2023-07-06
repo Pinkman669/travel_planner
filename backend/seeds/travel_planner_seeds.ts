@@ -20,6 +20,7 @@ export async function seed(knex: Knex): Promise<void> {
                 'start_date': new Date('10-10-2023'),
                 'end_date': new Date('10-13-2023'),
                 'location': 'Japan',
+                'active': true,
                 'user_id': users[0].id,
             }
         ]).returning('*')

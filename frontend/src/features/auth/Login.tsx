@@ -46,7 +46,7 @@ export default function Login() {
     async function submit(data: FormState) {
         const result = await localLogin(data.email, data.password)
         if (result.success) {
-            dispatch(login(result.name))
+            dispatch(login({name: result.name, userId: result.userId}))
             notify(result.success, 'Login success!')
             navigate('/')
         } else {
