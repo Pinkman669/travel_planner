@@ -7,7 +7,7 @@ import SignUp from './features/auth/SignUp';
 import Home from './features/home/Home';
 import { AuthGuard } from './features/auth/AuthGuard';
 import { FacebookCallback } from './features/auth/FacebookCallback';
-import MapPage from './api/map';
+import MapPage from './api/Map';
 import { ToastContainer } from 'react-toastify';
 
 
@@ -18,7 +18,7 @@ function App() {
         <Route path='/sign-up' element={<SignUp />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/facebook-callback' element={<FacebookCallback />}></Route>
-        {/* <Route path='/map' element={<MapPage />}></Route> */}
+        <Route path='/map' element={<MapPage />}></Route>
         <Route element={<AuthGuard />}>
           <Route path='/' element={<Home />}></Route>
           <Route path='*' element={<Home />}></Route>

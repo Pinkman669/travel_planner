@@ -10,11 +10,8 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-
-
-
-// import { GoogleMap } from '@react-google-maps/api';
-// import {Map} from './api/GoogleMap';
+import { GoogleMap } from '@react-google-maps/api';
+import {Map} from './api/GoogleMap';
 
 
 const root = ReactDOM.createRoot(

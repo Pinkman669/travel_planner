@@ -37,14 +37,6 @@ export default function Home() {
         },
     });
 
-    useEffect(() =>{
-        if (formState.isSubmitSuccessful){
-            reset(formState.defaultValues)
-            handleModal()
-            setStartDate(null)
-        }
-    }, [formState, reset])
-
     const onSubmit = useMutation(
         async (data: { location: string, numberOfDays: number, tripName: string, startDate: Date, userId: number }) => {
             console.log('hi')
@@ -102,6 +94,14 @@ export default function Home() {
             setShowDeleteModal(true)
         }
     }
+
+    useEffect(() =>{
+        if (formState.isSubmitSuccessful){
+            reset(formState.defaultValues)
+            handleModal()
+            setStartDate(null)
+        }
+    }, [formState, reset])
 
     return (
         <div className="container-fluid">
