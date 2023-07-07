@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout } from "../auth/AuthSlice";
-import styles from "../../css/Home.module.css"
+import styles from "../../css/Home-and-itsModal.module.css"
 import { IconPlus, IconX } from "@tabler/icons-react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { DatePicker } from "@mui/x-date-pickers";

@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import styles from "../../css/Home.module.css"
-import { IconX } from "@tabler/icons-react";
+import styles from "../../css/Home-and-itsModal.module.css"
 
 interface DeleteConfirmProps{
     showModal: boolean;
