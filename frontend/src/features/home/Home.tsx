@@ -12,6 +12,7 @@ import TripItem from './TripItem'
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { differenceInDays } from 'date-fns'
 import '../../css/Custom-BS.css'
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface FormState {
     tripName: string;
@@ -20,6 +21,7 @@ interface FormState {
 }
 
 export default function Home() {
+    const navigate = useNavigate()
     const queryClient = useQueryClient()
     const dispatch = useAppDispatch()
     const username = useAppSelector(state => state.auth.name)
@@ -117,6 +119,7 @@ export default function Home() {
                                 onRemoveTrip.mutate({ tripId: item.id, tripName: item.name })
                                 handleDeleteConfirmModal()
                             }}
+                            onClickTrip={()=>navigate('/trip-event')}
                             key={item.id} tripName={item.name} location={item.location}
                             period={calculatePeriod(new Date(item.end_date), new Date(item.start_date))} onShowDeleteModal={handleDeleteConfirmModal}
                         />
