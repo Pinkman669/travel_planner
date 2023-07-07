@@ -24,6 +24,7 @@ export default function Home() {
     const dispatch = useAppDispatch()
     const username = useAppSelector(state => state.auth.name)
     const userId = useAppSelector(state => state.auth.userId)
+    // const tripItems = useAppSelector(state => state.trip.tripItems)
     const tripItemInfo = useTripItems(userId as number)
 
     const [showModal, setShowModal] = useState(false)
@@ -39,7 +40,6 @@ export default function Home() {
 
     const onSubmit = useMutation(
         async (data: { location: string, numberOfDays: number, tripName: string, startDate: Date, userId: number }) => {
-            console.log('hi')
             return await addTrip(data.location, data.numberOfDays, data.tripName, data.startDate, data.userId)
         },
         {

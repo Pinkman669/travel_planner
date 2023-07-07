@@ -1,5 +1,5 @@
 .mainContainer{
-    min-height: 80vh;
+    height: 80vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -113,4 +113,11 @@
     width: 200px;
     display: flex;
     justify-content: space-around;
+}
+
+@media screen and (max-width: 480px){
+    .mainContainer{
+        justify-content: center;
+        overflow: scroll;
+    }
 }

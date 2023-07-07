@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { addDays } from 'date-fns'
+import { useDispatch } from 'react-redux';
+import { update_trip_item } from './tripSlice';
 
 interface TripItem{
     id: number;
@@ -11,7 +13,8 @@ interface TripItem{
 }
 
 export function useTripItems(userId: number){
-    const {isLoading, error, data, isFetching,status } = useQuery({
+    const dispatch = useDispatch()
+    const {isLoading, error, data, isFetching, status } = useQuery({
         queryKey: ['tripItems'],
         queryFn : async() =>{
             const res = await fetch(`${process.env.REACT_APP_API_SERVER}/home/getTrip/${userId}`,{
@@ -26,6 +29,9 @@ export function useTripItems(userId: number){
 
     if (isLoading || isFetching || error || !data){
         return []
+    }
+    if (status === 'success'){
+        dispatch(update_trip_item(data))
     }
     return data
 }
@@ -43,7 +49,6 @@ export async function addTrip(tripName: string, numberOfDays: number, location: 
         })
     })
 
-    const result = await res.json()
     if (res.status === 200){
         return true
     } else{
