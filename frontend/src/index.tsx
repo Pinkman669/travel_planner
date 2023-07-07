@@ -5,9 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
-import { store } from './store';
+import { store } from './redux/store';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,7 +22,9 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
-          <App />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <App />
+          </LocalizationProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </ QueryClientProvider >
       </BrowserRouter>

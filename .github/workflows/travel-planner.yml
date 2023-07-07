@@ -29,6 +29,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Docker Build and Push
+        env:
+          FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
+          FACEBOOK_CLIENT_SECRET: ${{ secrets.FACEBOOK_CLIENT_SECRET }}
+          jwt_secret: ${{ secrets.JWT_SECRET }}
+          REACT_PUBLIC_HOSTNAME: https://travel-planner.pinkman.world
         working-directory: backend
         run: |
           docker build -t pinkman667/travel_planner:latest .
@@ -43,6 +48,7 @@ jobs:
         working-directory: frontend
         env:
           REACT_APP_API_SERVER: https://api-travel-planner.pinkman.world
+          REACT_APP_FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
         run: |
           yarn install
           yarn test

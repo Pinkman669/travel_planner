@@ -47,7 +47,7 @@ export class AuthController {
                 email: userInfo.email
             }
             const token = jwtSimple.encode(payload, jwt.jwtSecret + '')
-            res.status(200).json({ token: token, name: userInfo.name })
+            res.status(200).json({ token: token, name: userInfo.name, userId: userInfo.id })
         } catch (e) {
             logger.error(`[ER002] login failed ${e}`)
             res.status(400).json({ success: false, msg: `[ER002] login failed ${e}` })
@@ -83,7 +83,9 @@ export class AuthController {
             const profileResponse = await fetch(`https://graph.facebook.com/me?fields=id,name,email,birthday&access_token=${data.access_token}`);
             const userInfo = await profileResponse.json()
             let user: User = await this.authService.userInfo(userInfo.email)
+            console.log('backend received request')
             if (!user){
+                console.log('backend creating account')
                 const hashedPassword = await hashPassword(crypto.randomBytes(48).toString())
                 user = await this.authService.signUp(userInfo.name, userInfo.email, hashedPassword, userInfo.birthday)
             }

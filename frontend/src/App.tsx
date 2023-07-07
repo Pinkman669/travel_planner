@@ -8,6 +8,8 @@ import Home from './features/home/Home';
 import { AuthGuard } from './features/auth/AuthGuard';
 import { FacebookCallback } from './features/auth/FacebookCallback';
 import MapPage from './features/map/Map';
+import { ToastContainer } from 'react-toastify';
+import TripEvent from './features/event/TripEvent';
 
 
 function App() {
@@ -20,10 +22,24 @@ function App() {
         <Route path='/map' element={<MapPage />}></Route>
         <Route element={<AuthGuard />}>
           <Route path='/' element={<Home />}></Route>
+          <Route path='/trip-event' element={<TripEvent />}></Route>
           <Route path='*' element={<Home />}></Route>
         </Route>
       </Routes>
-    </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </div >
   );
 }
 

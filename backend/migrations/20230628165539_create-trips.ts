@@ -9,6 +9,7 @@ export async function up(knex: Knex): Promise<void> {
         table.date('end_date')
         table.string('location')
         table.integer('user_id')
+        table.boolean('active')
         table.foreign('user_id').references('users.id')
     })
 }

@@ -1,12 +1,14 @@
 import {configureStore} from '@reduxjs/toolkit'
-import authReducer from './features/auth/AuthSlice'
-import placeReducer from './features/map/placeSlice'
+import authReducer from '../features/auth/AuthSlice'
+import tripReducer from '../features/home/tripSlice'
+import placeReducer from '../features/map/placeSlice'
 
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
-        place: placeReducer
+        trip: tripReducer,
+        place: placeReducer,
     }
 })
 

@@ -124,18 +124,6 @@ export default function SignUp() {
                 <div id='login-link-div'>
                     <Link to='/' id='login-link'>I have an account already!</Link>
                 </div>
-                <ToastContainer
-                    position="top-right"
-                    autoClose={2000}
-                    hideProgressBar={true}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="light"
-                />
             </div>
         </div>
     )

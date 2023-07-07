@@ -46,7 +46,8 @@ export default function Login() {
     async function submit(data: FormState) {
         const result = await localLogin(data.email, data.password)
         if (result.success) {
-            dispatch(login(result.name))
+            dispatch(login({name: result.name, userId: result.userId}))
+            notify(result.success, 'Login success!')
             navigate('/')
         } else {
             notify(result.success, 'Email or password not match')
@@ -87,18 +88,6 @@ export default function Login() {
                     <Link to='/sign-up' id='sign-up-link'>Create an account now</Link>
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={2000}
-                hideProgressBar={true}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
         </div>
     )
 }
