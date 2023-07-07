@@ -8,9 +8,6 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { GoogleMap } from '@react-google-maps/api';
-import {Map} from './api/GoogleMap';
-
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -1,12 +1,16 @@
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
-import Places from "./PlaceSearch";
-import "../css/googleMap.css";
+import PlaceSearch from "./PlaceSearch";
+import "../../css/googleMap.css";
+import PlaceInfo from "./PlaceInfo";
+import { useAppSelector } from "../../redux/hooks";
+
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 
 export function Map() {
+  const placeId = useAppSelector((state) => state.place.placeId);
   const [location, setLocation] = useState<LatLngLiteral>();
   const mapRef = useRef<google.maps.Map>();
   const onLoad = useCallback((map: google.maps.Map) => {
@@ -26,6 +30,7 @@ export function Map() {
   );
 
   if (process.env.REACT_APP_MAP_DISPLAY === "1") {
+
     return (
       <div className="search-page">
         <GoogleMap
@@ -36,15 +41,15 @@ export function Map() {
           onLoad={onLoad}
         >
           {location && <Marker position={location} />}
+          
         </GoogleMap>
-        <Places
+        <PlaceSearch
           setLocation={(position) => {
             setLocation(position);
             mapRef.current?.panTo(position);
           }}
         />
-
-        <div className="places-info-container"></div>
+        {placeId && <PlaceInfo/>}
       </div>
     );
   } else {

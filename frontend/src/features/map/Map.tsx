@@ -1,6 +1,5 @@
 import { useLoadScript } from "@react-google-maps/api";
 import { Map } from "./GoogleMap";
-import React from "react";
 
 export default function MapPage() {
   const { isLoaded } = useLoadScript({
