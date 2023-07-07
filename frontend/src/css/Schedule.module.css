@@ -1,0 +1,21 @@
+#scheduleContainer{
+    width: 70%;
+    height: 80vh;
+    background-color: #BDE3FF;
+    border-radius: 10px;
+}
+
+#ScheduleHeader{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    align-items: flex-end;
+}
+
+#tripTitle{
+}
+
+#ScheduleLine{
+    height: 8px;
+    background-color: white;
+}
