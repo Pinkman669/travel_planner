@@ -119,7 +119,7 @@ export default function Home() {
                                 onRemoveTrip.mutate({ tripId: item.id, tripName: item.name })
                                 handleDeleteConfirmModal()
                             }}
-                            onClickTrip={()=>navigate('/trip-event')}
+                            onClickTrip={()=>navigate(`/trip-event/${item.id}`)}
                             key={item.id} tripName={item.name} location={item.location}
                             period={calculatePeriod(new Date(item.end_date), new Date(item.start_date))} onShowDeleteModal={handleDeleteConfirmModal}
                         />
