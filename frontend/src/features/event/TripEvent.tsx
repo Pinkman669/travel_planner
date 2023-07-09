@@ -3,12 +3,12 @@ import { useAppSelector } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 import Schedule from "./Schedule";
 import { differenceInDays, addDays  } from 'date-fns'
-import styles from '../../css/TripEvent.module.css'
+// import styles from '../../css/TripEvent.module.css'
 
-interface EventItem{
-    id: number;
-    name: string;
-}
+// interface EventItem{
+//     id: number;
+//     name: string;
+// }
 
 export default function TripEvent(){
     const {tripId} = useParams()

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from '../../css/Day.module.css'
 import Event from './Event'
 import { updateEventOrder, useEventItem } from "./EventAPI";
 import { isSameDay } from "date-fns";
 import { DndContext, DragEndEvent, closestCenter } from '@dnd-kit/core';
-import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { notify } from "../utils/utils";
 // import { useAppSelector } from "../../redux/hooks";

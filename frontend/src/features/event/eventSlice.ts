@@ -1,4 +1,3 @@
-import { arrayMove } from "@dnd-kit/sortable";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -17,11 +16,6 @@ interface EventItem {
     category: string;
     item_order: number;
     day: number;
-}
-
-interface newNumber{
-    activeNum: number;
-    overNum: number
 }
 
 interface EventState {
