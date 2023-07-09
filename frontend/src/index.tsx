@@ -10,6 +10,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { DndContext } from '@dnd-kit/core';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -23,7 +24,9 @@ root.render(
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <App />
+            <DndContext>
+              <App />
+            </DndContext>
           </LocalizationProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </ QueryClientProvider >

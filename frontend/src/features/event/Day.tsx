@@ -3,15 +3,16 @@ import styles from '../../css/Day.module.css'
 import Event from './Event'
 import { useEventItem } from "./EventAPI";
 import { isSameDay } from "date-fns";
-import { useAppSelector } from "../../redux/hooks";
+// import { useAppSelector } from "../../redux/hooks";
 
-interface DayItemProps{
+interface DayItemProps {
     tripId: number;
     date: Date;
     dayNumber: number;
 }
 
-export default function Day(props: DayItemProps){
+export default function Day(props: DayItemProps) {
+
     const eventList = useEventItem(props.tripId)
     const currentDateList = eventList.filter((event) => {
         return isSameDay(new Date(event.date), props.date)
@@ -26,7 +27,7 @@ export default function Day(props: DayItemProps){
             <div className={styles.eventContainer}>
                 {
                     currentDateList.map((event) => (
-                        <Event key={event.id} eventName={event.name} location={event.location} date={event.date}/>
+                        <Event key={event.id} id={event.id} eventName={event.name} location={event.location} date={event.date} />
                     ))
                 }
             </div>
