@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import TripItem from "./TripItem";
 
 interface TripItem {
     id: number;

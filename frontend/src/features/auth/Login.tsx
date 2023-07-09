@@ -8,7 +8,6 @@ import { localLogin } from './AuthAPI';
 import { login } from "./AuthSlice";
 import { useAppDispatch } from '../../redux/hooks';
 import { notify } from '../utils/utils'
-import { ToastContainer } from 'react-toastify';
 
 interface FormState {
     email: string;
