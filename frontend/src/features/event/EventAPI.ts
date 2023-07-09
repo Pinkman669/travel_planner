@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 
 interface EventItem{
     id: number;
+    name: string;
     date: Date;
     time: Date;
     location: string;
@@ -21,7 +22,7 @@ export function useEventItem(tripId: number){
     const {isLoading, error, data, isFetching } = useQuery({
         queryKey: ['eventItems'],
         queryFn : async() =>{
-            const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getEvent/${tripId}`,{
+            const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getEvents/${tripId}`,{
                 headers : {
                     "Authorization":`Bearer ${localStorage.getItem('token')}`
                 }

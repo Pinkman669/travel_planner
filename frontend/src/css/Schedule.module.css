@@ -25,6 +25,8 @@
     height: 92%;
     width: 100%;
     display: flex;
-    flex-wrap: nowrap;
+    flex-direction: column;
+    flex-wrap: wrap;
     overflow-x: scroll;
+    align-content: flex-start;
 }

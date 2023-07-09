@@ -6,6 +6,7 @@ interface ScheduleProps{
     tripName: string;
     userName: string;
     arrOfTripDate: Date[];
+    tripId: number;
 }
 
 export default function Schedule(props: ScheduleProps){
@@ -19,7 +20,7 @@ export default function Schedule(props: ScheduleProps){
             <div id={styles.ScheduleLine}></div>
             <div id={styles.allDaysContainer}>
                     {arrOfTripDate.map((date, index) =>(
-                        <Day key={index} dayNumber={index+1} date={date}/>
+                        <Day key={index} dayNumber={index+1} date={date} tripId={props.tripId}/>
                     ))}
             </div>
         </div>

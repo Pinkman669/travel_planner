@@ -8,9 +8,15 @@ export class EventController{
 
     getEvents = async(req: Request, res: Response) =>{
         try{
-
+            const tripId = Number(req.params.tripId)
+            if (!tripId){
+                throw new Error('Missing tripId')
+            }
+            const eventList = await this.eventService.getEvents(tripId)
+            res.status(200).json({success: true, result: eventList})
         }catch(e){
-            logger.error(`[ERR007] ${errorCode['ERR007']}`)
+            logger.error(`[ERR007] ${e}`)
+            res.status(400).json({success: false, msg: `[ERR007] ${errorCode.ERR007}`})
         }
     }
 }
