@@ -3,6 +3,7 @@ import styles from '../../css/Day.module.css'
 import Event from './Event'
 import { useEventItem } from "./EventAPI";
 import { isSameDay } from "date-fns";
+import { useAppSelector } from "../../redux/hooks";
 
 interface DayItemProps{
     tripId: number;

@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { useDispatch } from 'react-redux';
+import { update_event_item } from './eventSlice';
 
 
 interface EventItem{
@@ -19,7 +21,8 @@ interface EventItem{
 }
 
 export function useEventItem(tripId: number){
-    const {isLoading, error, data, isFetching } = useQuery({
+    const dispatch = useDispatch()
+    const {isLoading, error, data, isFetching, status } = useQuery({
         queryKey: ['eventItems'],
         queryFn : async() =>{
             const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getEvents/${tripId}`,{
@@ -35,6 +38,8 @@ export function useEventItem(tripId: number){
     if (isLoading || isFetching || error || !data){
         return []
     }
-
+    if (status === 'success'){
+        dispatch(update_event_item(data))
+    }
     return data
 }
