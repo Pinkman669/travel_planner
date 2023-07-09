@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { logger } from "../logger";
-// import jwtSimple from "jwt-simple";
-// import jwt from "../jwt";
 import { TripService } from "../services/tripService";
 
 
