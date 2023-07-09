@@ -1,7 +1,5 @@
 import { useLoadScript } from "@react-google-maps/api";
 import { Map } from "./GoogleMap";
-import React from "react";
-
 
 export default function MapPage() {
   const { isLoaded } = useLoadScript({
@@ -9,6 +7,13 @@ export default function MapPage() {
     libraries: ["places"],
   });
   if (!isLoaded) return <div>Loading...</div>;
-  return <Map/>
- 
-}
+
+    return (
+      <div className="trip-container">
+        <div className="schedule-container">schedule</div>
+        <div className="control-container">
+          <Map />
+        </div>
+      </div>
+    );
+  }

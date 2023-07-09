@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "src/api/GoogleMap.tsx"  ]
+, "src/features/map/GoogleMap.tsx"  ]
 }
