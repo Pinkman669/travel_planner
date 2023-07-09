@@ -19,7 +19,7 @@ export default function Schedule(props: ScheduleProps){
             <div id={styles.ScheduleLine}></div>
             <div id={styles.allDaysContainer}>
                     {arrOfTripDate.map((date, index) =>(
-                        <Day key={index}/>
+                        <Day key={index} dayNumber={index+1} date={date}/>
                     ))}
             </div>
         </div>
