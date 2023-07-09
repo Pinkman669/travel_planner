@@ -26,6 +26,7 @@ export function eventRouter(){
     const route = express.Router()
 
     route.get('/getEvents/:tripId', isLoggedIn, eventController.getEvents)
+    route.put('/updateEventOrder', isLoggedIn, eventController.updateEventOrder)
 
     return route
 }

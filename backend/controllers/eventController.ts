@@ -19,4 +19,19 @@ export class EventController{
             res.status(400).json({success: false, msg: `[ERR007] ${errorCode.ERR007}`})
         }
     }
+
+    updateEventOrder = async(req: Request, res: Response) =>{
+        try{
+            const {activeEventId, overEventId, activeOrder, overOrder} = req.body
+            if (!activeEventId || !overEventId || !activeOrder || !overOrder){
+                throw new Error('Missing update info')
+            }
+            await this.eventService.updateEventOrder(activeEventId, overOrder)
+            await this.eventService.updateEventOrder(overEventId, activeOrder)
+            res.status(200).json({success: true})
+        }catch(e){
+            logger.error(`[ERR008] ${e}`)
+            res.status(400).json({success: false, msg: `[ERR008] ${errorCode.ERR008}`})
+        }
+    }
 }

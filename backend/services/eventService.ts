@@ -8,6 +8,16 @@ export class EventService{
             .select('*')
             .from('events')
             .where('trip_id', tripId)
+            .orderBy('item_order', 'asc')
         return result
+    }
+
+    async updateEventOrder(eventId: number , newOrder: number){
+        await this.knex
+            .update({
+                'item_order': newOrder
+            })
+            .from('events')
+            .where('id', eventId)
     }
 }
