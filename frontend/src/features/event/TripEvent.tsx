@@ -28,7 +28,7 @@ export default function TripEvent(){
     return (
         <div className={`container-fluid`}>
             This is event: {tripInfo?.name}
-            <Schedule numberOfDays={calculateNumberOfDays()} tripName={tripInfo?.name as string} userName={userName as string}/>
+            <Schedule arrOfTripDate={calculateNumberOfDays()} tripName={tripInfo?.name as string} userName={userName as string}/>
         </div>
     )
 }
