@@ -19,3 +19,10 @@
     height: 8px;
     background-color: white;
 }
+
+#allDaysContainer{
+    padding: 10px 0;
+    height: 92%;
+    width: 100%;
+    display: flex;
+}

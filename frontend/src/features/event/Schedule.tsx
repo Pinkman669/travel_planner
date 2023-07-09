@@ -1,12 +1,16 @@
 import React from "react";
 import styles from '../../css/Schedule.module.css'
+import Day from "../home/Day";
 
 interface ScheduleProps{
     tripName: string;
     userName: string;
+    numberOfDays: Date[];
 }
 
 export default function Schedule(props: ScheduleProps){
+    const numberOfDays = props.numberOfDays
+    console.log(numberOfDays)
     return (
         <div id={styles.scheduleContainer}>
             <div id={styles.ScheduleHeader}>
@@ -15,9 +19,9 @@ export default function Schedule(props: ScheduleProps){
             </div>
             <div id={styles.ScheduleLine}></div>
             <div id={styles.allDaysContainer}>
-                <div className={styles.dayContainer}>
-                    
-                </div>
+                    <Day />
+                    <Day />
+                    <Day />
             </div>
         </div>
     )
