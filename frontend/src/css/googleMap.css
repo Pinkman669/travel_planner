@@ -52,7 +52,52 @@
 
 .places-info-container{
   position:absolute;
-  bottom:3px;
+  padding:0.5rem  ;
+  border-radius: 25px;
+  background-color: #ffffff;
+  width: 90%;
+  left:5%;
+  bottom:10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 1200;
+  font-size: 16px;
+}
+
+.place_info_top_container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.feature_container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-left: 0.5rem;
+}
+
+.place_name{
+  font-weight: 900;
+  font-size: 36px;
+}
+.info_detail_title {
+  font-weight: 900;
+  display: flex;
+  margin: 0.5rem;
+  padding:0 1rem ;
+}
+
+.info_detail{
+  font-weight: 500;
+  padding:0 1rem ;
+}
+
+.feature_button{
+  padding:0.5rem;
+  border: black solid 0.5px;
+  background-color: #ffffff;
+  height: fit-content;
+  width: fit-content;
+  border-radius: 25px;
 }
 
 
