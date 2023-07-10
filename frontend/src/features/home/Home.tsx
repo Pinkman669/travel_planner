@@ -12,7 +12,7 @@ import TripItem from './TripItem'
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { differenceInDays } from 'date-fns'
 import '../../css/Custom-BS.css'
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface FormState {
     tripName: string;
@@ -100,7 +100,7 @@ export default function Home() {
     useEffect(() =>{
         if (formState.isSubmitSuccessful){
             reset(formState.defaultValues)
-            handleModal()
+            setShowModal(false)
             setStartDate(null)
         }
     }, [formState, reset])
@@ -119,7 +119,7 @@ export default function Home() {
                                 onRemoveTrip.mutate({ tripId: item.id, tripName: item.name })
                                 handleDeleteConfirmModal()
                             }}
-                            onClickTrip={()=>navigate('/trip-event')}
+                            onClickTrip={()=>navigate(`/trip-event/${item.id}`)}
                             key={item.id} tripName={item.name} location={item.location}
                             period={calculatePeriod(new Date(item.end_date), new Date(item.start_date))} onShowDeleteModal={handleDeleteConfirmModal}
                         />

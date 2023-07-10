@@ -15,7 +15,7 @@ export async function up(knex: Knex): Promise<void> {
         table.integer('expense')
         table.integer('trip_id')
         table.string('category')
-        table.integer('order')
+        table.integer('item_order')
         table.integer('day')
         table.foreign('trip_id').references('trips.id')
     })

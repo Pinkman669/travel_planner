@@ -4,11 +4,13 @@ import dotenv from 'dotenv'
 import  Knex  from "knex";
 import { AuthService } from "./services/authService";
 import { AuthController } from "./controllers/authController";
-import { authRouter, tripRouter } from "./Router";
+import { authRouter, eventRouter, tripRouter } from "./Router";
 import { User } from "./services/models";
 import cors from 'cors'
 import { TripService } from "./services/tripService";
 import { TripController } from "./controllers/tripController";
+import { EventService } from "./services/eventService";
+import { EventController } from "./controllers/eventController";
 
 dotenv.config()
 
@@ -29,6 +31,8 @@ export const authService = new AuthService(knex)
 export const authController = new AuthController(authService)
 export const tripService = new TripService(knex)
 export const tripController = new TripController(tripService)
+export const eventService = new EventService(knex)
+export const eventController = new EventController(eventService)
 
 const app = express();
 app.use(cors())
@@ -41,6 +45,7 @@ app.get("/", function (req: Request, res: Response) {
 
 app.use('/auth', authRouter())
 app.use('/home', tripRouter())
+app.use('/event', eventRouter())
 
 const PORT = 8080;
 

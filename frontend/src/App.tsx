@@ -22,7 +22,7 @@ function App() {
         <Route path='/map' element={<MapPage />}></Route>
         <Route element={<AuthGuard />}>
           <Route path='/' element={<Home />}></Route>
-          <Route path='/trip-event' element={<TripEvent />}></Route>
+          <Route path='/trip-event/:tripId' element={<TripEvent />}></Route>
           <Route path='*' element={<Home />}></Route>
         </Route>
       </Routes>

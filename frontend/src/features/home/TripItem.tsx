@@ -2,7 +2,6 @@ import React from "react";
 import styles from "../../css/Home-and-itsModal.module.css"
 import { IconTrashXFilled } from "@tabler/icons-react";
 import DeleteConfirmModal from "./DeleteConfirmModal";
-import { Button } from "react-bootstrap";
 
 export interface TripItemProps {
     tripName: string;

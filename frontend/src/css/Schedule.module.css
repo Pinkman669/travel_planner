@@ -1,0 +1,32 @@
+#scheduleContainer{
+    width: 70%;
+    height: 90vh;
+    background-color: #BDE3FF;
+    border-radius: 10px;
+}
+
+#ScheduleHeader{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    align-items: flex-end;
+}
+
+#tripTitle{
+}
+
+#ScheduleLine{
+    height: 8px;
+    background-color: white;
+}
+
+#allDaysContainer{
+    padding: 10px 0;
+    height: 92%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow-x: scroll;
+    align-content: flex-start;
+}

@@ -1,4 +1,4 @@
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
 import PlaceSearch from "./PlaceSearch";
 import "../../css/googleMap.css";

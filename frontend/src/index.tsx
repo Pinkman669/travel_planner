@@ -23,7 +23,7 @@ root.render(
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <App />
+              <App />
           </LocalizationProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </ QueryClientProvider >

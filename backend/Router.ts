@@ -1,5 +1,5 @@
 import { isLoggedIn } from "./guard";
-import { authController, tripController } from "./main";
+import { authController, tripController, eventController } from "./main";
 import express from "express";
 
 export function authRouter(){
@@ -18,6 +18,15 @@ export function tripRouter(){
     route.get('/getTrip/:userId', isLoggedIn, tripController.getTrips)
     route.post('/addTrip', isLoggedIn, tripController.addTrip)
     route.put('/removeTrip/:tripId', isLoggedIn, tripController.removeTrip)
+
+    return route
+}
+
+export function eventRouter(){
+    const route = express.Router()
+
+    route.get('/getEvents/:tripId', isLoggedIn, eventController.getEvents)
+    route.put('/updateEventOrder', isLoggedIn, eventController.updateEventOrder)
 
     return route
 }
