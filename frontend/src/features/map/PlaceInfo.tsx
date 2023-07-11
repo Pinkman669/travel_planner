@@ -1,15 +1,22 @@
 import usePlaceInfo from "./placeAPI";
-import "../image/add.PNG";
+import add from "../image/add.png";
+import favourite from "../image/favourite.png";
+import { useState } from "react";
+import { NewEventModal } from "../event/NewEventModal";
+
+
 
 export default function PlaceInfo() {
   const placeInfo = usePlaceInfo();
+  // const [showNewEventModal, setShowNewEventModal] = useState(false);
+
   return (
     <div className="places-info-container">
       <div className="place_info_top_container">
         <div className="place_name">{placeInfo?.name}</div>
         <div className="feature_container">
-          <button className="feature_button"><img src="../image/favourite.PNG" alt ="Favourite"/></button>
-          <button className="feature_button"><img src="../image/add.PNG" alt ="add"/></button>
+          <button className="feature_button"><img src= {favourite} alt ="Favourite"/></button>
+          <button className="feature_button"><img src= {add} alt ="add"/></button>
         </div>
       </div>
       <div className="info_detail_title">
@@ -41,6 +48,9 @@ export default function PlaceInfo() {
           </a>
         </div>
       )}
+      {/* <NewEventModal
+        isShown={newEventModal}
+        name = /> */}
     </div>
   );
 }
