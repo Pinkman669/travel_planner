@@ -10,7 +10,6 @@ import { FacebookCallback } from './features/auth/FacebookCallback';
 import MapPage from './features/map/Map';
 import { ToastContainer } from 'react-toastify';
 import TripEvent from './features/event/TripEvent';
-import DragNDrop from './features/dragNdropTest/DragNDrop';
 
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
           <Route path='/trip-event/:tripId' element={<TripEvent />}></Route>
           <Route path='*' element={<Home />}></Route>
         </Route>
-        <Route path='/dragNdrop' element={<DragNDrop />}></Route>
       </Routes>
 
       <ToastContainer

@@ -9,7 +9,6 @@ import { notify } from "../utils/utils";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { addDays } from 'date-fns'
 import Event from "./Event";
-import { duration } from "@mui/material";
 
 interface ScheduleProps {
     tripName: string;
@@ -79,9 +78,6 @@ export default function Schedule(props: ScheduleProps) {
     }
 
     async function handleDragEnd(event: DragEndEvent) {
-        if (draggingOver){
-            return
-        }
         const { active, over } = event
         if (active.id === over?.id) {
             return
@@ -121,7 +117,6 @@ export default function Schedule(props: ScheduleProps) {
     )
 
     const handleDragOver = (event: DragOverEvent) => {
-        // setDraggingOver(true)
         const { active, over } = event
         const activeId = active.id
         const overId = over?.id
@@ -141,7 +136,6 @@ export default function Schedule(props: ScheduleProps) {
             newDay: newDay,
             tripId: tripId
         })
-        setDraggingOver(false)
     }
 
     const onUpdateEventDate = useMutation(
