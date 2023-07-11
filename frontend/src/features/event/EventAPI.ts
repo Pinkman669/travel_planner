@@ -45,6 +45,7 @@ export function useEventItem(tripId: number){
 }
 
 export async function updateEventOrder(activeEventId: number, overEventId: number, activeOrder: number, overOrder: number){
+    console.log(activeOrder, overOrder)
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateEventOrder`, {
         method: 'PUT',
         headers: {
@@ -63,7 +64,8 @@ export async function updateEventOrder(activeEventId: number, overEventId: numbe
     }
 }
 
-export async function updateEventDate(activeEventId: number, currDay:number){
+export async function updateEventDate(activeEventId: number, newDate: Date ,newDay:number, tripId: number){
+    // console.log(`newDate in frontendAPI: ${newDate}`)
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateEventDate`, {
         method: 'PUT',
         headers: {
@@ -71,7 +73,7 @@ export async function updateEventDate(activeEventId: number, currDay:number){
             "Authorization":`Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-            activeEventId , currDay
+            activeEventId , newDate, newDay, tripId
         })
     })
     
