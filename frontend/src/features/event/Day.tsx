@@ -27,7 +27,7 @@ export default function Day(props: DayItemProps) {
                         <div>{(props.date).toDateString()}</div>
                     </div>
                     <div className={styles.eventContainer}>
-                        <SortableContext items={eventList}>
+                        <SortableContext id={props.container} items={eventList}>
                             <div ref={setNodeRef}>
                                 {
                                     eventList.map((event) => (

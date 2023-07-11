@@ -54,4 +54,20 @@ export class EventController {
             res.status(400).json({ success: false, msg: `[ERR009] ${errorCode.ERR009}` })
         }
     }
+
+    updateDayEvent = async (req: Request, res: Response) => {
+        try {
+            const { eventList } = req.body
+            if (!eventList){
+                throw new Error('Missing info')
+            }
+            eventList.forEach(async (event: any) => {
+                await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, event.item_order)
+            });
+            res.status(200).json({ success: true })
+        } catch (e) {
+            logger.error(`[ERR0010] ${e}`)
+            res.status(400).json({ success: false, msg: `[ERR0010] ${errorCode.ERR009}` })
+        }
+    }
 }
