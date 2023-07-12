@@ -24,7 +24,7 @@ export function NewEventModal(props: newEventModalProps) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>Create New Event</Modal.Title>
+        <Modal.Title>Add to your trip plan</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

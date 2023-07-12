@@ -6,22 +6,6 @@ import { CSS } from "@dnd-kit/utilities"
 import commonStyles from '../../css/Common.module.css'
 import { useSortable } from "@dnd-kit/sortable";
 
-// interface EventItem {
-//     id: number;
-//     date: Date;
-//     time: Date;
-//     location: string;
-//     business_hours: string;
-//     phone: string;
-//     website: string;
-//     budget: number;
-//     expense: number;
-//     trip_id: number;
-//     category: string;
-//     order: number;
-//     day: number;
-// }
-
 interface EventItemProps {
     id: number;
     eventName: string;

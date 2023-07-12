@@ -1,83 +1,43 @@
 import React from "react";
 import styles from '../../css/Day.module.css'
 import Event from './Event'
-import { updateEventOrder, useEventItem } from "./EventAPI";
-import { isSameDay } from "date-fns";
-import { DndContext, DragEndEvent, closestCenter } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { notify } from "../utils/utils";
-// import { useAppSelector } from "../../redux/hooks";
+import {EventItem} from './EventAPI'
+import { useDroppable } from "@dnd-kit/core";
 
 interface DayItemProps {
     tripId: number;
     date: Date;
     dayNumber: number;
+    eventList: EventItem[]
+    container: string;
 }
 
 export default function Day(props: DayItemProps) {
-    const queryClient = useQueryClient()
-    const eventList = useEventItem(props.tripId)
-    const currentDateList = (eventList.filter((event) => {
-        return isSameDay(new Date(event.date), props.date)
-    }))
-
-    async function handleDragEnd(event: DragEndEvent) {
-        const { active, over } = event
-        if (active.id === over?.id) {
-            return
-        }
-        const activeOrder = (active.data.current?.sortable.index) + 1
-        const overOrder = (over?.data.current?.sortable.index) + 1
-        const activeEventInfo = currentDateList.find((event) => +event.item_order === activeOrder)
-        const overEventInfo = currentDateList.find((event) => +event.item_order === overOrder)
-        if (!activeEventInfo?.id || !overEventInfo?.id) {
-            return
-        }
-        onUpdateEventOrder.mutate({
-            activeEventId: activeEventInfo.id,
-            overEventId: overEventInfo.id,
-            activeOrder: activeOrder,
-            overOrder: overOrder
-        })
-    }
-
-    const onUpdateEventOrder = useMutation(
-        async (data: { activeEventId: number, overEventId: number, activeOrder: number, overOrder: number }) => {
-            return await updateEventOrder(data.activeEventId, data.overEventId, data.activeOrder, data.overOrder)
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries(['eventItems'])
-            },
-            onError: () => {
-                notify(false, 'Event rearrange failed')
-            }
-        }
-    )
+    const eventList = props.eventList
+    const { setNodeRef } = useDroppable({
+        id: props.container
+      });
 
     return (
         <>
-            <DndContext
-                collisionDetection={closestCenter}
-                onDragEnd={handleDragEnd}
-            >
                 <div className={styles.dayContainer}>
                     <div className={styles.dayHeader}>
                         <div>Day {props.dayNumber}</div>
                         <div>{(props.date).toDateString()}</div>
                     </div>
                     <div className={styles.eventContainer}>
-                        <SortableContext items={currentDateList} strategy={verticalListSortingStrategy}>
-                            {
-                                currentDateList.map((event) => (
-                                    <Event key={event.id} id={event.id} eventName={event.name} location={event.location} date={event.date} />
-                                ))
-                            }
+                        <SortableContext id={props.container} items={eventList}>
+                            <div ref={setNodeRef}>
+                                {
+                                    eventList.map((event) => (
+                                        <Event key={event.id} id={event.id} eventName={event.name} location={event.location} date={event.date} />
+                                    ))
+                                }
+                            </div>
                         </SortableContext>
                     </div>
                 </div>
-            </DndContext>
         </>
     )
 }

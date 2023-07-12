@@ -4,7 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface EventItem {
     id: number;
     name: string;
-    date: Date;
+    date: Date|string;
     time: Date;
     location: string;
     business_hours: string;
@@ -18,8 +18,16 @@ interface EventItem {
     day: number;
 }
 
+interface UpdateEventOrder {
+    day: number;
+    date: Date|string;
+    item_order: number;
+    id: number;
+}
 
-
+// interface Days{
+//     [key: string]: EventItem[]
+// }
 
 interface EventState {
     eventItems: EventItem[],
@@ -47,9 +55,21 @@ export const eventSlice = createSlice({
         },
         add_event_item: (state: EventState, action:PayloadAction<{placeId:string}>)=> {
             state.newEventItem = action.payload.placeId;
+            localStorage.setItem('eventItems', JSON.stringify(state.eventItems))
+        },
+        update_event_order: (state: EventState, action: PayloadAction<UpdateEventOrder>) => {
+            state.eventItems = state.eventItems.map((event) => {
+                if (event.id === action.payload.id) {
+                    event.day = action.payload.day
+                    event.date = action.payload.date
+                    event.item_order = action.payload.item_order
+                }
+                return event
+            })
+            localStorage.setItem('eventItems', JSON.stringify(state.eventItems))
         }
     }
 })
 
-export const { update_event_item } = eventSlice.actions
+export const { update_event_item, update_event_order } = eventSlice.actions
 export default eventSlice.reducer

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { update_event_item } from './eventSlice';
 
 
-interface EventItem{
+export interface EventItem{
     id: number;
     name: string;
     date: Date;
@@ -53,6 +53,44 @@ export async function updateEventOrder(activeEventId: number, overEventId: numbe
         },
         body: JSON.stringify({
             activeEventId , overEventId, activeOrder, overOrder
+        })
+    })
+
+    if (res.status === 200){
+        return true
+    } else{
+        return false
+    }
+}
+
+export async function updateEventDate(activeEventId: number, newDate: Date ,newDay:number, tripId: number){
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateEventDate`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization":`Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            activeEventId , newDate, newDay, tripId
+        })
+    })
+    
+    if (res.status === 200){
+        return true
+    } else{
+        return false
+    }
+}
+
+export async function updateDayEventOrder(eventList: EventItem[]){
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateDayEventOrder`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization":`Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            eventList
         })
     })
 
