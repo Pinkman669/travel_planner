@@ -22,9 +22,11 @@ export class EventController {
 
     updateEventOrder = async (req: Request, res: Response) => {
         try {
-            console.log('we are in update order')
             const { activeEventId, overEventId, activeOrder, overOrder } = req.body
-            if (!activeEventId || !overEventId || !activeOrder || !overOrder) {
+            if (!activeEventId || !overEventId ) {
+                throw new Error('Missing update info')
+            }
+            if (activeOrder < 0 || overOrder < 0){
                 throw new Error('Missing update info')
             }
             await this.eventService.updateEventOrder(activeEventId, overOrder)

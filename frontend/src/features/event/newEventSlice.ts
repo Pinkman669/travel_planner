@@ -123,16 +123,17 @@ export const newEventSlice = createSlice({
                 }
                 return event
             })
-            newEventList = arrayMove(newEventList, action.payload.activeIndex-1,action.payload.overIndex-1 )
+            newEventList = arrayMove(newEventList, action.payload.activeIndex - 1, action.payload.overIndex - 1)
             state.new_eventItems[action.payload.container] = newEventList
             localStorage.setItem('newEventItems', JSON.stringify(state.new_eventItems))
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchEventByTrip.fulfilled, (state: EventState, action: PayloadAction<Days>) => {
-            state.new_eventItems = action.payload
-            localStorage.setItem('newEventItems', JSON.stringify(state.new_eventItems))
-        })
+        builder
+            .addCase(fetchEventByTrip.fulfilled, (state: EventState, action: PayloadAction<Days>) => {
+                state.new_eventItems = action.payload
+                localStorage.setItem('newEventItems', JSON.stringify(state.new_eventItems))
+            })
     }
 })
 

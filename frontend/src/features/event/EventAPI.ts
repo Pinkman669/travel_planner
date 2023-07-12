@@ -72,25 +72,6 @@ export async function updateEventOrder(activeEventId: number, overEventId: numbe
     }
 }
 
-// export async function updateEventDate(activeEventId: number, newDate: Date, newDay: number, tripId: number) {
-//     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateEventDate`, {
-//         method: 'PUT',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             "Authorization": `Bearer ${localStorage.getItem('token')}`
-//         },
-//         body: JSON.stringify({
-//             activeEventId, newDate, newDay, tripId
-//         })
-//     })
-
-//     if (res.status === 200) {
-//         return true
-//     } else {
-//         return false
-//     }
-// }
-
 export async function updateDayEventOrder(activeEventList: EventItem[], overEventList: EventItem[], newDate: Date, newDay: number, newIndex: number, activeEventId: number) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateDayEventOrder`, {
         method: 'PUT',

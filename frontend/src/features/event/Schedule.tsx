@@ -3,7 +3,7 @@ import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, K
 import styles from '../../css/Schedule.module.css'
 import Day from "./Day";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { EventItem, updateDayEventOrder, updateEventOrder, useEventItem } from "./EventAPI";
+import { EventItem, updateDayEventOrder, updateEventOrder } from "./EventAPI";
 import { notify } from "../utils/utils";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import Event from "./Event";
@@ -100,6 +100,13 @@ export default function Schedule(props: ScheduleProps) {
         if (!activeIndex || !overIndex) {
             return
         }
+        console.log(activeId)
+        onUpdateEventOrder.mutate({
+            activeEventId: Number(activeId),
+            overEventId: Number(overId),
+            activeOrder: activeIndex,
+            overOrder: overIndex
+        })
         dispatch(new_update_event_order({
             container: activeContainer as string,
             activeId: Number(activeId),
@@ -108,12 +115,6 @@ export default function Schedule(props: ScheduleProps) {
             overIndex: overIndex
         }))
 
-        onUpdateEventOrder.mutate({
-            activeEventId: Number(activeId),
-            overEventId: Number(overId),
-            activeOrder: activeIndex,
-            overOrder: overIndex
-        })
         setOverLayActiveState(null)
     }
     const onUpdateEventOrder = useMutation(
