@@ -16,7 +16,7 @@ export default function usePlaceInfo() {
         ]
     }
 const { isLoading, error, data, isFetching} = useQuery({
-  queryKey: ["placeDetail"],
+  queryKey: ["placeDetail",placeId],
   queryFn: async () => {
     const detail = (await getDetails(
       placeInfo

@@ -18,23 +18,35 @@ interface EventItem {
     day: number;
 }
 
+
+
+
 interface EventState {
-    eventItems: EventItem[]
+    eventItems: EventItem[],
+    newEventItem: string | null
 }
 
 const initialState: EventState = localStorage.getItem('eventItems') !== null ?
-    { eventItems: JSON.parse(localStorage.getItem('tripItems') as string) } :
     {
-        eventItems: []
+        eventItems: JSON.parse(localStorage.getItem('tripItems') as string),
+        newEventItem: null
+    } :
+    {
+        eventItems: [],
+        newEventItem: null
     }
+
 
 export const eventSlice = createSlice({
     name: 'event',
     initialState,
-    reducers : {
-        update_event_item: (state: EventState, action: PayloadAction<EventItem[]>) =>{
+    reducers: {
+        update_event_item: (state: EventState, action: PayloadAction<EventItem[]>) => {
             state.eventItems = action.payload
             localStorage.setItem('eventItems', JSON.stringify(action.payload))
+        },
+        add_event_item: (state: EventState, action:PayloadAction<{placeId:string}>)=> {
+            state.newEventItem = action.payload.placeId;
         }
     }
 })

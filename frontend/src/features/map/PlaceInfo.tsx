@@ -8,15 +8,15 @@ import { NewEventModal } from "../event/NewEventModal";
 
 export default function PlaceInfo() {
   const placeInfo = usePlaceInfo();
-  // const [showNewEventModal, setShowNewEventModal] = useState(false);
+  const [showNewEventModal, setShowNewEventModal] = useState(false);
 
   return (
     <div className="places-info-container">
       <div className="place_info_top_container">
         <div className="place_name">{placeInfo?.name}</div>
         <div className="feature_container">
-          <button className="feature_button"><img src= {favourite} alt ="Favourite"/></button>
-          <button className="feature_button"><img src= {add} alt ="add"/></button>
+          <button className="feature_button" ><img src= {favourite} alt ="Favourite"/></button>
+          <button className="feature_button" onClick={() => setShowNewEventModal(true)}><img src= {add} alt ="add"/></button>
         </div>
       </div>
       <div className="info_detail_title">
@@ -48,9 +48,17 @@ export default function PlaceInfo() {
           </a>
         </div>
       )}
-      {/* <NewEventModal
-        isShown={newEventModal}
-        name = /> */}
+    
+      {placeInfo?.formatted_address && < NewEventModal
+        isShown = {showNewEventModal}
+        name = {placeInfo?.name || ""}
+        address={placeInfo?.formatted_address}
+        business_hours={placeInfo?.opening_hours?.weekday_text || null}
+        phone = {placeInfo?.formatted_phone_number || ""}
+        website = {placeInfo?.website || ""}
+        onHide={() => setShowNewEventModal(false)}
+        onSubmit={() => {}}/>
+      }
     </div>
   );
 }

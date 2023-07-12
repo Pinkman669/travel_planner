@@ -1,9 +1,9 @@
-import {Knex} from 'knex'
+import { Knex } from 'knex'
 
-export class EventService{
-    constructor(private knex: Knex){}
+export class EventService {
+    constructor(private knex: Knex) { }
 
-    async getEvents(tripId: number){
+    async getEvents(tripId: number) {
         const result = await this.knex
             .select('*')
             .from('events')
@@ -12,12 +12,34 @@ export class EventService{
         return result
     }
 
-    async updateEventOrder(eventId: number , newOrder: number){
+    async updateEventOrder(eventId: number, newOrder: number) {
         await this.knex
             .update({
                 'item_order': newOrder
             })
             .from('events')
             .where('id', eventId)
+    }
+
+    async addNewEvent(name: string, date: Date, time?: TimeRanges, location: string, business_hours?: string[],
+        phone?: string, website?: string, budget?: number, expense?: number, category: string,
+        order: number, day: number, place_id: string) {
+        await this.knex.insert({
+            'name': name,
+            'date': date,
+            'time': time,
+            'location': location,
+            'business_hour': business_hours,
+            'phone': phone,
+            'website':website,
+            'budget':budget,
+            'expense':expense,
+            'category':category,
+            'order':order,
+            'day':day,
+            'active':true,
+            'place_id':place_id
+        })
+            .into('events')
     }
 }

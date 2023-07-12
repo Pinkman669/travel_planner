@@ -1,0 +1,9 @@
+.readOnly{
+    background-color:transparent;
+    border: none;
+}
+
+.readOnly:hover{
+    background-color:transparent;
+    border: none;
+}
