@@ -31,32 +31,27 @@ export function NewEventModal(props: newEventModalProps) {
         <p>
           <Form>
             <div className="place_name">{props.name}</div>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" >
               <Form.Label>Category</Form.Label>
-              <Form.Control type="category" placeholder="Example: Food, Lodging" />
+              <Form.Control type="text" placeholder="Example: Food, Lodging" />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" >
               <Form.Label>Date</Form.Label>
               <Form.Control type="date" placeholder="DD/MM/YY" />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" >
               <Form.Label>Time</Form.Label>
               <Form.Control type="text" placeholder="booked for 9:00pm" />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" >
               <Form.Label>Address</Form.Label>
-              <Form.Control
-                className="readOnly"
-                type="text"
-                placeholder={props.address}
-                readOnly
-              />
+             <div>{props.address}</div>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3">
               <Form.Label>Business Hours</Form.Label>
               {props.business_hours ? (
                 <div>
@@ -74,7 +69,7 @@ export function NewEventModal(props: newEventModalProps) {
               )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" >
               <Form.Label>Phone No. </Form.Label>
               {props.phone ? (
                 <div>{props.phone}</div>
@@ -83,7 +78,7 @@ export function NewEventModal(props: newEventModalProps) {
               )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3">
               <Form.Label>Website </Form.Label>
               {props.website ? (
                 <div><a href={props.website} target="_blank">
@@ -95,12 +90,12 @@ export function NewEventModal(props: newEventModalProps) {
             </Form.Group>
 
           
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" >
               <Form.Label>Budget($)</Form.Label>
               <Form.Control type="text" placeholder="100" />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" >
               <Form.Label>Expense($)</Form.Label>
               <Form.Control type="text" placeholder="100" />
             </Form.Group>

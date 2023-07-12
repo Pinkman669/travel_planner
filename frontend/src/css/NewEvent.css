@@ -3,7 +3,7 @@
     border: none;
 }
 
-.readOnly:hover{
+.readOnly:focus{
     background-color:transparent;
     border: none;
 }
