@@ -4,7 +4,6 @@ import { new_update_event_item } from './newEventSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { isSameDay } from 'date-fns';
 
-
 export interface EventItem {
     id: number;
     name: string;
@@ -24,7 +23,7 @@ export interface EventItem {
 
 export function useEventItem(tripId: number) {
     const dispatch = useAppDispatch()
-    const DatesOfTrip = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === tripId)))?.DatesOfTrip
+    const datesOfTrip = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === tripId)))?.DatesOfTrip
     const { isLoading, error, data, isFetching, status } = useQuery({
         queryKey: ['eventItems'],
         queryFn: async () => {
@@ -42,15 +41,15 @@ export function useEventItem(tripId: number) {
         return []
     }
     if (status === 'success') {
-        dispatch(update_event_item(data))
-        const sortedEventMap = new Map()
-        DatesOfTrip!.forEach((date, index) => {
-            const currentDateList = data.filter((event) => isSameDay(new Date(event.date), new Date(date)))
-            sortedEventMap.set(`day${index + 1}`, currentDateList)
-        })
-        const mapToObject = Object.fromEntries(sortedEventMap)
-        dispatch(new_update_event_item(mapToObject))
     }
+    dispatch(update_event_item(data))
+    const sortedEventMap = new Map()
+    datesOfTrip!.forEach((date, index) => {
+        const currentDateList = data.filter((event) => isSameDay(new Date(event.date), new Date(date)))
+        sortedEventMap.set(`day${index + 1}`, currentDateList)
+    })
+    const mapToObject = Object.fromEntries(sortedEventMap)
+    dispatch(new_update_event_item(mapToObject))
     return data
 }
 

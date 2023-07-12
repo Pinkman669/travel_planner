@@ -8,8 +8,7 @@ import { notify } from "../utils/utils";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import Event from "./Event";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { new_update_event_order, new_update_event_order_date } from "./newEventSlice";
-// import { new_update_event_item } from "./newEventSlice";
+import { new_update_event_order, new_update_event_order_date } from "./newEventSlice"
 
 interface ScheduleProps {
     tripName: string;
@@ -32,6 +31,7 @@ export default function Schedule(props: ScheduleProps) {
     const [overLayActiveState, setOverLayActiveState] = useState<OverLayState | null>(null)
     const arrOfTripDate = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === props.tripId)))?.DatesOfTrip
     const mapToObject = JSON.parse(localStorage.getItem('newEventItems') as string)
+    // const testingMap = useAppSelector(state => state.new_event.new_eventItems) 
 
     const sensors = useSensors(
         useSensor(TouchSensor),
@@ -66,7 +66,7 @@ export default function Schedule(props: ScheduleProps) {
 
     }
 
-    async function handleDragEnd(event: DragEndEvent) {
+    async function handleDragEnd(event: DragEndEvent) { // In charge of swapping orders
         const { active, over } = event
         if (active.id === over?.id) {
             return
@@ -78,7 +78,7 @@ export default function Schedule(props: ScheduleProps) {
         }
         const activeContainer = findContainer(activeId + '')
         const overContainer = findContainer(overId + '')
-        if (activeContainer !== overContainer){
+        if (activeContainer !== overContainer) {
             return
         }
         const eventList = mapToObject[activeContainer as string]
@@ -89,10 +89,10 @@ export default function Schedule(props: ScheduleProps) {
         if (!activeIndex || !overIndex) {
             return
         }
-        const newEventList = eventList.map((event: EventItem) =>{
-            if (event.id === activeId){
+        const newEventList = eventList.map((event: EventItem) => {
+            if (event.id === activeId) {
                 event.item_order = overIndex
-            } else if (event.id === overId){
+            } else if (event.id === overId) {
                 event.item_order = activeIndex
             }
             return event
@@ -126,7 +126,7 @@ export default function Schedule(props: ScheduleProps) {
         }
     )
 
-    const handleDragOver = (event: DragOverEvent) => {
+    const handleDragOver = (event: DragOverEvent) => { // In charge of moving to different day column
         const { active, over } = event
         const activeId = active.id
         const overId = over?.id
@@ -154,6 +154,7 @@ export default function Schedule(props: ScheduleProps) {
             const modifier = isLastItem ? 1 : 0
             newIndex = overIndex >= 0 ? overIndex + modifier : overEventList.length + 1
         }
+
         const newDate = arrOfTripDate![indexOfOverContainer]
         const newActiveEventList = activeEventList.filter((event: any) => event.id !== Number(activeId))
         const newOverEventList = overEventList.slice()
@@ -179,22 +180,6 @@ export default function Schedule(props: ScheduleProps) {
         }))
         console.log(JSON.parse(localStorage.getItem('newEventItems')!))
 
-        // dispatch(update_event_order({day: newDay, date: (newDate), item_order: newIndex, id: Number(activeId)}))
-        // for (let i in overEventList){
-        //     if (overEventList[i].item_order >= newIndex){
-        //         console.log('im hit ' + overEventList[i].name)
-        //         const newItemOrder = overEventList[i].item_order + 1
-        //         dispatch(update_event_order({day: newDay, date: (newDate), item_order: newItemOrder, id: overEventList[i].id}))
-        //     }
-        // }
-        // const newActiveEventList = activeEventList.filter((event:any) => event.id !== Number(activeId))
-        // for (let i in newActiveEventList){
-        //     if (newActiveEventList[i].item_order >= newIndex){
-        //         const newItemOrder = newActiveEventList[i].item_order - 1
-        //         const origDay = new Date(newActiveEventList[i].date).toString()
-        //         dispatch(update_event_order({day: newActiveEventList[i].day, date: (origDay), item_order: newItemOrder, id: newActiveEventList[i].id}))
-        //     }
-        // }
         onUpdateDayEvent.mutate({
             activeEvenList: newActiveEventList,
             overEventList: newOverEventList
