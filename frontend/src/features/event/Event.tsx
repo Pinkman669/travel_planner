@@ -1,7 +1,6 @@
 import React from "react";
 import styles from '../../css/Event.module.css'
-import { IconPencil } from "@tabler/icons-react";
-// import { useDraggable } from '@dnd-kit/core';
+import { IconGripHorizontal, IconPencil } from "@tabler/icons-react";
 import { CSS } from "@dnd-kit/utilities"
 import commonStyles from '../../css/Common.module.css'
 import { useSortable } from "@dnd-kit/sortable";
@@ -24,7 +23,8 @@ export default function Event(props: EventItemProps) {
     }
 
     return (
-        <div ref={setNodeRef} style={style} {...listeners} {...attributes} className={styles.eventItemContainer}>
+        <div ref={setNodeRef} style={style} className={styles.eventItemContainer}>
+            <button className={`${commonStyles.iconBtn} ${styles.dragHandle}`} {...listeners} {...attributes}><IconGripHorizontal /></button>
             <div>{props.eventName}</div>
             <div>{props.location}</div>
             <button className={`${commonStyles.iconBtn} ${commonStyles.eventEditBtn}`}><IconPencil /></button>
