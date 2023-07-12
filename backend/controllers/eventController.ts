@@ -36,37 +36,26 @@ export class EventController {
         }
     }
 
-    // updateEventDate = async (req: Request, res: Response) => {
-    //     try {
-    //         console.log('we are in update Date')
-    //         const { activeEventId, newDate, newDay, tripId } = req.body
-    //         console.log(`newDate in backend: ${newDate}`)
-    //         if (!activeEventId || !newDate || !newDay || !tripId) {
-    //             throw new Error('Missing info')
-    //         }
-    //         const eventListByDay = await this.eventService.getEventByDay(tripId, newDay)
-    //         const newItemOrder = eventListByDay.length + 1
-    //         await this.eventService.updateEventDate(activeEventId, newDate, newDay, newItemOrder)
-
-    //         res.status(200).json({ success: true })
-    //     } catch (e) {
-    //         logger.error(`[ERR009] ${e}`)
-    //         res.status(400).json({ success: false, msg: `[ERR009] ${errorCode.ERR009}` })
-    //     }
-    // }
-
-    updateDayEvent = async (req: Request, res: Response) => {
+    updateDayEventOrder = async (req: Request, res: Response) => {
         try {
-            const { activeEventList, overEventList } = req.body
-            if (!activeEventList || !overEventList) {
+            const { activeEventList, overEventList, newDate, newDay, newIndex , activeEventId } = req.body
+            console.log('log ' + activeEventList, overEventList)
+            if (!activeEventList || !overEventList || !newDate || !newDay || !newIndex || !activeEventId) {
                 throw new Error('Missing info')
             }
+
             console.log('im in')
             activeEventList.forEach(async (event: any) => {
-                await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, event.item_order)
+                const newItemOrder = event.item_order >= Number(newIndex) ? event.item_order - 1 : event.item_order
+                await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, newItemOrder)
             });
             overEventList.forEach(async (event: any) => {
-                await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, event.item_order)
+                if (event.id === Number(activeEventId)){
+                    await this.eventService.updateEventDate(event.id, new Date(newDate), newDay, newIndex)
+                } else{
+                    const newItemOrder = event.item_order >= Number(newIndex) ? event.item_order + 1 : event.item_order
+                    await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, newItemOrder)
+                }
             });
             res.status(200).json({ success: true })
         } catch (e) {

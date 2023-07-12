@@ -91,7 +91,7 @@ export async function updateEventOrder(activeEventId: number, overEventId: numbe
 //     }
 // }
 
-export async function updateDayEventOrder(activeEventList: EventItem[], overEventList: EventItem[]) {
+export async function updateDayEventOrder(activeEventList: EventItem[], overEventList: EventItem[], newDate: Date, newDay: number, newIndex: number, activeEventId: number) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateDayEventOrder`, {
         method: 'PUT',
         headers: {
@@ -99,7 +99,7 @@ export async function updateDayEventOrder(activeEventList: EventItem[], overEven
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-            activeEventList, overEventList
+            activeEventList, overEventList, newDate, newDay, newIndex, activeEventId
         })
     })
 

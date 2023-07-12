@@ -1,10 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { isSameDay } from "date-fns";
 
 interface EventItem {
     id: number;
     name: string;
-    date: Date|string;
+    date: Date | string;
     time: Date;
     location: string;
     business_hours: string;
@@ -20,7 +21,7 @@ interface EventItem {
 
 interface UpdateEventOrder {
     day: number;
-    date: Date|string;
+    date: Date | string;
     item_order: number;
     id: number;
 }
