@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, KeyboardSensor, PointerSensor, TouchSensor, closestCorners, useSensor, useSensors } from '@dnd-kit/core';
 import styles from '../../css/Schedule.module.css'
 import Day from "./Day";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { EventItem, updateDayEventOrder, updateEventOrder } from "./EventAPI";
 import { notify } from "../utils/utils";
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import Event from "./Event";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { fetchEventByTrip, new_update_event_active_order_date, new_update_event_order, new_update_event_over_order_date } from "./newEventSlice"
@@ -30,7 +30,7 @@ export default function Schedule(props: ScheduleProps) {
     const arrOfTripDate = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === props.tripId)))?.DatesOfTrip
     useEffect(() => {
         dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: arrOfTripDate || [] }))
-    }, [])
+    }, [dispatch, arrOfTripDate, props.tripId])
     const [overLayActiveState, setOverLayActiveState] = useState<OverLayState | null>(null)
     const mapToObject = useAppSelector(state => state.new_event.new_eventItems)
 
@@ -59,6 +59,8 @@ export default function Schedule(props: ScheduleProps) {
             return mapToObject[key].find((event) => {
                 if (event.id === Number(id)) {
                     return true
+                } else{
+                    return false
                 }
             })
         });
