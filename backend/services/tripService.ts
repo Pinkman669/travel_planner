@@ -1,4 +1,5 @@
 import { Knex } from 'knex'
+import { TripItem } from '../util/type'
 
 export class TripService{
     constructor(private knex: Knex){}
@@ -21,7 +22,7 @@ export class TripService{
             .from('trips')
             .where('user_id', userId)
             .andWhere('active', true)
-        return result
+        return result as TripItem[]
     }
 
     async removeTrip(tripId: number){

@@ -3,6 +3,7 @@ import authReducer from '../features/auth/AuthSlice'
 import tripReducer from '../features/home/tripSlice'
 import placeReducer from '../features/map/placeSlice'
 import eventReducer from '../features/event/eventSlice'
+import newEventReducer from '../features/event/newEventSlice'
 
 
 export const store = configureStore({
@@ -10,7 +11,8 @@ export const store = configureStore({
         auth: authReducer,
         trip: tripReducer,
         place: placeReducer,
-        event: eventReducer
+        event: eventReducer,
+        new_event: newEventReducer
     }
 })
 

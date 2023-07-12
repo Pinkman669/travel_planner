@@ -13,7 +13,7 @@ export class EventController {
                 throw new Error('Missing tripId')
             }
             const eventList = await this.eventService.getEvents(tripId)
-            res.status(200).json({ success: true, result: eventList })
+            res.status(200).json({ success: true, result: eventList})
         } catch (e) {
             logger.error(`[ERR007] ${e}`)
             res.status(400).json({ success: false, msg: `[ERR007] ${errorCode.ERR007}` })
@@ -36,38 +36,42 @@ export class EventController {
         }
     }
 
-    updateEventDate = async (req: Request, res: Response) => {
-        try {
-            console.log('we are in update Date')
-            const { activeEventId, newDate, newDay, tripId } = req.body
-            console.log(`newDate in backend: ${newDate}`)
-            if (!activeEventId || !newDate || !newDay || !tripId) {
-                throw new Error('Missing info')
-            }
-            const eventListByDay = await this.eventService.getEventByDay(tripId, newDay)
-            const newItemOrder = eventListByDay.length + 1
-            await this.eventService.updateEventDate(activeEventId, newDate, newDay, newItemOrder)
+    // updateEventDate = async (req: Request, res: Response) => {
+    //     try {
+    //         console.log('we are in update Date')
+    //         const { activeEventId, newDate, newDay, tripId } = req.body
+    //         console.log(`newDate in backend: ${newDate}`)
+    //         if (!activeEventId || !newDate || !newDay || !tripId) {
+    //             throw new Error('Missing info')
+    //         }
+    //         const eventListByDay = await this.eventService.getEventByDay(tripId, newDay)
+    //         const newItemOrder = eventListByDay.length + 1
+    //         await this.eventService.updateEventDate(activeEventId, newDate, newDay, newItemOrder)
 
-            res.status(200).json({ success: true })
-        } catch (e) {
-            logger.error(`[ERR009] ${e}`)
-            res.status(400).json({ success: false, msg: `[ERR009] ${errorCode.ERR009}` })
-        }
-    }
+    //         res.status(200).json({ success: true })
+    //     } catch (e) {
+    //         logger.error(`[ERR009] ${e}`)
+    //         res.status(400).json({ success: false, msg: `[ERR009] ${errorCode.ERR009}` })
+    //     }
+    // }
 
     updateDayEvent = async (req: Request, res: Response) => {
         try {
-            const { eventList } = req.body
-            if (!eventList){
+            const { activeEventList, overEventList } = req.body
+            if (!activeEventList || !overEventList) {
                 throw new Error('Missing info')
             }
-            eventList.forEach(async (event: any) => {
+            console.log('im in')
+            activeEventList.forEach(async (event: any) => {
+                await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, event.item_order)
+            });
+            overEventList.forEach(async (event: any) => {
                 await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, event.item_order)
             });
             res.status(200).json({ success: true })
         } catch (e) {
-            logger.error(`[ERR0010] ${e}`)
-            res.status(400).json({ success: false, msg: `[ERR0010] ${errorCode.ERR009}` })
+            logger.error(`[ERR009] ${e}`)
+            res.status(400).json({ success: false, msg: `[ERR009] ${errorCode.ERR009}` })
         }
     }
 }

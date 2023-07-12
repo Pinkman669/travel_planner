@@ -5,11 +5,6 @@ import Schedule from "./Schedule";
 import { differenceInDays, addDays  } from 'date-fns'
 // import styles from '../../css/TripEvent.module.css'
 
-// interface EventItem{
-//     id: number;
-//     name: string;
-// }
-
 export default function TripEvent(){
     const {tripId} = useParams()
     const tripInfo = useAppSelector(state => state.trip.tripItems.find((item) => item.id === Number(tripId)))

@@ -10,6 +10,7 @@ interface TripItem{
     location: string;
     name: string;
     user_id: number;
+    DatesOfTrip? : Date[]
 }
 
 export function useTripItems(userId: number){

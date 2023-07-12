@@ -8,6 +8,7 @@ interface TripItem {
     location: string;
     name: string;
     user_id: number;
+    DatesOfTrip?: Date[]
 }
 
 export interface TripState {
@@ -25,7 +26,6 @@ export const tripSlice = createSlice({
     initialState,
     reducers: {
         update_trip_item: (state: TripState, action: PayloadAction<TripItem[]>) => {
-            state.tripItems = action.payload
             localStorage.setItem('tripItems', JSON.stringify(action.payload))
         }
     }

@@ -25,16 +25,12 @@ interface UpdateEventOrder {
     id: number;
 }
 
-// interface Days{
-//     [key: string]: EventItem[]
-// }
-
 interface EventState {
     eventItems: EventItem[]
 }
 
 const initialState: EventState = localStorage.getItem('eventItems') !== null ?
-    { eventItems: JSON.parse(localStorage.getItem('tripItems') as string) } :
+    { eventItems: JSON.parse(localStorage.getItem('eventItems') as string) } :
     {
         eventItems: []
     }
