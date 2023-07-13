@@ -31,17 +31,14 @@ interface UpdateEventOrder {
 
 interface EventState {
     eventItems: EventItem[],
-    newEventItem: string | null
 }
 
 const initialState: EventState = localStorage.getItem('eventItems') !== null ?
     {
         eventItems: JSON.parse(localStorage.getItem('tripItems') as string),
-        newEventItem: null
     } :
     {
         eventItems: [],
-        newEventItem: null
     }
 
 
@@ -52,10 +49,7 @@ export const eventSlice = createSlice({
         update_event_item: (state: EventState, action: PayloadAction<EventItem[]>) => {
             state.eventItems = action.payload
             localStorage.setItem('eventItems', JSON.stringify(action.payload))
-        },
-        add_event_item: (state: EventState, action:PayloadAction<{placeId:string}>)=> {
-            state.newEventItem = action.payload.placeId;
-            localStorage.setItem('eventItems', JSON.stringify(state.eventItems))
+        
         },
         update_event_order: (state: EventState, action: PayloadAction<UpdateEventOrder>) => {
             state.eventItems = state.eventItems.map((event) => {
