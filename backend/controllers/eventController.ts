@@ -22,6 +22,7 @@ export class EventController {
 
     updateEventOrder = async (req: Request, res: Response) => {
         try {
+            console.log('changing order!!!!!!!!!!!')
             const { activeEventId, overEventId, activeOrder, overOrder } = req.body
             if (!activeEventId || !overEventId ) {
                 throw new Error('Missing update info')
@@ -40,22 +41,25 @@ export class EventController {
 
     updateDayEventOrder = async (req: Request, res: Response) => {
         try {
-            const { activeEventList, overEventList, newDate, newDay, newIndex , activeEventId } = req.body
-            console.log('log ' + activeEventList, overEventList)
-            if (!activeEventList || !overEventList || !newDate || !newDay || !newIndex || !activeEventId) {
+            console.log('change order and date!!!!!!!')
+            const { activeEventList, overEventList, newDate, newDay, newIndex , activeEventId, activeIndex } = req.body
+            if (!activeEventList || !overEventList || !newDate || !newDay || !newIndex || !activeEventId || !activeIndex) {
                 throw new Error('Missing info')
             }
 
-            console.log('im in')
             activeEventList.forEach(async (event: any) => {
-                const newItemOrder = event.item_order >= Number(newIndex) ? event.item_order - 1 : event.item_order
+                console.log('newIndex: ' + activeIndex)
+                const newItemOrder = event.item_order > Number(activeIndex) ? event.item_order - 1 : event.item_order
+                console.log('origin: ' + event.item_order ,'newOrder: ' + newItemOrder, 'id: '+ event.id)
                 await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, newItemOrder)
             });
             overEventList.forEach(async (event: any) => {
                 if (event.id === Number(activeEventId)){
                     await this.eventService.updateEventDate(event.id, new Date(newDate), newDay, newIndex)
                 } else{
+                    console.log('name: ' + event.name, 'order: ' + event.item_order, 'newIndex: ' + newIndex)
                     const newItemOrder = event.item_order >= Number(newIndex) ? event.item_order + 1 : event.item_order
+                    console.log('newOrder: ' + newItemOrder)
                     await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, newItemOrder)
                 }
             });

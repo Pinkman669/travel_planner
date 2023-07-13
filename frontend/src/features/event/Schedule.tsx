@@ -13,7 +13,6 @@ import { fetchEventByTrip, new_update_event_active_order_date, new_update_event_
 interface ScheduleProps {
     tripName: string;
     userName: string;
-    arrOfTripDate: Date[];
     tripId: number;
 }
 
@@ -99,10 +98,11 @@ export default function Schedule(props: ScheduleProps) {
         const overInfo = eventList.find((event) => event.id === overId)
         const activeIndex = eventList.indexOf(activeInfo as EventItem) + 1
         const overIndex = eventList.indexOf(overInfo as EventItem) + 1
+        console.log('active: '+ activeIndex, 'over: '  +overIndex)
         if (!activeIndex || !overIndex) {
             return
         }
-        console.log(activeId)
+
         onUpdateEventOrder.mutate({
             activeEventId: Number(activeId),
             overEventId: Number(overId),
@@ -129,7 +129,8 @@ export default function Schedule(props: ScheduleProps) {
             },
             onError: () => {
                 notify(false, 'Event rearrange failed')
-            }
+            },
+            onSettled: () => dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: arrOfTripDate || [] }))
         }
     )
 
@@ -151,6 +152,7 @@ export default function Schedule(props: ScheduleProps) {
         const overEventList = mapToObject[overContainer as string]
         const activeInfo = activeEventList.find((event) => event.id === activeId)
         const overInfo = overEventList.find((event) => event.id === overId)
+        const activeIndex = activeEventList.indexOf(activeInfo as EventItem) + 1
         const overIndex = overEventList.indexOf(overInfo as EventItem) + 1
 
         let newIndex: number
@@ -172,7 +174,7 @@ export default function Schedule(props: ScheduleProps) {
             overContainer: overContainer as string,
             overEventList: newOverEventList,
             activeInfo: activeInfo as EventItem,
-            newIndex: newIndex,
+            activeIndex: activeIndex,
         }))
         dispatch(new_update_event_over_order_date({
             overContainer: overContainer as string,
@@ -188,6 +190,7 @@ export default function Schedule(props: ScheduleProps) {
             newDate: newDate,
             newIndex: newIndex,
             newDay: newDay,
+            activeIndex: activeIndex,
             activeEventId: activeInfo!.id
         })
 
@@ -195,16 +198,17 @@ export default function Schedule(props: ScheduleProps) {
 
     const onUpdateDayEvent = useMutation(
         async (data: {
-            activeEvenList: any, overEventList: any, newIndex: number, newDate: Date, newDay: number, activeEventId: number
+            activeEvenList: any, overEventList: any, newIndex: number, newDate: Date, newDay: number, activeEventId: number, activeIndex: number
         }) => {
             return await updateDayEventOrder(
-                data.activeEvenList, data.overEventList, data.newDate, data.newDay, data.newIndex, data.activeEventId
+                data.activeEvenList, data.overEventList, data.newDate, data.newDay, data.newIndex, data.activeEventId, data.activeIndex
             )
         },
         {
             onSuccess: () => {
                 // queryClient.invalidateQueries(['eventItems'])
-            }
+            },
+            onSettled: () => dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: arrOfTripDate || [] }))
         }
     )
 

@@ -34,7 +34,7 @@ interface New_update_active_order_date {
     overContainer: string;
     overEventList: EventItem[];
     activeInfo: EventItem;
-    newIndex: number
+    activeIndex: number
 }
 
 interface New_update_over_order_date {
@@ -90,7 +90,7 @@ export const newEventSlice = createSlice({
         },
         new_update_event_active_order_date: (state: EventState, action: PayloadAction<New_update_active_order_date>) => {
             const newActiveList = state.new_eventItems[action.payload.activeContainer].map((event) => {
-                if (event.item_order >= action.payload.newIndex) {
+                if (event.item_order > action.payload.activeIndex) {
                     event.item_order--
                 }
                 return event
@@ -113,6 +113,7 @@ export const newEventSlice = createSlice({
                 return event
             })
             state.new_eventItems[action.payload.overContainer] = newOverList
+            localStorage.setItem('newEventItems', JSON.stringify(state.new_eventItems))
         },
         new_update_event_order: (state: EventState, action: PayloadAction<New_update_order>) => {
             let newEventList = state.new_eventItems[action.payload.container].map((event) => {

@@ -6,13 +6,14 @@ import { IconPlus, IconX } from "@tabler/icons-react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useForm } from "react-hook-form";
-import { addTrip, useTripItems, removeTrip } from "./AddTripAPI";
+import { addTrip, removeTrip } from "./AddTripAPI";
 import { notify } from "../utils/utils";
 import TripItem from './TripItem'
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { differenceInDays } from 'date-fns'
 import '../../css/Custom-BS.css'
 import { useNavigate } from "react-router-dom";
+import { fetchTripItemByUserId } from "./tripSlice";
 
 interface FormState {
     tripName: string;
@@ -26,8 +27,11 @@ export default function Home() {
     const dispatch = useAppDispatch()
     const username = useAppSelector(state => state.auth.name)
     const userId = useAppSelector(state => state.auth.userId)
-    // const tripItems = useAppSelector(state => state.trip.tripItems)
-    const tripItemInfo = useTripItems(userId as number)
+
+    useEffect(() =>{
+        dispatch(fetchTripItemByUserId({userId: userId as number}))
+    },[dispatch, userId])
+    const tripItemInfo = useAppSelector(state => state.trip.tripItems)
 
     const [showModal, setShowModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -51,7 +55,8 @@ export default function Home() {
             },
             onError: () => {
                 notify(false, 'Add trip failed')
-            }
+            },
+            onSettled: () => dispatch(fetchTripItemByUserId({userId: userId as number}))
         }
     )
 
@@ -66,7 +71,8 @@ export default function Home() {
             },
             onError: () => {
                 notify(false, 'Trip remove failed')
-            }
+            },
+            onSettled: () => dispatch(fetchTripItemByUserId({userId: userId as number}))
         }
     )
 
