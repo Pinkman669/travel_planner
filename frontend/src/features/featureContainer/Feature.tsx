@@ -2,7 +2,7 @@
 import { useLoadScript } from "@react-google-maps/api";
 import { Map } from "../map/GoogleMap";
 import FeatureTab from "./FeatureTab";
-import "../../css/feature.css"
+import "../../css/Feature.css"
 
 
 export default function Feature() {
