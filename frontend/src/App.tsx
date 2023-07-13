@@ -10,6 +10,7 @@ import { FacebookCallback } from './features/auth/FacebookCallback';
 import MapPage from './features/map/Map';
 import { ToastContainer } from 'react-toastify';
 import TripEvent from './features/event/TripEvent';
+import EventsRoute from './features/map/EventsRoute';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/facebook-callback' element={<FacebookCallback />}></Route>
         <Route path='/map' element={<MapPage />}></Route>
+        <Route path='/events-route' element={<EventsRoute />}></Route>
         <Route element={<AuthGuard />}>
           <Route path='/' element={<Home />}></Route>
           <Route path='/trip-event/:tripId' element={<TripEvent />}></Route>

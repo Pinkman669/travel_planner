@@ -138,5 +138,10 @@ export const newEventSlice = createSlice({
     }
 })
 
-export const { new_update_event_item, new_update_event_active_order_date, new_update_event_over_order_date, new_update_event_order } = newEventSlice.actions
+export const {
+    new_update_event_item,
+    new_update_event_active_order_date,
+    new_update_event_over_order_date,
+    new_update_event_order
+} = newEventSlice.actions
 export default newEventSlice.reducer
