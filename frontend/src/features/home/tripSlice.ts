@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-interface TripItem {
+export interface TripItem {
     id: number;
     start_date: Date;
     end_date: Date;
