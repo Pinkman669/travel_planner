@@ -2,6 +2,7 @@ import React from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 import Schedule from "./Schedule";
+import EventRoute from "../map/EventsRoute";
 
 export default function TripEvent(){
     const {tripId} = useParams()
@@ -10,8 +11,8 @@ export default function TripEvent(){
 
     return (
         <div className={`container-fluid`}>
-            This is event: {tripInfo?.name}
             <Schedule tripId={Number(tripId)} tripName={tripInfo?.name as string} userName={userName as string}/>
+            <EventRoute />
         </div>
     )
 }

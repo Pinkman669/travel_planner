@@ -1,16 +1,25 @@
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+// import { select_day_trip } from "../event/daySlice";
 import "../../css/googleMap.css";
-import { useAppSelector } from "../../redux/hooks";
+import { EventItem } from "../utils/types";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 
 type MapOptions = google.maps.MapOptions;
 
-export function GoogleRoute() {
-    useEffect(() =>{ // Temporarily set selected day trip
-        
-    }, [])
+interface GoogleRouteProps{
+    eventList: EventItem[]
+}
+
+export function GoogleRoute(props: GoogleRouteProps) {
+    const dispatch = useAppDispatch()
+
+    // useEffect(() =>{ // Temporarily set selected day trip
+    //     dispatch(select_day_trip('day1'))
+    // }, [])
+    // const selectedDay = useAppSelector(state => state.day.selected_day_trip)
 
     const [location, setLocation] = useState<LatLngLiteral>();
     const mapRef = useRef<google.maps.Map>();
