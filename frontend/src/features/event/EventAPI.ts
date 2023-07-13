@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDispatch } from 'react-redux';
 import { update_event_item } from './eventSlice';
+import { differenceInDays } from 'date-fns';
 
 
 export interface EventItem{
@@ -18,7 +19,10 @@ export interface EventItem{
     category: string;
     item_order: number;
     day: number;
+    place_id: string
 }
+
+export type NewEventItem = Omit<EventItem,"id"|"day"|"trip_id">
 
 export function useEventItem(tripId: number){
     const dispatch = useDispatch()
@@ -93,6 +97,22 @@ export async function updateDayEventOrder(eventList: EventItem[]){
             eventList
         })
     })
+}
+
+export async function addNewEvent(eventList: NewEventItem, placeId:string, startDay:Date){
+
+    const day= differenceInDays(eventList.date,startDay)
+
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/addNewEvent`,{
+        method:'POST',
+        headers:{
+            'Content-Type': 'application/json',
+            "Authorization":`Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            eventList, placeId, day
+        })
+})
 
     if (res.status === 200){
         return true

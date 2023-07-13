@@ -41,24 +41,25 @@ export class EventService {
         return result
     }
 
-    async addNewEvent(name: string, date: Date, time?: TimeRanges, location: string, business_hours?: string[],
+    async addNewEvent(data: {name: string, date: Date, time?: TimeRanges, location: string, business_hours?: string[],
         phone?: string, website?: string, budget?: number, expense?: number, category: string,
-        order: number, day: number, place_id: string) {
+       day: number, place_id: string}) {
+
         await this.knex.insert({
-            'name': name,
-            'date': date,
-            'time': time,
-            'location': location,
-            'business_hour': business_hours,
-            'phone': phone,
-            'website':website,
-            'budget':budget,
-            'expense':expense,
-            'category':category,
-            'order':order,
-            'day':day,
+            'name': data.name,
+            'date': data.date,
+            'time': data.time,
+            'location': data.location,
+            'business_hour': data.business_hours,
+            'phone': data.phone,
+            'website':data.website,
+            'budget':data.budget,
+            'expense':data.expense,
+            'category':data.category,
+            'order':1,
+            'day':data.day,
             'active':true,
-            'place_id':place_id
+            'place_id':data.place_id
         })
             .into('events')
     }
