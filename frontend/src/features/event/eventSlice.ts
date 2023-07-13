@@ -4,7 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface EventItem {
     id: number;
     name: string;
-    date: Date|string;
+    date: Date | string;
     time: Date;
     location: string;
     business_hours: string;
@@ -20,14 +20,10 @@ interface EventItem {
 
 interface UpdateEventOrder {
     day: number;
-    date: Date|string;
+    date: Date | string;
     item_order: number;
     id: number;
 }
-
-// interface Days{
-//     [key: string]: EventItem[]
-// }
 
 interface EventState {
     eventItems: EventItem[],

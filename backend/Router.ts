@@ -27,8 +27,8 @@ export function eventRouter(){
 
     route.get('/getEvents/:tripId', isLoggedIn, eventController.getEvents)
     route.put('/updateEventOrder', isLoggedIn, eventController.updateEventOrder)
-    route.put('/updateEventDate', isLoggedIn, eventController.updateEventDate)
-    route.put('/updateDayEventOrder', isLoggedIn, eventController.updateDayEvent)
+    // route.put('/updateEventDate', isLoggedIn, eventController.updateEventDate)
+    route.put('/updateDayEventOrder', isLoggedIn, eventController.updateDayEventOrder)
 
     return route
 }

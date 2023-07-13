@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { logger } from "../logger";
 import { TripService } from "../services/tripService";
-
+import { calculateNumberOfDays } from "../util/utilFn";
 
 export class TripController{
     constructor(private tripService: TripService){}
@@ -27,6 +27,12 @@ export class TripController{
                 throw new Error('UserID missing')
             }
             const result = await this.tripService.getTrip(userId)
+            if (result.length){
+                for (let tripItem of result){
+                    const DatesOfTrip = calculateNumberOfDays(tripItem)
+                    tripItem.DatesOfTrip = DatesOfTrip
+                }
+            }
             res.status(200).json({success: true, result: result})
         }catch(e){
             logger.error(`[ERR005] ${e}`)

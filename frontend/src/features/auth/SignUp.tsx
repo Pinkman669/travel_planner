@@ -121,7 +121,7 @@ export default function SignUp() {
                     </Button>
                 </Form>
                 <div id='login-link-div'>
-                    <Link to='/' id='login-link'>I have an account already!</Link>
+                    <Link to='/login' id='login-link'>I have an account already!</Link>
                 </div>
             </div>
         </div>

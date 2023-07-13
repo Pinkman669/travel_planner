@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { useDispatch } from 'react-redux';
 import { update_event_item } from './eventSlice';
+import { new_update_event_item } from './newEventSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { isSameDay } from 'date-fns';
 import { differenceInDays } from 'date-fns';
 
-
-export interface EventItem{
+export interface EventItem {
     id: number;
     name: string;
     date: Date;
@@ -22,16 +23,17 @@ export interface EventItem{
     place_id: string
 }
 
-export type NewEventItem = Omit<EventItem,"id"|"day"|"trip_id">
+export type NewEventItem = Omit<EventItem, "id" | "day" | "trip_id">
 
-export function useEventItem(tripId: number){
-    const dispatch = useDispatch()
-    const {isLoading, error, data, isFetching, status } = useQuery({
+export function useEventItem(tripId: number) {
+    const dispatch = useAppDispatch()
+    const datesOfTrip = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === tripId)))?.DatesOfTrip
+    const { isLoading, error, data, isFetching, status } = useQuery({
         queryKey: ['eventItems'],
-        queryFn : async() =>{
-            const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getEvents/${tripId}`,{
-                headers : {
-                    "Authorization":`Bearer ${localStorage.getItem('token')}`
+        queryFn: async () => {
+            const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getEvents/${tripId}`, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }
             })
             const result = await res.json()
@@ -39,84 +41,83 @@ export function useEventItem(tripId: number){
         }
     })
 
-    if (isLoading || isFetching || error || !data){
+    if (isLoading || isFetching || error || !data) {
         return []
     }
-    if (status === 'success'){
-        dispatch(update_event_item(data))
+    if (status === 'success') {
     }
+    dispatch(update_event_item(data))
+    const sortedEventMap = new Map()
+    datesOfTrip!.forEach((date, index) => {
+        const currentDateList = data.filter((event) => isSameDay(new Date(event.date), new Date(date)))
+        sortedEventMap.set(`day${index + 1}`, currentDateList)
+    })
+    const mapToObject = Object.fromEntries(sortedEventMap)
+    dispatch(new_update_event_item(mapToObject))
     return data
 }
 
-export async function updateEventOrder(activeEventId: number, overEventId: number, activeOrder: number, overOrder: number){
+export async function updateEventOrder(activeEventId: number, overEventId: number, activeOrder: number, overOrder: number) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateEventOrder`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            "Authorization":`Bearer ${localStorage.getItem('token')}`
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-            activeEventId , overEventId, activeOrder, overOrder
+            activeEventId, overEventId, activeOrder, overOrder
         })
     })
 
-    if (res.status === 200){
+    if (res.status === 200) {
         return true
-    } else{
+    } else {
         return false
     }
 }
-
-export async function updateEventDate(activeEventId: number, newDate: Date ,newDay:number, tripId: number){
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateEventDate`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            "Authorization":`Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({
-            activeEventId , newDate, newDay, tripId
-        })
-    })
-    
-    if (res.status === 200){
-        return true
-    } else{
-        return false
-    }
-}
-
-export async function updateDayEventOrder(eventList: EventItem[]){
+export async function updateDayEventOrder(
+    activeEventList: EventItem[],
+    overEventList: EventItem[],
+    newDate: Date, newDay: number,
+    newIndex: number,
+    activeEventId: number,
+    activeIndex: number
+) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateDayEventOrder`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            "Authorization":`Bearer ${localStorage.getItem('token')}`
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-            eventList
+            activeEventList, overEventList, newDate, newDay, newIndex, activeEventId, activeIndex
         })
     })
+
+    if (res.status === 200) {
+        return true
+    } else {
+        return false
+    }
 }
+export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date) {
 
-export async function addNewEvent(eventList: NewEventItem, placeId:string, startDay:Date){
+    const day = differenceInDays(eventList.date, startDay)
 
-    const day= differenceInDays(eventList.date,startDay)
-
-    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/addNewEvent`,{
-        method:'POST',
-        headers:{
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/addNewEvent`, {
+        method: 'POST',
+        headers: {
             'Content-Type': 'application/json',
-            "Authorization":`Bearer ${localStorage.getItem('token')}`
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
             eventList, placeId, day
         })
-})
+    })
 
-    if (res.status === 200){
+    if (res.status === 200) {
         return true
-    } else{
+    } else {
         return false
     }
 }
