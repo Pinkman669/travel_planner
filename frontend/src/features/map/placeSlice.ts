@@ -18,11 +18,11 @@ const placeSlice = createSlice({
         change_placeId:(state:PlaceState, action: PayloadAction<{placeId:string}>) => {
             state.placeId = action.payload.placeId;
         },
-        favourite:(state:PlaceState) => {
+        setFavourite:(state:PlaceState) => {
             state.favourite = !state.favourite;
         }
     }
 })
 
-export const {change_placeId,favourite} = placeSlice.actions;
+export const {change_placeId,setFavourite} = placeSlice.actions;
 export default placeSlice.reducer;

@@ -1,21 +1,47 @@
-import usePlaceInfo from "./placeAPI";
+import usePlaceInfo, { LocationDetail, addFavouriteLocation } from "./placeAPI";
 import add from "../image/add.png";
 import favourite from "../image/favourite.png";
 import { useState } from "react";
 import { NewEventModal } from "../event/NewEventModal";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { notify } from "../utils/utils";
+import { useDispatch } from "react-redux";
+import {setFavourite} from "./placeSlice"
 
 
 
 export default function PlaceInfo() {
   const placeInfo = usePlaceInfo();
   const [showNewEventModal, setShowNewEventModal] = useState(false);
+  const dispatch = useDispatch()
+  const queryClient = useQueryClient()
+  const addFavourite = useMutation(
+    async (placeInfo:LocationDetail ) => {
+   
+      return await addFavouriteLocation(placeInfo)
+    },
+    {
+        onSuccess: () => {
+                queryClient.invalidateQueries(['eventItems'])
+            notify(true, 'Added to favourite item')
+        },
+        onError: () => {
+            notify(false, 'Add to favourite failed')
+        }
+    }
+)
 
+  async function submit(placeInfo:LocationDetail ) {
+    addFavourite.mutate(
+      placeInfo
+    )
+}
   return (
     <div className="places-info-container">
       <div className="place_info_top_container">
         <div className="place_name">{placeInfo?.name}</div>
         <div className="feature_container">
-          <button className="feature_button" ><img src= {favourite} alt ="Favourite"/></button>
+          <button className="feature_button" onClick={() => dispatch(setFavourite())} ><img src= {favourite} alt ="Favourite"/></button>
           <button className="feature_button" onClick={() => setShowNewEventModal(true)}><img src= {add} alt ="add"/></button>
         </div>
       </div>
@@ -57,7 +83,7 @@ export default function PlaceInfo() {
         phone = {placeInfo?.formatted_phone_number || ""}
         website = {placeInfo?.website || ""}
         onHide={() => setShowNewEventModal(false)}
-        onSubmit={() => {}}/>
+       />
       }
     </div>
   );
