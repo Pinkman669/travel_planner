@@ -9,7 +9,7 @@ export interface EventItem {
     id: number;
     name: string;
     date: Date;
-    time: Date;
+    time: string;
     location: string;
     business_hours: string;
     phone: string;
@@ -100,9 +100,21 @@ export async function updateDayEventOrder(
         return false
     }
 }
-export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date) {
+export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date, tripId: string ) {
 
-    const day = differenceInDays(eventList.date, startDay)
+    console.log(addNewEvent!!!!)
+    const eventDayString = eventList.date.toString()
+    console.log(eventDayString)
+    const eventDay = new Date(eventDayString)
+    const startDayString =startDay.toString().split("T")[0]
+    console.log(startDayString)
+    const startDayDate = new Date(startDayString)
+    console.log("eventDay:"+ eventDay+" start :"+startDayDate )
+
+    const differenceInDay = differenceInDays(eventDay, startDayDate )
+    console.log(differenceInDay)
+    const day = differenceInDay +1
+
 
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/addNewEvent`, {
         method: 'POST',
@@ -111,10 +123,9 @@ export async function addNewEvent(eventList: NewEventItem, placeId: string, star
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-            eventList, placeId, day
+            eventList, placeId: placeId, day: day, tripId: tripId
         })
     })
-
     if (res.status === 200) {
         return true
     } else {
