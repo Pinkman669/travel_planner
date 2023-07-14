@@ -8,6 +8,7 @@ export class EventService {
             .select('*')
             .from('events')
             .where('trip_id', tripId)
+            .andWhere('active', true)
             .orderBy('item_order', 'asc')
         return result
     }
@@ -38,7 +39,31 @@ export class EventService {
             .select('*')
             .from('events')
             .where('trip_id', tripId)
+            .andWhere('active', true)
             .andWhere('day', day)
         return result
+    }
+
+    async addNewEvent(data: {name: string, date: Date, time?: TimeRanges, location: string, business_hours?: string[],
+        phone?: string, website?: string, budget?: number, expense?: number, category: string,
+       day: number, place_id: string}) {
+
+        await this.knex.insert({
+            'name': data.name,
+            'date': data.date,
+            'time': data.time,
+            'location': data.location,
+            'business_hour': data.business_hours,
+            'phone': data.phone,
+            'website':data.website,
+            'budget':data.budget,
+            'expense':data.expense,
+            'category':data.category,
+            'order':1,
+            'day':data.day,
+            'active':true,
+            'place_id':data.place_id
+        })
+            .into('events')
     }
 }

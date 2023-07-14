@@ -35,7 +35,8 @@
     "start": "ts-node main.ts",
     "dev": "ts-node-dev main.ts",
     "test": "jest",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "seed-test": "knex seed:run --specific=travel_planner_seeds_test.ts"
   },
   "devDependencies": {
     "prettier": "2.8.8",

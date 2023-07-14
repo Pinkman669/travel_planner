@@ -1,7 +1,7 @@
 import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks";
-import "../../css/googleMap.css";
+import "../../css/GoogleMap.css";
 import { EventItem } from "../utils/types";
 import { Button } from "react-bootstrap";
 import getGoogleRoute from "./routeAPI";

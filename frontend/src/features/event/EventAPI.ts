@@ -3,6 +3,7 @@ import { update_event_item } from './eventSlice';
 import { new_update_event_item } from './newEventSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { isSameDay } from 'date-fns';
+import { differenceInDays } from 'date-fns';
 
 export interface EventItem {
     id: number;
@@ -19,7 +20,10 @@ export interface EventItem {
     category: string;
     item_order: number;
     day: number;
+    place_id: string
 }
+
+export type NewEventItem = Omit<EventItem, "id" | "day" | "trip_id">
 
 export function useEventItem(tripId: number) {
     const dispatch = useAppDispatch()
@@ -71,14 +75,13 @@ export async function updateEventOrder(activeEventId: number, overEventId: numbe
         return false
     }
 }
-
 export async function updateDayEventOrder(
     activeEventList: EventItem[],
-     overEventList: EventItem[], 
-     newDate: Date, newDay: number,
-     newIndex: number, 
-     activeEventId: number,
-     activeIndex: number
+    overEventList: EventItem[],
+    newDate: Date, newDay: number,
+    newIndex: number,
+    activeEventId: number,
+    activeIndex: number
 ) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateDayEventOrder`, {
         method: 'PUT',
@@ -88,6 +91,27 @@ export async function updateDayEventOrder(
         },
         body: JSON.stringify({
             activeEventList, overEventList, newDate, newDay, newIndex, activeEventId, activeIndex
+        })
+    })
+
+    if (res.status === 200) {
+        return true
+    } else {
+        return false
+    }
+}
+export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date) {
+
+    const day = differenceInDays(eventList.date, startDay)
+
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/addNewEvent`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            eventList, placeId, day
         })
     })
 
