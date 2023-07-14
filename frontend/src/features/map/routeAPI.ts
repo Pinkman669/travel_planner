@@ -1,16 +1,24 @@
-export default async function useGoogleRoute(
-    origin: string,
-    destination: string,
+export default async function getGoogleRoute(
+    directionService: google.maps.DirectionsService,
+    originId: string,
+    destinationId: string,
+    waypoints: google.maps.DirectionsWaypoint[],
     travelMode: google.maps.TravelMode
 ) {
-    const directionService = new google.maps.DirectionsService()
-
-    const result = await directionService.route({
-        origin: origin,
-        destination: destination,
-        travelMode: travelMode
-    })
-
-    console.log(result)
-    return result
+    try{
+        const result = await directionService.route({
+            origin: {
+                placeId: originId
+            },
+            waypoints: waypoints,
+            destination: {
+                placeId: destinationId
+            },
+            travelMode: travelMode
+        })
+    
+        return result
+    } catch(e){
+        return null
+    }
 }

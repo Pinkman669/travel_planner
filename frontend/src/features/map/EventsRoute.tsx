@@ -13,14 +13,9 @@ export default function EventRoute() {
         libraries: ['places'],
     });
 
-    useEffect(() =>{ // Temporarily set selected day trip
-        dispatch(select_day_trip('day1'))
-    }, [])
-
     const selectedDay = useAppSelector(state => state.day.selected_day_trip)
     const eventsByDay = useAppSelector(state => state.new_event.new_eventItems)[selectedDay as string]
 
-    console.log(eventsByDay)
     return (
         <div className="trip-container">
             <div className="control-container">

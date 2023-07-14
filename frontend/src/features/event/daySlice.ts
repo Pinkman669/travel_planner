@@ -16,7 +16,7 @@ export const daySlice = createSlice({
     reducers: {
         select_day_trip: (state: DayState, action: PayloadAction<string>) => {
             state.selected_day_trip = action.payload
-        }
+        },
     }
 })
 

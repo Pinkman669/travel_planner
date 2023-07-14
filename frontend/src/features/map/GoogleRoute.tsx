@@ -1,21 +1,27 @@
-import { GoogleMap, Marker } from "@react-google-maps/api";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-// import { select_day_trip } from "../event/daySlice";
+import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { useAppDispatch } from "../../redux/hooks";
 import "../../css/googleMap.css";
 import { EventItem } from "../utils/types";
+import { Button } from "react-bootstrap";
+import getGoogleRoute from "./routeAPI";
+import { notify } from "../utils/utils";
+import fs from 'fs'
+
 
 type LatLngLiteral = google.maps.LatLngLiteral;
-
 type MapOptions = google.maps.MapOptions;
+type DirectionsResponse = google.maps.DirectionsResult
 
-interface GoogleRouteProps{
+interface GoogleRouteProps {
     eventList: EventItem[]
 }
 
 export function GoogleRoute(props: GoogleRouteProps) {
+    const directionService = new google.maps.DirectionsService()
     const dispatch = useAppDispatch()
 
+    const [directionResponse, setDirectionResponse] = useState<DirectionsResponse | null>(null)
     // useEffect(() =>{ // Temporarily set selected day trip
     //     dispatch(select_day_trip('day1'))
     // }, [])
@@ -41,10 +47,32 @@ export function GoogleRoute(props: GoogleRouteProps) {
         []
     );
 
+    async function handleGetRoute() {
+        setDirectionResponse(null)
+        const travelMode = google.maps.TravelMode.DRIVING
+        const res = await getGoogleRoute(
+            directionService,
+            'ChIJ2_UmUkxNekgRqmv-BDgUvtk',
+            'ChIJdd4hrwug2EcRmSrV3Vo6llI',
+            [{
+                location:{
+                    placeId: 'ChIJc3FBGy2UcEgRmHnurvD-gco'
+                } 
+            }],
+            travelMode
+        )
+        if (res) {
+            setDirectionResponse(res)
+        } else {
+            notify(false, 'Get Route error')
+        }
+    }
+
     if (process.env.REACT_APP_MAP_DISPLAY === "1") {
 
         return (
             <div className="search-page">
+                <Button variant="dark" onClick={handleGetRoute}>Get Route</Button>
                 <GoogleMap
                     zoom={13}
                     center={center}
@@ -53,8 +81,9 @@ export function GoogleRoute(props: GoogleRouteProps) {
                     onLoad={onLoad}
                 >
                     {location && <Marker position={location} />}
-
+                    {directionResponse && <DirectionsRenderer directions={directionResponse} />}
                 </GoogleMap>
+                {directionResponse && <div></div>}
             </div>
         );
     } else {
