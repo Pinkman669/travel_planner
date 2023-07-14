@@ -29,6 +29,7 @@ export function eventRouter(){
     route.put('/updateEventOrder', isLoggedIn, eventController.updateEventOrder)
     // route.put('/updateEventDate', isLoggedIn, eventController.updateEventDate)
     route.put('/updateDayEventOrder', isLoggedIn, eventController.updateDayEventOrder)
+    route.post('/addNewEvent',eventController.addNewEvent )
 
     return route
 }

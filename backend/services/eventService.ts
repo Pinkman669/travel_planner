@@ -42,26 +42,38 @@ export class EventService {
         return result
     }
 
-    async addNewEvent(data: {name: string, date: Date, time?: TimeRanges, location: string, business_hours?: string[],
-        phone?: string, website?: string, budget?: number, expense?: number, category: string,
-       day: number, place_id: string}) {
 
-        await this.knex.insert({
-            'name': data.name,
-            'date': data.date,
-            'time': data.time,
-            'location': data.location,
-            'business_hour': data.business_hours,
-            'phone': data.phone,
-            'website':data.website,
-            'budget':data.budget,
-            'expense':data.expense,
-            'category':data.category,
-            'order':1,
-            'day':data.day,
-            'active':true,
-            'place_id':data.place_id
-        })
+    async addNewEvent(data: {
+        name: string, date: Date, time?: TimeRanges, location: string, business_hours?: string[],
+        phone?: string, website?: string, budget?: number, expense?: number, category: string
+    }, place_id: string, day: Number, trip_id: string) {
+
+        const res = await this.knex
+            .first('item_order')
+            .where('trip_id', trip_id)
+            .andWhere('day', day)
+            .orderBy('item_order','desc')
+            .from("events")
+        console.log("res:",res)
+
+        await this.knex
+            .insert({
+                'name': data.name,
+                'date': data.date,
+                'time': data.time,
+                'location': data.location,
+                'business_hours': data.business_hours,
+                'phone': data.phone,
+                'website': data.website,
+                'budget': data.budget,
+                'expense': data.expense,
+                'category': data.category,
+                'item_order': res.item_order +1,
+                'day': day,
+                'active': true,
+                'place_id': place_id
+            })
             .into('events')
+
     }
 }

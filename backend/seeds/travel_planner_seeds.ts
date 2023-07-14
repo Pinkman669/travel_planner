@@ -80,7 +80,7 @@ export async function seed(knex: Knex): Promise<void> {
                 'trip_id': trips[0].id,
                 'category': 'food',
                 'item_order': 1,
-                'day': 1,
+                'day': 2,
             }
         ]);
 

@@ -69,4 +69,21 @@ export class EventController {
             res.status(400).json({ success: false, msg: `[ERR009] ${errorCode.ERR009}` })
         }
     }
+
+    addNewEvent = async (req:Request, res:Response) =>{
+        try {
+            console.log('Add new event')
+            const {eventList, placeId, day, tripId} = req.body
+            if (!eventList || !placeId || !day || !tripId) {
+                throw new Error('Missing new event info')
+            }
+            
+            await this.eventService.addNewEvent(eventList, placeId , day, tripId )
+            
+            res.status(200).json({ success: true })
+        } catch (e) {
+            logger.error(`[ERR0010] ${e}`)
+            res.status(400).json({ success: false, msg: `[ERR0010] ${errorCode.ERR010}`})
+        }
+    }
 }

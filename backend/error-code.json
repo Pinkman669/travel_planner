@@ -1,5 +1,6 @@
 {
     "ERR007": "Get event list failed",
     "ERR008": "Update event order failed",
-    "ERR009": "Update event date failed"
+    "ERR009": "Update event date failed",
+    "ERR010": "Add New Event failed"
 }

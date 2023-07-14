@@ -1,4 +1,3 @@
-import React from "react";
 import styles from '../../css/Event.module.css'
 import { IconGripHorizontal, IconPencil } from "@tabler/icons-react";
 import { CSS } from "@dnd-kit/utilities"

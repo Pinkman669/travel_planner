@@ -2,6 +2,14 @@ import { Knex } from "knex";
 import { hashPassword } from '../hash'
 
 export async function seed(knex: Knex): Promise<void> {
+    
+    await knex("events").del();
+    await knex("trips").del();
+    await knex("users").del();
+    await knex("authorization").del();
+    await knex("expenses").del();
+    await knex("favourite_events").del();
+
     // Inserts seed entries
     let users = await knex.select('*').from('users').where('email', 'test@gmail.com')
     if (users.length === 0) {
@@ -104,7 +112,7 @@ export async function seed(knex: Knex): Promise<void> {
                 'trip_id': trips[0].id,
                 'category': 'food',
                 'item_order': 1,
-                'day': 1,
+                'day': 2,
             }
         ]);
 
