@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from '../../css/Day.module.css'
 import Event from './Event'
 import { SortableContext } from "@dnd-kit/sortable";
-import { EventItem } from './EventAPI'
+import { EventItem } from '../utils/types'
 import { useDroppable } from "@dnd-kit/core";
 import DaySelector from "./DaySelector";
 import { useAppSelector } from "../../redux/hooks";

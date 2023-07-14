@@ -7,7 +7,7 @@ interface EventItem {
     id: number;
     name: string;
     date: Date;
-    time: Date;
+    time: string;
     location: string;
     business_hours: string;
     phone: string;

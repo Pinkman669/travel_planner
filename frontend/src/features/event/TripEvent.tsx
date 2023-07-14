@@ -2,7 +2,7 @@ import React from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 import Schedule from "./Schedule";
-import EventRoute from "../map/EventsRoute";
+// import EventRoute from "../map/EventsRoute";
 import Feature from "../featureContainer/Feature";
 
 export default function TripEvent(){
@@ -12,9 +12,9 @@ export default function TripEvent(){
 
     return (
         <div className={`container-fluid`}>
-            {/* <Schedule tripId={Number(tripId)} tripName={tripInfo?.name as string} userName={userName as string}/> */}
+            <Schedule tripId={Number(tripId)} tripName={tripInfo?.name as string} userName={userName as string}/>
             <Feature/>
-            <EventRoute />
+            {/* <EventRoute /> */}
         </div>
     )
 }

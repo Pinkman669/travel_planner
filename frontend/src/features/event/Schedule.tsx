@@ -3,12 +3,13 @@ import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, K
 import styles from '../../css/Schedule.module.css'
 import Day from "./Day";
 import { useMutation } from "@tanstack/react-query";
-import { EventItem, updateDayEventOrder, updateEventOrder } from "./EventAPI";
+import { updateDayEventOrder, updateEventOrder } from "./EventAPI";
 import { notify } from "../utils/utils";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import Event from "./Event";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { fetchEventByTrip, new_update_event_active_order_date, new_update_event_order, new_update_event_over_order_date } from "./newEventSlice"
+import { EventItem } from '../utils/types'
 
 interface ScheduleProps {
     tripName: string;

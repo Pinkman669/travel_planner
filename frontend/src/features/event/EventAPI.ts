@@ -1,28 +1,5 @@
-import { useQuery } from '@tanstack/react-query'
-import { update_event_item } from './eventSlice';
-import { new_update_event_item } from './newEventSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { isSameDay } from 'date-fns';
 import { differenceInDays } from 'date-fns';
-
-export interface EventItem {
-    id: number;
-    name: string;
-    date: Date;
-    time: Date;
-    location: string;
-    business_hours: string;
-    phone: string;
-    website: string;
-    budget: number;
-    expense: number;
-    trip_id: number;
-    category: string;
-    item_order: number;
-    day: number;
-    active: boolean,
-    place_id: string
-}
+import { EventItem } from '../utils/types'
 
 export type NewEventItem = Omit<EventItem, "id" | "day" | "trip_id">
 
