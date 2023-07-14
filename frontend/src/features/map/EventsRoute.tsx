@@ -2,10 +2,9 @@ import { useLoadScript } from "@react-google-maps/api";
 import { GoogleRoute } from "./GoogleRoute";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 
 export default function EventRoute() {
-    const dispatch = useAppDispatch()
     const [showRoute, setShowRoute] = useState(false)
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY || "",
@@ -23,7 +22,7 @@ export default function EventRoute() {
                     <Button variant="dark" onClick={() => setShowRoute(true)}>Show Route</Button>
                 }
                 {
-                    isLoaded && showRoute &&<GoogleRoute eventList={eventsByDay}/>
+                    isLoaded && showRoute && eventsByDay.length > 1 &&<GoogleRoute eventList={eventsByDay}/>
                 }
             </div>
         </div>

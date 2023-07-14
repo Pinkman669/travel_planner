@@ -1,6 +1,5 @@
 import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { useAppDispatch } from "../../redux/hooks";
 import "../../css/GoogleMap.css";
 // import styles from '../../css/GoogleRoute.module.css'
 import { EventItem } from "../utils/types";
@@ -13,18 +12,17 @@ import RouteInfo from "./RouteInfo";
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 type DirectionsResponse = google.maps.DirectionsResult
+type DirectionsWayPoint = google.maps.DirectionsWaypoint
 
 interface GoogleRouteProps {
     eventList: EventItem[]
 }
 
 export function GoogleRoute(props: GoogleRouteProps) {
+    const evenList = props.eventList
+
     const directionService = new google.maps.DirectionsService()
-    const dispatch = useAppDispatch()
-
     const [directionResponse, setDirectionResponse] = useState<DirectionsResponse | null>(null)
-
-    // const selectedDay = useAppSelector(state => state.day.selected_day_trip)
 
     const [location, setLocation] = useState<LatLngLiteral>();
     const mapRef = useRef<google.maps.Map>();
@@ -39,25 +37,37 @@ export function GoogleRoute(props: GoogleRouteProps) {
         () => ({
             mapId: "cb967ffe6985ef4e", // the style of the map
             //   disableDefaultUI: true, // the option to change the view of the map, it's set to street view right now
-            clickableIcons: false, // the option to click on the icons that shows up on the map
+            clickableIcons: false,
             streetViewControl: false,
             mapTypeControl: false
         }),
         []
     );
+    const startPointId = evenList[0].place_id
+    const endPointId = evenList[evenList.length-1].place_id
+    const WayPointArr: DirectionsWayPoint[] = []
+    if (evenList.length > 2){
+        createWayPointArr()
+    }
+    function createWayPointArr(){
+        const wayPointList = evenList.slice(1, evenList.length-1)
+        wayPointList.forEach((event) => {
+            WayPointArr.push({
+                location: {
+                    placeId: event.place_id
+                }
+            })
+        })
+    }
 
-    async function handleGetRoute() {
+    async function handleGetRoute(startPointId: string, endPointId: string, wayPointArr: DirectionsWayPoint[]) {
         setDirectionResponse(null)
         const travelMode = google.maps.TravelMode.DRIVING
         const res = await getGoogleRoute(
             directionService,
-            'ChIJ2_UmUkxNekgRqmv-BDgUvtk',
-            'ChIJdd4hrwug2EcRmSrV3Vo6llI',
-            [{
-                location: {
-                    placeId: 'ChIJc3FBGy2UcEgRmHnurvD-gco'
-                }
-            }],
+            startPointId,
+            endPointId,
+            wayPointArr,
             travelMode
         )
         if (res) {
@@ -71,21 +81,22 @@ export function GoogleRoute(props: GoogleRouteProps) {
     if (process.env.REACT_APP_MAP_DISPLAY === "1") {
 
         return (
-            <div className="search-page">
-                <Button variant="dark" onClick={handleGetRoute}>Get Route</Button>
-                <GoogleMap
-                    zoom={13}
-                    center={center}
-                    mapContainerClassName="map-container"
-                    options={options}
-                    onLoad={onLoad}
-                >
-                    {location && <Marker position={location} />}
-                    {directionResponse && <DirectionsRenderer directions={directionResponse} />}
-                </GoogleMap>
-                <RouteInfo travelMode={'driving'} />
-                {/* {directionResponse && <RouteInfo />} */}
-            </div>
+            <>
+                <div className="search-page">
+                    <GoogleMap
+                        zoom={13}
+                        center={center}
+                        mapContainerClassName="map-container"
+                        options={options}
+                        onLoad={onLoad}
+                    >
+                        {location && <Marker position={location} />}
+                        {directionResponse && <DirectionsRenderer directions={directionResponse} />}
+                    </GoogleMap>
+                    <Button variant="dark" onClick={() => handleGetRoute(startPointId, endPointId, WayPointArr)}>Get Route</Button>
+                    {directionResponse && <RouteInfo travelMode="driving" directionResponse={directionResponse}/>}
+                </div>
+            </>
         );
     } else {
         return <div>Map display off</div>;
