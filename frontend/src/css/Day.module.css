@@ -25,3 +25,11 @@
     align-items: center;
     padding: 10px;
 }
+
+.dayTitle > div{
+    display: inline;
+}
+
+.daySelectedEffect{
+    border: 2px solid red;
+}

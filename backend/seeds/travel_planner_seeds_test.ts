@@ -53,6 +53,8 @@ export async function seed(knex: Knex): Promise<void> {
                 'category': 'food',
                 'item_order': 1,
                 'day': 1,
+                'active': true,
+                'place_id': 'ChIJp8IoW4MBe0gRRX7vrejn6Ig'
             },
             {
                 'name': 'event-2',
@@ -73,6 +75,8 @@ export async function seed(knex: Knex): Promise<void> {
                 'category': 'food',
                 'item_order': 2,
                 'day': 1,
+                'active': true,
+                'place_id': 'ChIJxZPY38BSekgR4KXk5UeCC4s'
             },
             {
                 'name': 'event-3',
@@ -93,6 +97,8 @@ export async function seed(knex: Knex): Promise<void> {
                 'category': 'food',
                 'item_order': 3,
                 'day': 1,
+                'active': true,
+                'place_id': 'ChIJc3FBGy2UcEgRmHnurvD-gco'
             },
             {
                 'name': 'event-4',
@@ -113,6 +119,8 @@ export async function seed(knex: Knex): Promise<void> {
                 'category': 'food',
                 'item_order': 1,
                 'day': 2,
+                'active': true,
+                'place_id': 'ChIJdd4hrwug2EcRmSrV3Vo6llI'
             }
         ]);
 

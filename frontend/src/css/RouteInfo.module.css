@@ -1,0 +1,13 @@
+.RouteInfoContainer{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    flex-wrap: wrap;
+    align-content: space-around;
+    border-radius: 10px;
+    padding: 10px 0;
+}
+
+.wayPointInfo{
+    
+}

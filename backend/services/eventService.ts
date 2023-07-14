@@ -8,6 +8,7 @@ export class EventService {
             .select('*')
             .from('events')
             .where('trip_id', tripId)
+            .andWhere('active', true)
             .orderBy('item_order', 'asc')
         return result
     }
@@ -38,6 +39,7 @@ export class EventService {
             .select('*')
             .from('events')
             .where('trip_id', tripId)
+            .andWhere('active', true)
             .andWhere('day', day)
         return result
     }
