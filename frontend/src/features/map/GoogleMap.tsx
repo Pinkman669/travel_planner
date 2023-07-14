@@ -7,7 +7,7 @@ import { useAppSelector } from "../../redux/hooks";
 
 
 type LatLngLiteral = google.maps.LatLngLiteral;
-type MapOptions = google.maps.MapOptions;
+type MapOptions = google.maps.MapOptions; 
 
 export function Map() {
   const placeId = useAppSelector((state) => state.place.placeId);

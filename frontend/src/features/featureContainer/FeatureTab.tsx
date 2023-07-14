@@ -5,7 +5,7 @@ export default function FeatureTab() {
     <div>
       <Nav variant="tabs" defaultActiveKey="/trip">
         <Nav.Item>
-          <Nav.Link className="mapTab" href="/home">
+          <Nav.Link className="mapTab" href="/trip-event/:tripId">
             Map
           </Nav.Link>
         </Nav.Item>

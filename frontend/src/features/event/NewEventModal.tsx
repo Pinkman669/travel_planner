@@ -5,7 +5,6 @@ import { queryClient } from "../..";
 import { useMutation } from "@tanstack/react-query";
 import { NewEventItem, addNewEvent } from "./EventAPI";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 import { notify } from "../utils/utils";
@@ -32,7 +31,7 @@ export function NewEventModal(props: newEventModalProps) {
     defaultValues: {
       name: "",
       date: new Date(),
-      time: new Date(),
+      time: "",
       location: "",
       business_hours: "",
       phone: "",
@@ -47,8 +46,9 @@ export function NewEventModal(props: newEventModalProps) {
 
   const onSubmit = useMutation(
     async (data:NewEventItem ) => {
-    if (placeId && startDate){
-      // return await addNewEvent(data,placeId,startDate)
+      console.log(placeId, startDate, tripId)
+    if (placeId && startDate && tripId){
+      return await addNewEvent(data,placeId,startDate,tripId)
     }
     },
     {
@@ -209,15 +209,16 @@ export function NewEventModal(props: newEventModalProps) {
               {...register("expense")}
             />
           </Form.Group>
-        </Form>
-      </Modal.Body>
+       
+      
 
-      <Modal.Footer>
+
         <Button variant="secondary" onClick={props.onHide}>
           Cancel
         </Button>
-        <Button variant="primary" type="submit" onClick={props.onHide}>Add</Button>
-      </Modal.Footer>
+        <Button variant="primary" type="submit" >Add</Button>
+      </Form>
+      </Modal.Body>
     </Modal>
   );
 }
