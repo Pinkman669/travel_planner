@@ -25,5 +25,7 @@ yarn-error.log*
 
 
 .env
-dragNDropTest/
+testingGoogleDirectionResults.json
+TransitGoogleResult.json
+
 

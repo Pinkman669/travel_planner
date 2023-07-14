@@ -6,7 +6,7 @@ import { EventItem } from "../utils/types";
 import { Button } from "react-bootstrap";
 import getGoogleRoute from "./routeAPI";
 import { notify } from "../utils/utils";
-import fs from 'fs'
+import RouteInfo from "./RouteInfo";
 
 
 type LatLngLiteral = google.maps.LatLngLiteral;
@@ -22,9 +22,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
     const dispatch = useAppDispatch()
 
     const [directionResponse, setDirectionResponse] = useState<DirectionsResponse | null>(null)
-    // useEffect(() =>{ // Temporarily set selected day trip
-    //     dispatch(select_day_trip('day1'))
-    // }, [])
+
     // const selectedDay = useAppSelector(state => state.day.selected_day_trip)
 
     const [location, setLocation] = useState<LatLngLiteral>();
@@ -63,6 +61,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
         )
         if (res) {
             setDirectionResponse(res)
+            console.log(JSON.stringify(res, null, 4))
         } else {
             notify(false, 'Get Route error')
         }
@@ -83,7 +82,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
                     {location && <Marker position={location} />}
                     {directionResponse && <DirectionsRenderer directions={directionResponse} />}
                 </GoogleMap>
-                {directionResponse && <div></div>}
+                {/* {directionResponse && <RouteInfo />} */}
             </div>
         );
     } else {
