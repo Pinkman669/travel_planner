@@ -23,15 +23,20 @@ export class EventController {
     updateEventOrder = async (req: Request, res: Response) => {
         try {
             console.log('changing order!!!!!!!!!!!')
-            const { activeEventId, overEventId, activeOrder, overOrder } = req.body
-            if (!activeEventId || !overEventId ) {
+            const { activeEventId, activeOrder, overOrder, eventList } = req.body
+            if (!activeEventId || !eventList ) {
                 throw new Error('Missing update info')
             }
             if (activeOrder < 0 || overOrder < 0){
                 throw new Error('Missing update info')
             }
             await this.eventService.updateEventOrder(activeEventId, overOrder)
-            await this.eventService.updateEventOrder(overEventId, activeOrder)
+            eventList.forEach(async(event: any) =>{
+                if (event.id !== activeEventId){
+                    const newItemOrder = event.item_order > Number(activeOrder) ? event.item_order - 1 : event.item_order
+                    await this.eventService.updateEventOrder(event.id, newItemOrder)
+                }
+            })
             res.status(200).json({ success: true })
         } catch (e) {
             logger.error(`[ERR008] ${e}`)

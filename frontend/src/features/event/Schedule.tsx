@@ -102,13 +102,7 @@ export default function Schedule(props: ScheduleProps) {
         if (!activeIndex || !overIndex) {
             return
         }
-
-        onUpdateEventOrder.mutate({
-            activeEventId: Number(activeId),
-            overEventId: Number(overId),
-            activeOrder: activeIndex,
-            overOrder: overIndex
-        })
+        
         dispatch(new_update_event_order({
             container: activeContainer as string,
             activeId: Number(activeId),
@@ -116,12 +110,19 @@ export default function Schedule(props: ScheduleProps) {
             overId: Number(overId),
             overIndex: overIndex
         }))
+        onUpdateEventOrder.mutate({
+            activeEventId: Number(activeId),
+            activeOrder: activeIndex,
+            overOrder: overIndex,
+            eventList: eventList
+        })
+        console.log(JSON.parse(localStorage.getItem('newEventItems')!))
 
         setOverLayActiveState(null)
     }
     const onUpdateEventOrder = useMutation(
-        async (data: { activeEventId: number, overEventId: number, activeOrder: number, overOrder: number }) => {
-            return await updateEventOrder(data.activeEventId, data.overEventId, data.activeOrder, data.overOrder)
+        async (data: { activeEventId: number,activeOrder: number, overOrder: number, eventList: EventItem[] }) => {
+            return await updateEventOrder(data.activeEventId, data.activeOrder, data.overOrder, data.eventList)
         },
         {
             onSuccess: () => {

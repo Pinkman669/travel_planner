@@ -48,7 +48,7 @@ export function NewEventModal(props: newEventModalProps) {
   const onSubmit = useMutation(
     async (data:NewEventItem ) => {
     if (placeId && startDate){
-      return await addNewEvent(data,placeId,startDate)
+      // return await addNewEvent(data,placeId,startDate)
     }
     },
     {

@@ -6,7 +6,7 @@ import { isSameDay } from "date-fns";
 interface EventItem {
     id: number;
     name: string;
-    date: Date | string;
+    date: Date;
     time: Date;
     location: string;
     business_hours: string;
@@ -18,6 +18,8 @@ interface EventItem {
     category: string;
     item_order: number;
     day: number;
+    active: boolean,
+    place_id: string;
 }
 
 interface Days {
@@ -119,8 +121,9 @@ export const newEventSlice = createSlice({
             let newEventList = state.new_eventItems[action.payload.container].map((event) => {
                 if (event.id === action.payload.activeId) {
                     event.item_order = action.payload.overIndex
-                } else if (event.id === action.payload.overId) {
-                    event.item_order = action.payload.activeIndex
+                }
+                if (event.item_order > action.payload.activeIndex){
+                    event.item_order--
                 }
                 return event
             })
