@@ -2,6 +2,7 @@ import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import "../../css/GoogleMap.css";
+// import styles from '../../css/GoogleRoute.module.css'
 import { EventItem } from "../utils/types";
 import { Button } from "react-bootstrap";
 import getGoogleRoute from "./routeAPI";
@@ -53,9 +54,9 @@ export function GoogleRoute(props: GoogleRouteProps) {
             'ChIJ2_UmUkxNekgRqmv-BDgUvtk',
             'ChIJdd4hrwug2EcRmSrV3Vo6llI',
             [{
-                location:{
+                location: {
                     placeId: 'ChIJc3FBGy2UcEgRmHnurvD-gco'
-                } 
+                }
             }],
             travelMode
         )
@@ -82,6 +83,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
                     {location && <Marker position={location} />}
                     {directionResponse && <DirectionsRenderer directions={directionResponse} />}
                 </GoogleMap>
+                <RouteInfo travelMode={'driving'} />
                 {/* {directionResponse && <RouteInfo />} */}
             </div>
         );
