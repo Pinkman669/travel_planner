@@ -25,7 +25,6 @@ interface OverLayState {
 }
 
 export default function Schedule(props: ScheduleProps) {
-    // const queryClient = useQueryClient()
     const dispatch = useAppDispatch()
     const arrOfTripDate = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === props.tripId)))?.DatesOfTrip
     useEffect(() => {

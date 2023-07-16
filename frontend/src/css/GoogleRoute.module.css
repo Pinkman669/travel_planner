@@ -1,0 +1,61 @@
+.RouteFormOverlay {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    width: 100%;
+    height: 40%;
+    border-radius: 10px;
+    background-color: rgba(5, 0, 8, 0.591);
+    padding: 20px;
+}
+
+.RouteFormContainer {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.showRouteFromBtn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+}
+
+.closeRouteFormBtn {
+    position: absolute;
+    right: 10px;
+}
+
+.open{
+    display: block;
+    animation: slide-up 200ms;
+}
+
+.close{
+    display: none;
+}
+
+.closing{
+    display: block;
+    animation: slide-down 200ms;
+}
+
+@keyframes slide-up{
+    0% {
+        transform: translateY(50%);
+    }
+    100%{
+        transform: translateY(0%);
+    }
+}
+
+@keyframes slide-down{
+    0%{
+        transform: translateY(0%);
+    }
+    100%{
+        transform: translateY(80%);
+    }
+}

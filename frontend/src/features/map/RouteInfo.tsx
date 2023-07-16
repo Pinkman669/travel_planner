@@ -4,8 +4,8 @@ import styles from '../../css/RouteInfo.module.css'
 import { Button, OverlayTrigger, Popover, PopoverHeader } from 'react-bootstrap'
 
 interface RouteInfoProps {
-    travelMode: string;
     directionResponse: google.maps.DirectionsResult
+    travelMode: string;
 }
 
 export default function RouteInfo(props: RouteInfoProps) {

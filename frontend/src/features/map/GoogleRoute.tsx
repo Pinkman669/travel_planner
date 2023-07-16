@@ -1,18 +1,20 @@
 import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
 import "../../css/GoogleMap.css";
-// import styles from '../../css/GoogleRoute.module.css'
+import styles from '../../css/GoogleRoute.module.css'
 import { EventItem } from "../utils/types";
-import { Button } from "react-bootstrap";
 import getGoogleRoute from "./routeAPI";
 import { notify } from "../utils/utils";
 import RouteInfo from "./RouteInfo";
-
+import RouteForm, { RouteFormState } from "./RouteForm";
+import { Button, CloseButton } from "react-bootstrap";
+import { IconTableOptions } from "@tabler/icons-react";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
 type DirectionsResponse = google.maps.DirectionsResult
 type DirectionsWayPoint = google.maps.DirectionsWaypoint
+type TravelMode = google.maps.TravelMode
 
 interface GoogleRouteProps {
     eventList: EventItem[]
@@ -24,7 +26,10 @@ export function GoogleRoute(props: GoogleRouteProps) {
     const directionService = new google.maps.DirectionsService()
     const [directionResponse, setDirectionResponse] = useState<DirectionsResponse | null>(null)
 
+    const [travelModeValue, setTravelModeValue] = useState<any | null>(null)
     const [location, setLocation] = useState<LatLngLiteral>();
+    const [animation, setAnimation] = useState(false)
+    const [showRouteForm, setShowRouteForm] = useState(true);
     const mapRef = useRef<google.maps.Map>();
     const onLoad = useCallback((map: google.maps.Map) => {
         mapRef.current = map;
@@ -44,13 +49,13 @@ export function GoogleRoute(props: GoogleRouteProps) {
         []
     );
     const startPointId = evenList[0].place_id
-    const endPointId = evenList[evenList.length-1].place_id
+    const endPointId = evenList[evenList.length - 1].place_id
     const WayPointArr: DirectionsWayPoint[] = []
-    if (evenList.length > 2){
+    if (evenList.length > 2) {
         createWayPointArr()
     }
-    function createWayPointArr(){
-        const wayPointList = evenList.slice(1, evenList.length-1)
+    function createWayPointArr() {
+        const wayPointList = evenList.slice(1, evenList.length - 1)
         wayPointList.forEach((event) => {
             WayPointArr.push({
                 location: {
@@ -60,21 +65,44 @@ export function GoogleRoute(props: GoogleRouteProps) {
         })
     }
 
-    async function handleGetRoute(startPointId: string, endPointId: string, wayPointArr: DirectionsWayPoint[]) {
+    function handleFormSubmit(data: RouteFormState) {
+        handleGetRoute(startPointId, endPointId, WayPointArr, data.travelMode as TravelMode)
+        handleClose()
+    }
+
+    async function handleGetRoute(
+        startPointId: string,
+        endPointId: string,
+        wayPointArr: DirectionsWayPoint[],
+        travelModeValue: TravelMode
+    ) {
         setDirectionResponse(null)
-        const travelMode = google.maps.TravelMode.DRIVING
         const res = await getGoogleRoute(
             directionService,
             startPointId,
             endPointId,
             wayPointArr,
-            travelMode
+            travelModeValue
         )
         if (res) {
+            setTravelModeValue(travelModeValue)
             setDirectionResponse(res)
-            console.log(JSON.stringify(res, null, 4))
         } else {
             notify(false, 'Get Route error')
+        }
+    }
+
+    const handleClose = async () => {
+        setAnimation(true)
+        await new Promise(r => setTimeout(r, 100))
+        setAnimation(false)
+        setShowRouteForm(false)
+    };
+    const handleShow = async () => {
+        if (!showRouteForm) {
+            setShowRouteForm((prev) => !prev)
+        } else {
+            handleClose()
         }
     }
 
@@ -83,6 +111,19 @@ export function GoogleRoute(props: GoogleRouteProps) {
         return (
             <>
                 <div className="search-page">
+                    <Button variant="dark" onClick={handleShow} className={styles.showRouteFromBtn}>
+                        <IconTableOptions />
+                    </Button>
+                    {
+                        // showRouteForm &&
+                        <div className={`${styles.RouteFormOverlay} ${showRouteForm ? styles.open : styles.close} ${animation ? styles.closing : null}`}>
+                            <CloseButton variant='white' onClick={handleClose} className={styles.closeRouteFormBtn} />
+                            <div className={styles.RouteFormContainer}>
+                                <RouteForm onSubmit={handleFormSubmit}></RouteForm>
+                            </div>
+                        </div>
+                    }
+
                     <GoogleMap
                         zoom={13}
                         center={center}
@@ -93,8 +134,8 @@ export function GoogleRoute(props: GoogleRouteProps) {
                         {location && <Marker position={location} />}
                         {directionResponse && <DirectionsRenderer directions={directionResponse} />}
                     </GoogleMap>
-                    <Button variant="dark" onClick={() => handleGetRoute(startPointId, endPointId, WayPointArr)}>Get Route</Button>
-                    {directionResponse && <RouteInfo travelMode="driving" directionResponse={directionResponse}/>}
+                    {directionResponse && <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse} />}
+
                 </div>
             </>
         );
