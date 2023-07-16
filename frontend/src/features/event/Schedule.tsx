@@ -27,9 +27,11 @@ interface OverLayState {
 export default function Schedule(props: ScheduleProps) {
     const dispatch = useAppDispatch()
     const arrOfTripDate = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === props.tripId)))?.DatesOfTrip
+    
     useEffect(() => {
         dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: arrOfTripDate || [] }))
     }, [dispatch, arrOfTripDate, props.tripId])
+    
     const [overLayActiveState, setOverLayActiveState] = useState<OverLayState | null>(null)
     const mapToObject = useAppSelector(state => state.new_event.new_eventItems)
 
@@ -125,9 +127,6 @@ export default function Schedule(props: ScheduleProps) {
             return await updateEventOrder(data.activeEventId, data.activeOrder, data.overOrder, data.eventList)
         },
         {
-            onSuccess: () => {
-                // queryClient.invalidateQueries(['eventItems'])
-            },
             onError: () => {
                 notify(false, 'Event rearrange failed')
             },
@@ -206,9 +205,6 @@ export default function Schedule(props: ScheduleProps) {
             )
         },
         {
-            onSuccess: () => {
-                // queryClient.invalidateQueries(['eventItems'])
-            },
             onSettled: () => dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: arrOfTripDate || [] }))
         }
     )
