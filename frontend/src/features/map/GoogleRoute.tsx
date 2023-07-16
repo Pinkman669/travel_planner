@@ -1,6 +1,5 @@
 import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
-import "../../css/GoogleMap.css";
 import styles from '../../css/GoogleRoute.module.css'
 import { EventItem } from "../utils/types";
 import getGoogleRoute from "./routeAPI";
@@ -8,7 +7,7 @@ import { notify } from "../utils/utils";
 import RouteInfo from "./RouteInfo";
 import RouteForm, { RouteFormState } from "./RouteForm";
 import { Button, CloseButton } from "react-bootstrap";
-import { IconTableOptions } from "@tabler/icons-react";
+import { IconInfoSquareFilled, IconTableOptions } from "@tabler/icons-react";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
@@ -30,6 +29,8 @@ export function GoogleRoute(props: GoogleRouteProps) {
     const [location, setLocation] = useState<LatLngLiteral>();
     const [animation, setAnimation] = useState(false)
     const [showRouteForm, setShowRouteForm] = useState(true);
+    const [showRouteInfo, setShowRouteInfo] = useState(false)
+    const [showOverlay, setShowOverlay] = useState(true)
     const mapRef = useRef<google.maps.Map>();
     const onLoad = useCallback((map: google.maps.Map) => {
         mapRef.current = map;
@@ -87,6 +88,9 @@ export function GoogleRoute(props: GoogleRouteProps) {
         if (res) {
             setTravelModeValue(travelModeValue)
             setDirectionResponse(res)
+            setShowOverlay(true)
+            setShowRouteForm(false)
+            setShowRouteInfo(true)
         } else {
             notify(false, 'Get Route error')
         }
@@ -96,13 +100,19 @@ export function GoogleRoute(props: GoogleRouteProps) {
         setAnimation(true)
         await new Promise(r => setTimeout(r, 100))
         setAnimation(false)
-        setShowRouteForm(false)
+        setShowOverlay(false)
     };
-    const handleShow = async () => {
-        if (!showRouteForm) {
-            setShowRouteForm((prev) => !prev)
-        } else {
-            handleClose()
+    const handleShowRouteFrom = () => {
+        setShowOverlay(true)
+        setShowRouteForm(true)
+        setShowRouteInfo(false)
+    }
+
+    const handleShowRouteInfo = () => {
+        if (directionResponse) {
+            setShowOverlay(true)
+            setShowRouteInfo(true)
+            setShowRouteForm(false)
         }
     }
 
@@ -110,20 +120,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
 
         return (
             <>
-                <div className="search-page">
-                    <Button variant="dark" onClick={handleShow} className={styles.showRouteFromBtn}>
-                        <IconTableOptions />
-                    </Button>
-                    {
-                        // showRouteForm &&
-                        <div className={`${styles.RouteFormOverlay} ${showRouteForm ? styles.open : styles.close} ${animation ? styles.closing : null}`}>
-                            <CloseButton variant='white' onClick={handleClose} className={styles.closeRouteFormBtn} />
-                            <div className={styles.RouteFormContainer}>
-                                <RouteForm onSubmit={handleFormSubmit}></RouteForm>
-                            </div>
-                        </div>
-                    }
-
+                <div className={styles.searchPage}>
                     <GoogleMap
                         zoom={13}
                         center={center}
@@ -134,8 +131,28 @@ export function GoogleRoute(props: GoogleRouteProps) {
                         {location && <Marker position={location} />}
                         {directionResponse && <DirectionsRenderer directions={directionResponse} />}
                     </GoogleMap>
-                    {directionResponse && <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse} />}
-
+                    <div className={
+                        `${styles.RouteFormOverlay} 
+                        ${showOverlay ? styles.open : styles.close} 
+                        ${animation ? styles.closing : null}
+                        ${showRouteForm ? styles.RouteFormOverlayColour : styles.RouteInfoOverlayColour}`
+                        }>
+                        <button onClick={handleShowRouteFrom} className={styles.showRouteFromBtn}>
+                            <IconTableOptions />
+                        </button>
+                        <button onClick={handleShowRouteInfo} className={styles.showRouteInfoBtn}>
+                            <IconInfoSquareFilled />
+                        </button>
+                        <CloseButton variant='white' onClick={handleClose} className={styles.closeRouteFormBtn} />
+                        {
+                            showRouteInfo && directionResponse ?
+                                <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse} /> :
+                                null
+                        }
+                        {showRouteForm && <div className={`${styles.RouteFormContainer} ${showRouteForm ? null : styles.closeForm}`}>
+                            <RouteForm onSubmit={handleFormSubmit}></RouteForm>
+                        </div>}
+                    </div>
                 </div>
             </>
         );

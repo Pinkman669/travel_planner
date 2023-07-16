@@ -1,5 +1,4 @@
 import React from 'react'
-import directionResultJSON from './testingGoogleDirectionResults.json'
 import styles from '../../css/RouteInfo.module.css'
 import { Button, OverlayTrigger, Popover, PopoverHeader } from 'react-bootstrap'
 

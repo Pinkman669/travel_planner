@@ -18,7 +18,9 @@ export default function EventRoute() {
         <div className="trip-container">
             <div className="control-container">
                 {
-                    isLoaded && showRoute && selectedDay &&eventsByDay.length > 1 && <GoogleRoute eventList={eventsByDay} />
+                    isLoaded && showRoute && selectedDay && eventsByDay.length > 1 ? 
+                    <GoogleRoute eventList={eventsByDay}/> :
+                    <div>Not Enough Info</div>
                 }
             </div>
         </div>
