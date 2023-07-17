@@ -8,6 +8,7 @@ import RouteInfo from "./RouteInfo";
 import RouteForm, { RouteFormState } from "./RouteForm";
 import { Button, CloseButton } from "react-bootstrap";
 import { IconInfoSquareFilled, IconTableOptions } from "@tabler/icons-react";
+import RouteTransitInfo from "./RouteTransitInfo";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type MapOptions = google.maps.MapOptions;
@@ -121,7 +122,12 @@ export function GoogleRoute(props: GoogleRouteProps) {
             }
             Promise.all(promises)
                 .then((result) => {
+                    setTravelModeValue(travelModeValue)
                     setDirectionResponseArr(result as DirectionsResponse[])
+                    setShowOverlay(true)
+                    setShowRouteForm(false)
+                    setShowRouteInfo(true)
+                    handleClose()
                 })
                 .catch((error) => {
                     notify(false, 'Get Route error')
@@ -142,13 +148,19 @@ export function GoogleRoute(props: GoogleRouteProps) {
     }
 
     const handleShowRouteInfo = () => {
-        if (directionResponse) {
+        if (directionResponse || directionResponseArr) {
             setShowOverlay(true)
             setShowRouteInfo(true)
             setShowRouteForm(false)
         }
     }
 
+    if (directionResponseArr && showRouteInfo && showOverlay) {
+        console.log('should show')
+    }
+    if (directionResponse && showRouteInfo) {
+        console.log('sth wrong')
+    }
     if (process.env.REACT_APP_MAP_DISPLAY === "1") {
 
         return (
@@ -166,8 +178,8 @@ export function GoogleRoute(props: GoogleRouteProps) {
                         {
                             directionResponseArr ?
                                 directionResponseArr.map((direction, index) => {
-                                    return <>
-                                        <DirectionsRenderer key={index + 'secret123'} directions={direction}
+                                    return <div key={index + 'secet123'}>
+                                        <DirectionsRenderer directions={direction}
                                             options={{
                                                 suppressMarkers: true
                                             }}
@@ -183,7 +195,8 @@ export function GoogleRoute(props: GoogleRouteProps) {
                                             }}
                                             position={direction.routes[0].legs[0].end_location}
                                         />
-                                    </>
+                                    </div>
+
                                 }) :
                                 null
                         }
@@ -201,6 +214,11 @@ export function GoogleRoute(props: GoogleRouteProps) {
                             <IconInfoSquareFilled />
                         </button>
                         <CloseButton variant='white' onClick={handleClose} className={styles.closeRouteFormBtn} />
+                        {
+                            showRouteInfo && directionResponseArr ?
+                            <RouteTransitInfo travelMode={travelModeValue} directionResponse={directionResponseArr} /> :
+                            null
+                        }
                         {
                             showRouteInfo && directionResponse ?
                                 <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse} /> :

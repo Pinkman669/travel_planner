@@ -17,3 +17,9 @@
 .routeInfoDiv{
     padding: 5px 0;
 }
+
+.closeBtnContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

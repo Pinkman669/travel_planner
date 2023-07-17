@@ -27,7 +27,7 @@ export default function RouteInfo(props: RouteInfoProps) {
             <div>Travel Mode: {props.travelMode.toLocaleLowerCase()}</div>
             {
                 legs.map((routeInfo: google.maps.DirectionsLeg, index: number) => {
-                    return <div key={index} className={styles.routeInfoDiv}>
+                    return <div key={index+'secret1234567894564'} className={styles.routeInfoDiv}>
                         <OverlayTrigger
                             trigger='click'
                             key={index}
