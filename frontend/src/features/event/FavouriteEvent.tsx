@@ -15,7 +15,7 @@ export interface FavouriteDetail {
   name?: string;
   address: string;
   phone?: string;
-  business_hours?: string[];
+  business_hours?: string;
   website?: string;
   place_id: string;
 }
@@ -25,15 +25,14 @@ export default function FavouriteEvent() {
   const placeInfo = usePlaceInfo();
   const [showNewEventModal, setShowNewEventModal] = useState(false);
   const queryClient = useQueryClient();
-  const favouriteEvent = useFavouriteEvent();
-
+  const favouriteEvent = useFavouriteEvent(tripId!);
 
   return (
     <div className="favourite-page">
 {favouriteEvent.map((item) => (
       <div className="places-info-container">
         <div className="place_info_top_container">
-          <div className="place_name">{item?.name}</div>
+          <div className="place_name">{item.name}</div>
           <div className="feature_container">
             <button
               className="feature_button"
@@ -42,19 +41,17 @@ export default function FavouriteEvent() {
               <img src={add} alt="add" />
             </button>
           </div>
-        </div>›
+        </div>
         <div className="info_detail_title">
           Address:{" "}
-          <div className="info_detail">{item?.address}</div>
+          <div className="info_detail">{item.location}</div>
         </div>
 
         {item.business_hours && (
           <div className="info_detail_title">
-            Business Hours:
+            Business Hours:{" "}
             <div className="info_detail">
-              {item.business_hours.map((hours) => (
-                <div>{hours}</div>
-              ))}
+            {item.business_hours}
             </div>
           </div>
         )}
@@ -71,7 +68,7 @@ export default function FavouriteEvent() {
         {item.website && (
           <div className="info_detail_title">
             Website: {"  "}
-            <a href={placeInfo?.website} target="_blank">
+            <a href={item?.website} target="_blank">
               {item.website}
             </a>
           </div>
@@ -81,7 +78,7 @@ export default function FavouriteEvent() {
           <NewEventModal
             isShown={showNewEventModal}
             name={item.name || ""}
-            address={item.address}
+            address={item.location}
             business_hours={item.business_hours || null}
             phone={item.phone || ""}
             website={item.website || ""}

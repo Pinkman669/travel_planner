@@ -42,7 +42,7 @@ export function NewEventModal(props: newEventModalProps) {
       date: new Date(),
       time: "",
       location: "",
-      business_hours: "",
+      business_hours: [""],
       phone: "",
       website: "",
       budget: Number(),

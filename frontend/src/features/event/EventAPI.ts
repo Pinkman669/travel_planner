@@ -18,6 +18,15 @@ export interface LocationDetail {
     place_id?: string
 }
 
+export interface favouriteLocation {
+    name: string,
+    address: string,
+    phone: string,
+    business_hour: string[],
+    website: string,
+    place_id?: string
+}
+
 
 export type NewEventItem = Omit<EventItem, "id" | "day" | "trip_id">
 
@@ -177,13 +186,18 @@ export async function addFavouriteLocation(data: LocationDetail, tripId: string)
     }
 }
 
-export function useFavouriteEvent(){
+export function useFavouriteEvent(tripId:string){
     const {isLoading, error, data, isFetching} = useQuery({
         queryKey: ["eventItem"],
         queryFn: async ()=> {
-            const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getFavouriteEvent`)
+            const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getFavouriteEvent/${tripId}`,{
+                method: 'GET',
+                headers:{
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             const result = await res.json()
-            return result.data as FavouriteDetail[]
+            return result.result as [EventItem]
         }
     })
 
