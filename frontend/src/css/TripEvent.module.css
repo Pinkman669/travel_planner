@@ -1,10 +1,22 @@
-.TripEventContainer{
+.TripEventContainer {
     display: flex;
-    padding: 30px 15px;
+    padding: 5px 15px;
     height: 100%;
 }
 
-.scheduleOuterContainer{
+.scheduleOuterContainer {
     height: 100%;
     width: 100%;
+}
+
+.TripEventHeader {
+    display: flex;
+    padding: 5px 15px;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 400px){
+    .TripEventContainer{
+        padding: 0;
+    }
 }

@@ -9,3 +9,7 @@
 #feature-tabs-tab-Route{
     background-color: #D1ECFF;
 }
+
+.nav.nav-tabs{
+    background-color: white;
+}

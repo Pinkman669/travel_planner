@@ -1,0 +1,21 @@
+.controlContainer {
+  width: 30%;
+  background-color: #9c8e8e;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 95vh;
+  position: relative;
+}
+
+@media screen and (max-width: 400px){
+  .controlContainer{
+    width: 100%;
+    height: 100%;
+  }
+  #offcanvasCloseBtn{
+    position: absolute;
+    top: 8px;
+    right: 0;
+    z-index: 99;
+  }
+}

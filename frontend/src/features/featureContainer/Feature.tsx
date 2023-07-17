@@ -1,16 +1,21 @@
-import { useLoadScript } from "@react-google-maps/api";
-import { Map } from "../map/GoogleMap";
 import FeatureTab from "./FeatureTab";
-// import "../../css/Feature.css"
+import styles from '../../css/Feature.module.css'
+import { CloseButton } from "react-bootstrap";
 import FavouriteEvent from "../event/FavouriteEvent";
 
+interface FeatureProps{
+    onClose?: () => void;
+    screenWidth?: number;
+}
 
-export default function Feature() {
-  
+export default function Feature(props: FeatureProps) {
 
     return (
-        <div className="control-container"> 
-        <FeatureTab/>
+        <div className={styles.controlContainer}> 
+        {
+            props.screenWidth && props.screenWidth <= 400 && <CloseButton id={styles.offcanvasCloseBtn} onClick={props.onClose}/>
+        }
+            <FeatureTab/>
         </div>
     );
   }

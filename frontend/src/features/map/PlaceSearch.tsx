@@ -41,7 +41,7 @@ export default function PlaceSearch ({ setLocation }: PlacesProps) {
   }
 
   return (
-    <Combobox onSelect={handleSelect}>
+    <Combobox onSelect={handleSelect} className='comboBox-container'>
       <ComboboxInput
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -49,7 +49,7 @@ export default function PlaceSearch ({ setLocation }: PlacesProps) {
         className="combobox-input"
         placeholder="Search a destination"
       />
-      <ComboboxPopover>
+      <ComboboxPopover className="comboBox-popover">
         <ComboboxList>
           {status === "OK" &&
             data.map(({ place_id, description }) => (
