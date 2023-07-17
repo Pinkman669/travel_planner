@@ -1,48 +1,60 @@
-import usePlaceInfo, { LocationDetail, addFavouriteLocation } from "./placeAPI";
+import usePlaceInfo, { LocationDetail, addFavouriteLocation } from "../event/EventAPI";
 import add from "../image/add.png";
 import favourite from "../image/favourite.png";
 import { useState } from "react";
 import { NewEventModal } from "../event/NewEventModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { notify } from "../utils/utils";
-import { useDispatch } from "react-redux";
-import {setFavourite} from "./placeSlice"
+import { useParams } from "react-router-dom";
 
 
 
 export default function PlaceInfo() {
+  const { tripId } = useParams();
   const placeInfo = usePlaceInfo();
   const [showNewEventModal, setShowNewEventModal] = useState(false);
-  const dispatch = useDispatch()
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const addFavourite = useMutation(
-    async (placeInfo:LocationDetail ) => {
-   
-      return await addFavouriteLocation(placeInfo)
+    async (placeInfo: google.maps.places.PlaceResult) => {
+      const detail: LocationDetail = {
+        name: placeInfo.name,
+        place_id: placeInfo.place_id,
+        formatted_address: placeInfo.formatted_address,
+        formatted_phone_number: placeInfo.formatted_phone_number,
+        opening_hours: placeInfo.opening_hours?.weekday_text,
+        website: placeInfo.website,
+      };
+
+      return await addFavouriteLocation(detail, tripId!);
     },
     {
-        onSuccess: () => {
-                queryClient.invalidateQueries(['eventItems'])
-            notify(true, 'Added to favourite item')
-        },
-        onError: () => {
-            notify(false, 'Add to favourite failed')
-        }
+      onSuccess: () => {
+        queryClient.invalidateQueries(["eventItems"]);
+        notify(true, "Added to favourite item");
+      },
+      onError: () => {
+        notify(false, "Add to favourite failed");
+      },
     }
-)
+  );
 
-  async function submit(placeInfo:LocationDetail ) {
-    addFavourite.mutate(
-      placeInfo
-    )
-}
   return (
     <div className="places-info-container">
       <div className="place_info_top_container">
         <div className="place_name">{placeInfo?.name}</div>
         <div className="feature_container">
-          <button className="feature_button" onClick={() => dispatch(setFavourite())} ><img src= {favourite} alt ="Favourite"/></button>
-          <button className="feature_button" onClick={() => setShowNewEventModal(true)}><img src= {add} alt ="add"/></button>
+          <button
+            className="feature_button"
+            onClick={() => addFavourite.mutate(placeInfo!)}
+          >
+            <img src={favourite} alt="Favourite" />
+          </button>
+          <button
+            className="feature_button"
+            onClick={() => setShowNewEventModal(true)}
+          >
+            <img src={add} alt="add" />
+          </button>
         </div>
       </div>
       <div className="info_detail_title">
@@ -74,17 +86,18 @@ export default function PlaceInfo() {
           </a>
         </div>
       )}
-    
-      {placeInfo?.formatted_address && < NewEventModal
-        isShown = {showNewEventModal}
-        name = {placeInfo?.name || ""}
-        address={placeInfo?.formatted_address}
-        business_hours={placeInfo?.opening_hours?.weekday_text || null}
-        phone = {placeInfo?.formatted_phone_number || ""}
-        website = {placeInfo?.website || ""}
-        onHide={() => setShowNewEventModal(false)}
-       />
-      }
+
+      {placeInfo?.formatted_address && (
+        <NewEventModal
+          isShown={showNewEventModal}
+          name={placeInfo?.name || ""}
+          address={placeInfo?.formatted_address}
+          business_hours={placeInfo?.opening_hours?.weekday_text || null}
+          phone={placeInfo?.formatted_phone_number || ""}
+          website={placeInfo?.website || ""}
+          onHide={() => setShowNewEventModal(false)}
+        />
+      )}
     </div>
   );
 }

@@ -77,17 +77,34 @@ export class EventController {
 
     addNewEvent = async (req:Request, res:Response) =>{
         try {
-            console.log('Add new event')
-            const {eventList, placeId, day, tripId} = req.body
+            const {eventList, placeId, day, tripId, locationInfo} = req.body
             if (!eventList || !placeId || !day || !tripId) {
                 throw new Error('Missing new event info')
             }
-            console.log(eventList)
-            await this.eventService.addNewEvent(eventList, placeId , day, tripId )
+            
+            await this.eventService.addNewEvent(eventList, placeId , day, tripId, locationInfo)
+            
             res.status(200).json({ success: true })
         } catch (e) {
             logger.error(`[ERR0010] ${e}`)
             res.status(400).json({ success: false, msg: `[ERR0010] ${errorCode.ERR010}`})
         }
     }
+
+    addFavouriteEvent = async (req:Request, res:Response) =>{
+    try {
+        console.log('Favourite event')
+        const {data,tripId} = req.body
+        if (!data) {
+            throw new Error('Missing favourite event info')
+        }
+        
+        await this.eventService.addFavouriteEvent(data, tripId)
+        
+        res.status(200).json({ success: true })
+    } catch (e) {
+        logger.error(`[ERR0010] ${e}`)
+        res.status(400).json({ success: false, msg: `[ERR0011] ${errorCode.ERR011}`})
+    }
+}
 }
