@@ -3,12 +3,13 @@ import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, K
 import styles from '../../css/Schedule.module.css'
 import Day from "./Day";
 import { useMutation } from "@tanstack/react-query";
-import { EventItem, updateDayEventOrder, updateEventOrder } from "./EventAPI";
+import { updateDayEventOrder, updateEventOrder } from "./EventAPI";
 import { notify } from "../utils/utils";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import Event from "./Event";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { fetchEventByTrip, new_update_event_active_order_date, new_update_event_order, new_update_event_over_order_date } from "./newEventSlice"
+import { EventItem } from '../utils/types'
 
 interface ScheduleProps {
     tripName: string;
@@ -24,12 +25,13 @@ interface OverLayState {
 }
 
 export default function Schedule(props: ScheduleProps) {
-    // const queryClient = useQueryClient()
     const dispatch = useAppDispatch()
     const arrOfTripDate = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === props.tripId)))?.DatesOfTrip
+    
     useEffect(() => {
         dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: arrOfTripDate || [] }))
     }, [dispatch, arrOfTripDate, props.tripId])
+    
     const [overLayActiveState, setOverLayActiveState] = useState<OverLayState | null>(null)
     const mapToObject = useAppSelector(state => state.new_event.new_eventItems)
 
@@ -125,9 +127,6 @@ export default function Schedule(props: ScheduleProps) {
             return await updateEventOrder(data.activeEventId, data.activeOrder, data.overOrder, data.eventList)
         },
         {
-            onSuccess: () => {
-                // queryClient.invalidateQueries(['eventItems'])
-            },
             onError: () => {
                 notify(false, 'Event rearrange failed')
             },
@@ -206,9 +205,6 @@ export default function Schedule(props: ScheduleProps) {
             )
         },
         {
-            onSuccess: () => {
-                // queryClient.invalidateQueries(['eventItems'])
-            },
             onSettled: () => dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: arrOfTripDate || [] }))
         }
     )

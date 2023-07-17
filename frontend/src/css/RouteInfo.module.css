@@ -1,13 +1,25 @@
 .RouteInfoContainer{
     display: flex;
     flex-direction: column;
-    background-color: rgb(255, 255, 255);
     flex-wrap: wrap;
+    justify-content: flex-start;
     align-content: space-around;
-    border-radius: 10px;
-    padding: 10px 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    padding: 10px;
 }
 
 .wayPointInfo{
-    
+    padding: 10px;
+}
+
+.routeInfoDiv{
+    padding: 5px 0;
+}
+
+.closeBtnContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }

@@ -1,11 +1,11 @@
-export default async function getGoogleRoute(
+export async function getGoogleRoute(
     directionService: google.maps.DirectionsService,
     originId: string,
     destinationId: string,
     waypoints: google.maps.DirectionsWaypoint[],
     travelMode: google.maps.TravelMode
 ) {
-    try{
+    try {
         const result = await directionService.route({
             origin: {
                 placeId: originId
@@ -16,9 +16,47 @@ export default async function getGoogleRoute(
             },
             travelMode: travelMode
         })
-    
+
         return result
-    } catch(e){
+    } catch (e) {
         return null
     }
+}
+
+export async function getGoogleRouteTransit(
+    directionService: google.maps.DirectionsService,
+    originId: string,
+    destinationId: string,
+    travelMode: google.maps.TravelMode
+) {
+    // try{
+    //     const result = await directionService.route({
+    //         origin: {
+    //             placeId: originId
+    //         },
+    //         destination: {
+    //             placeId: destinationId
+    //         },
+    //         travelMode: travelMode
+    //     })
+
+    //     return result
+    // } catch(e){
+    //     return  null
+    // }
+    return directionService.route({
+        origin: {
+            placeId: originId
+        },
+        destination: {
+            placeId: destinationId
+        },
+        travelMode: travelMode
+    })
+        .then((result) => {
+            return result
+        })
+        .catch((error) =>{
+            return null
+        })
 }

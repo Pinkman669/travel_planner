@@ -1,12 +1,12 @@
-import { useQuery } from '@tanstack/react-query'
-import { update_event_item } from './eventSlice';
-import { new_update_event_item } from './newEventSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { isSameDay } from 'date-fns';
 import { differenceInDays } from 'date-fns';
 import { LocationInfo } from './NewEventModal';
 import { getDetails } from "use-places-autocomplete";
-import { Interface } from "readline";
+import { EventItem } from '../utils/types'
+import { useQuery } from '@tanstack/react-query'
+// import { new_update_event_item } from './newEventSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+// import { isSameDay } from 'date-fns';
+
 
 export interface LocationDetail {
     name?: string,
@@ -17,24 +17,6 @@ export interface LocationDetail {
     place_id?: string
 }
 
-export interface EventItem {
-    id: number;
-    name: string;
-    date: Date;
-    time: string;
-    location: string;
-    business_hours: string;
-    phone: string;
-    website: string;
-    budget: number;
-    expense: number;
-    trip_id: number;
-    category: string;
-    item_order: number;
-    day: number;
-    active: boolean,
-    place_id: string
-}
 
 export type NewEventItem = Omit<EventItem, "id" | "day" | "trip_id">
 

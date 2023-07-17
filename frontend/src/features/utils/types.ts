@@ -1,8 +1,8 @@
 export interface EventItem {
     id: number;
     name: string;
-    date: Date | string;
-    time: Date;
+    date: Date;
+    time: string;
     location: string;
     business_hours: string;
     phone: string;
@@ -13,4 +13,6 @@ export interface EventItem {
     category: string;
     item_order: number;
     day: number;
+    active: boolean;
+    place_id: string;
 }
