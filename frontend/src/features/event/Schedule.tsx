@@ -15,6 +15,7 @@ interface ScheduleProps {
     tripName: string;
     userName: string;
     tripId: number;
+    screenWidth: number;
 }
 
 interface OverLayState {

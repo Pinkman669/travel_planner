@@ -6,7 +6,7 @@ import { getGoogleRoute, getGoogleRouteTransit } from "./routeAPI";
 import { notify } from "../utils/utils";
 import RouteInfo from "./RouteInfo";
 import RouteForm, { RouteFormState } from "./RouteForm";
-import { Button, CloseButton } from "react-bootstrap";
+import { CloseButton } from "react-bootstrap";
 import { IconInfoSquareFilled, IconTableOptions } from "@tabler/icons-react";
 import RouteTransitInfo from "./RouteTransitInfo";
 
