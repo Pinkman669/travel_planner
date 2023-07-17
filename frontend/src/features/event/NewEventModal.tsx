@@ -48,16 +48,21 @@ export function NewEventModal(props: newEventModalProps) {
     async (data:NewEventItem ) => {
       console.log(placeId, startDate, tripId)
     if (placeId && startDate && tripId){
-      return await addNewEvent(data,placeId,startDate,tripId)
+      const result = await addNewEvent(data,placeId,startDate,tripId)
+      if (result){
+        notify(true, 'Added new event')
+      } else{
+        notify(false, 'Add new event fail')
+      }
     }
     },
     {
         onSuccess: () => {
-            queryClient.invalidateQueries(['tripItems'])
-            notify(true, 'Added new event')
+            // queryClient.invalidateQueries(['tripItems'])
+            // notify(true, 'Added new event')
         },
         onError: () => {
-            notify(false, 'Add new event fail')
+            // notify(false, 'Add new event fail')
         }
     }
 )

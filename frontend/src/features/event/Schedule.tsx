@@ -100,7 +100,7 @@ export default function Schedule(props: ScheduleProps) {
         const overInfo = eventList.find((event) => event.id === overId)
         const activeIndex = eventList.indexOf(activeInfo as EventItem) + 1
         const overIndex = eventList.indexOf(overInfo as EventItem) + 1
-        console.log('active: '+ activeIndex, 'over: '  +overIndex)
+
         if (!activeIndex || !overIndex) {
             return
         }
@@ -118,7 +118,7 @@ export default function Schedule(props: ScheduleProps) {
             overOrder: overIndex,
             eventList: eventList
         })
-        console.log(JSON.parse(localStorage.getItem('newEventItems')!))
+        
 
         setOverLayActiveState(null)
     }

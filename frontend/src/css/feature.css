@@ -1,8 +1,7 @@
-.control-container{
-    width:40%;
-    height: 90vh;
-    background-color: #ffffff;
-    border-radius: 25px;
-    margin: 2vh;
-  }
-  
+.control-container {
+  width: 30%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  max-height: 95vh;
+}

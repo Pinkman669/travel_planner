@@ -73,7 +73,8 @@ export class EventService {
                 'item_order': res.item_order +1,
                 'day': day,
                 'active': true,
-                'place_id': place_id
+                'place_id': place_id,
+                'trip_id': trip_id
             })
             .into('events')
 

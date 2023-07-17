@@ -82,9 +82,8 @@ export class EventController {
             if (!eventList || !placeId || !day || !tripId) {
                 throw new Error('Missing new event info')
             }
-            
+            console.log(eventList)
             await this.eventService.addNewEvent(eventList, placeId , day, tripId )
-            
             res.status(200).json({ success: true })
         } catch (e) {
             logger.error(`[ERR0010] ${e}`)
