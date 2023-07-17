@@ -1,4 +1,4 @@
-export default async function getGoogleRoute(
+export async function getGoogleRoute(
     directionService: google.maps.DirectionsService,
     originId: string,
     destinationId: string,
@@ -20,5 +20,28 @@ export default async function getGoogleRoute(
         return result
     } catch(e){
         return null
+    }
+}
+
+export async function getGoogleRouteTransit(
+    directionService: google.maps.DirectionsService,
+    originId: string,
+    destinationId: string,
+    travelMode: google.maps.TravelMode
+){
+    try{
+        const result = await directionService.route({
+            origin: {
+                placeId: originId
+            },
+            destination: {
+                placeId: destinationId
+            },
+            travelMode: travelMode
+        })
+
+        return result
+    } catch(e){
+        return  null
     }
 }

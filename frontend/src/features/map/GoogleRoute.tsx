@@ -2,7 +2,7 @@ import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
 import styles from '../../css/GoogleRoute.module.css'
 import { EventItem } from "../utils/types";
-import getGoogleRoute from "./routeAPI";
+import { getGoogleRoute, getGoogleRouteTransit } from "./routeAPI";
 import { notify } from "../utils/utils";
 import RouteInfo from "./RouteInfo";
 import RouteForm, { RouteFormState } from "./RouteForm";
@@ -49,24 +49,27 @@ export function GoogleRoute(props: GoogleRouteProps) {
         }),
         []
     );
-    const startPointId = evenList[0].place_id
-    const endPointId = evenList[evenList.length - 1].place_id
-    const WayPointArr: DirectionsWayPoint[] = []
-    if (evenList.length > 2) {
-        createWayPointArr()
-    }
-    function createWayPointArr() {
-        const wayPointList = evenList.slice(1, evenList.length - 1)
+
+    function createWayPointArr(inputEventList: EventItem[]) {
+        const wayPointArr: DirectionsWayPoint[] = []
+        const wayPointList = inputEventList.slice(1, inputEventList.length - 1)
         wayPointList.forEach((event) => {
-            WayPointArr.push({
+            wayPointArr.push({
                 location: {
                     placeId: event.place_id
                 }
             })
         })
+        return wayPointArr
     }
 
     function handleFormSubmit(data: RouteFormState) {
+        const startPointId = evenList[0].place_id
+        const endPointId = evenList[evenList.length - 1].place_id
+        let WayPointArr: DirectionsWayPoint[] = []
+        if (evenList.length > 2) {
+            WayPointArr = createWayPointArr(evenList)
+        }
         handleGetRoute(startPointId, endPointId, WayPointArr, data.travelMode as TravelMode)
         handleClose()
     }
@@ -78,21 +81,40 @@ export function GoogleRoute(props: GoogleRouteProps) {
         travelModeValue: TravelMode
     ) {
         setDirectionResponse(null)
-        const res = await getGoogleRoute(
-            directionService,
-            startPointId,
-            endPointId,
-            wayPointArr,
-            travelModeValue
-        )
-        if (res) {
-            setTravelModeValue(travelModeValue)
-            setDirectionResponse(res)
-            setShowOverlay(true)
-            setShowRouteForm(false)
-            setShowRouteInfo(true)
+        if (travelModeValue !== 'TRANSIT') {
+            const res = await getGoogleRoute(
+                directionService,
+                startPointId,
+                endPointId,
+                wayPointArr,
+                travelModeValue
+            )
+            if (res) {
+                setTravelModeValue(travelModeValue)
+                setDirectionResponse(res)
+                setShowOverlay(true)
+                setShowRouteForm(false)
+                setShowRouteInfo(true)
+            } else {
+                notify(false, 'Get Route error')
+            }
         } else {
-            notify(false, 'Get Route error')
+            const res = await getGoogleRouteTransit(
+                directionService,
+                startPointId,
+                endPointId,
+                travelModeValue
+            )
+            if (res) {
+                setTravelModeValue(travelModeValue)
+                setDirectionResponse(res)
+                setShowOverlay(true)
+                setShowRouteForm(false)
+                setShowRouteInfo(true)
+                console.log(JSON.stringify(res, null, 4))
+            } else {
+                notify(false, 'Get Route error')
+            }
         }
     }
 
@@ -136,7 +158,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
                         ${showOverlay ? styles.open : styles.close} 
                         ${animation ? styles.closing : null}
                         ${showRouteForm ? styles.RouteFormOverlayColour : styles.RouteInfoOverlayColour}`
-                        }>
+                    }>
                         <button onClick={handleShowRouteFrom} className={styles.showRouteFromBtn}>
                             <IconTableOptions />
                         </button>
@@ -146,7 +168,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
                         <CloseButton variant='white' onClick={handleClose} className={styles.closeRouteFormBtn} />
                         {
                             showRouteInfo && directionResponse ?
-                                <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse} /> :
+                                <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse}/> :
                                 null
                         }
                         {showRouteForm && <div className={`${styles.RouteFormContainer} ${showRouteForm ? null : styles.closeForm}`}>

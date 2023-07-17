@@ -26,7 +26,7 @@ export default function RouteInfo(props: RouteInfoProps) {
         <div className={styles.RouteInfoContainer}>
             <div>Travel Mode: {props.travelMode.toLocaleLowerCase()}</div>
             {
-                legs.map((routeInfo: any, index: number) => {
+                legs.map((routeInfo: google.maps.DirectionsLeg, index: number) => {
                     return <div key={index} className={styles.routeInfoDiv}>
                         <OverlayTrigger
                             trigger='click'
@@ -39,13 +39,36 @@ export default function RouteInfo(props: RouteInfoProps) {
                                         <div>To: {routeInfo.end_address}</div>
                                     </PopoverHeader>
                                     <div className={styles.wayPointInfo}>
-                                        <div>Distance: {routeInfo.distance.text}</div>
-                                        <div>Duration: {routeInfo.duration.text}</div>
+                                        <div>Distance: {routeInfo.distance!.text}</div>
+                                        <div>Duration: {routeInfo.duration!.text}</div>
+                                        {
+                                            props.travelMode === 'TRANSIT' ?
+                                                <div>Steps:
+                                                    <ol>
+                                                        {
+                                                            routeInfo.steps.map((step, index) => {
+                                                                return <li key={index + step.instructions}>
+                                                                    <div>{step.instructions}</div>
+                                                                    {
+                                                                        step.transit?.line.agencies?.map((agency) => {
+                                                                            if (agency) {
+                                                                                return <div key={index + agency?.name}>By {agency?.name}</div>
+                                                                            }
+                                                                            return null
+                                                                        })
+                                                                    }
+                                                                </li>
+                                                            })
+                                                        }
+                                                    </ol>
+                                                </div> :
+                                                null
+                                        }
                                     </div>
                                 </Popover>
                             }
                         >
-                            <Button variant="secondary">WayPoint {String.fromCharCode((index%26)+65)} to {String.fromCharCode((index%26)+1+65)}</Button>
+                            <Button variant="secondary">WayPoint {String.fromCharCode((index % 26) + 65)} to {String.fromCharCode((index % 26) + 1 + 65)}</Button>
                         </OverlayTrigger>
                     </div>
                 })
