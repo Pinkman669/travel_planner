@@ -22,6 +22,7 @@ interface OverLayState {
     location: string;
     name: string;
     date: Date;
+    eventItem: EventItem
 }
 
 export default function Schedule(props: ScheduleProps) {
@@ -72,6 +73,7 @@ export default function Schedule(props: ScheduleProps) {
         const activeContainer = findContainer(event.active.id)
         const eventInfo = mapToObject[activeContainer as string].find((e) => e.id === event.active.id)
         setOverLayActiveState({
+            eventItem: eventInfo as EventItem,
             id: Number(event.active.id),
             location: eventInfo?.location + '',
             name: eventInfo?.name + '',
@@ -237,7 +239,9 @@ export default function Schedule(props: ScheduleProps) {
                 }}>
                     {
                         overLayActiveState ? (
-                            <Event id={overLayActiveState.id}
+                            <Event
+                                eventItem={overLayActiveState.eventItem} 
+                                id={overLayActiveState.id}
                                 location={overLayActiveState.location}
                                 eventName={overLayActiveState.name}
                                 date={overLayActiveState.date} />

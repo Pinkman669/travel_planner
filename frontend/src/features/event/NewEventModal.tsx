@@ -5,9 +5,10 @@ import { queryClient } from "../..";
 import { useMutation } from "@tanstack/react-query";
 import { NewEventItem, addNewEvent } from "./EventAPI";
 import { useForm } from "react-hook-form";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 import { notify } from "../utils/utils";
+import { fetchEventByTrip } from "./newEventSlice";
 
 interface newEventModalProps {
   isShown: boolean;
@@ -28,8 +29,10 @@ export interface LocationInfo{
 }
 
 export function NewEventModal(props: newEventModalProps) {
+  const dispatch = useAppDispatch()
   const placeId = useAppSelector((state) => state.place.placeId);
   const { tripId } = useParams();
+  const datesOfTrip = useAppSelector(state => state.trip.tripItems).find((trip) => trip.id === Number(tripId))?.DatesOfTrip
   const tripInfo = useAppSelector((state) =>
     state.trip.tripItems.find((item) => item.id === Number(tripId))
   );
@@ -74,6 +77,7 @@ export function NewEventModal(props: newEventModalProps) {
       onError: () => {
         notify(false, "Add new event fail");
       },
+      onSettled: () => dispatch(fetchEventByTrip({tripId: Number(tripId), datesOfTrip: datesOfTrip || []}))
     }
   );
 

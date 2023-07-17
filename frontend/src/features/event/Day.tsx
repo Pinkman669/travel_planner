@@ -51,7 +51,7 @@ export default function Day(props: DayItemProps) {
                         <div ref={setNodeRef}>
                             {
                                 eventList.map((event) => (
-                                    <Event key={event.id} id={event.id} eventName={event.name} location={event.location} date={event.date} />
+                                    <Event eventItem={event} key={event.id} id={event.id} eventName={event.name} location={event.location} date={event.date} />
                                 ))
                             }
                         </div>

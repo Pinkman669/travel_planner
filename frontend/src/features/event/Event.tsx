@@ -3,12 +3,14 @@ import { IconGripHorizontal, IconPencil } from "@tabler/icons-react";
 import { CSS } from "@dnd-kit/utilities"
 import commonStyles from '../../css/Common.module.css'
 import { useSortable } from "@dnd-kit/sortable";
+import { EventItem } from '../utils/types';
 
 interface EventItemProps {
     id: number;
     eventName: string;
     location: string;
     date: Date;
+    eventItem: EventItem
 }
 
 export default function Event(props: EventItemProps) {
@@ -25,7 +27,6 @@ export default function Event(props: EventItemProps) {
         <div ref={setNodeRef} style={style} className={styles.eventItemContainer}>
             <button className={`${commonStyles.iconBtn} ${styles.dragHandle}`} {...listeners} {...attributes}><IconGripHorizontal /></button>
             <div>{props.eventName}</div>
-            <div>{props.location}</div>
             <button className={`${commonStyles.iconBtn} ${commonStyles.eventEditBtn}`}><IconPencil /></button>
         </div>
     )
