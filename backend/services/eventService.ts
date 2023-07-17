@@ -116,4 +116,14 @@ export class EventService {
         })
         .into('favourite_events')
     }
+
+    async getFavouriteEvent(tripId: number) {
+        const result = await this.knex
+            .select('*')
+            .from('favourite_events')
+            .where('trip_id', tripId)
+            .andWhere('active', true)
+            .orderBy('id', 'asc')
+        return result
+    }
 }

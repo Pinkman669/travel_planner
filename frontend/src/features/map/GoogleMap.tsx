@@ -1,7 +1,7 @@
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import { useCallback, useMemo, useRef, useState } from "react";
 import PlaceSearch from "./PlaceSearch";
-import "../../css/GoogleMap.css";
+import "../../css/googleMap.css";
 import PlaceInfo from "./PlaceInfo";
 import { useAppSelector } from "../../redux/hooks";
 

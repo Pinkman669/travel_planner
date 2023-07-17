@@ -103,8 +103,21 @@ export class EventController {
         
         res.status(200).json({ success: true })
     } catch (e) {
-        logger.error(`[ERR0010] ${e}`)
+        logger.error(`[ERR0011] ${e}`)
         res.status(400).json({ success: false, msg: `[ERR0011] ${errorCode.ERR011}`})
+    }
+}
+getFavouriteEvent = async (req: Request, res: Response) => {
+    try {
+        const tripId = Number(req.params.tripId)
+        if (!tripId) {
+            throw new Error('Missing tripId')
+        }
+        const favouriteList = await this.eventService.getEvents(tripId)
+        res.status(200).json({ success: true, result: favouriteList})
+    } catch (e) {
+        logger.error(`[ERR012] ${e}`)
+        res.status(400).json({ success: false, msg: `[ERR012] ${errorCode.ERR012}` })
     }
 }
 }

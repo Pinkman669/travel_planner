@@ -5,6 +5,7 @@ import { EventItem } from '../utils/types'
 import { useQuery } from '@tanstack/react-query'
 // import { new_update_event_item } from './newEventSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { FavouriteDetail } from './FavouriteEvent';
 // import { isSameDay } from 'date-fns';
 
 
@@ -97,17 +98,12 @@ export async function updateDayEventOrder(
 }
 export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date, tripId: string, locationInfo: LocationInfo) {
 
-    console.log(addNewEvent!!!!)
+
     const eventDayString = eventList.date.toString()
-    console.log(eventDayString)
     const eventDay = new Date(eventDayString)
     const startDayString = startDay.toString().split("T")[0]
-    console.log(startDayString)
     const startDayDate = new Date(startDayString)
-    console.log("eventDay:" + eventDay + " start :" + startDayDate)
-
     const differenceInDay = differenceInDays(eventDay, startDayDate)
-    console.log(differenceInDay)
     const day = differenceInDay + 1
 
 
@@ -178,4 +174,21 @@ export async function addFavouriteLocation(data: LocationDetail, tripId: string)
     } else {
         return false
     }
+}
+
+export function useFavouriteEvent(){
+    const {isLoading, error, data, isFetching} = useQuery({
+        queryKey: ["eventItem"],
+        queryFn: async ()=> {
+            const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getFavouriteEvent`)
+            const result = await res.json()
+            return result.data as FavouriteDetail[]
+        }
+    })
+
+    if(isLoading || isFetching || error || !data){
+        return []
+    }
+
+    return data
 }
