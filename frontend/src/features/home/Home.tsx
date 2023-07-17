@@ -29,12 +29,13 @@ export default function Home() {
     const userId = useAppSelector(state => state.auth.userId)
 
     useEffect(() =>{
+        console.log('hi')
         dispatch(fetchTripItemByUserId({userId: userId as number}))
     },[dispatch, userId])
+
     const tripItemInfo = useAppSelector(state => state.trip.tripItems)
 
     const [showModal, setShowModal] = useState(false)
-    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [startDate, setStartDate] = useState<Date | null>(null)
     const { register, handleSubmit, reset, formState } = useForm<FormState>({
         defaultValues: {
@@ -95,13 +96,6 @@ export default function Home() {
             setShowModal(true)
         }
     }
-    const handleDeleteConfirmModal = () => {
-        if (showDeleteModal) {
-            setShowDeleteModal(false)
-        } else {
-            setShowDeleteModal(true)
-        }
-    }
 
     useEffect(() =>{
         if (formState.isSubmitSuccessful){
@@ -121,13 +115,12 @@ export default function Home() {
                 {
                     tripItemInfo.map((item) => (
                         <TripItem
-                            showDeleteModal={showDeleteModal} onRemove={() => {
+                             onRemove={() => {
                                 onRemoveTrip.mutate({ tripId: item.id, tripName: item.name })
-                                handleDeleteConfirmModal()
                             }}
                             onClickTrip={()=>navigate(`/trip-event/${item.id}`)}
                             key={item.id} tripName={item.name} location={item.location}
-                            period={calculatePeriod(new Date(item.end_date), new Date(item.start_date))} onShowDeleteModal={handleDeleteConfirmModal}
+                            period={calculatePeriod(new Date(item.end_date), new Date(item.start_date))}
                         />
                     ))
                 }

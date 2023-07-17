@@ -13,7 +13,7 @@ import { addDays } from 'date-fns'
 // }
 
 // export function useTripItems(userId: number){
-//     const dispatch = useDispatch()
+//     const dispatch = useAppDispatch()
 //     const {isLoading, error, data, isFetching, status } = useQuery({
 //         queryKey: ['tripItems'],
 //         queryFn : async() =>{

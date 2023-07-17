@@ -4,6 +4,8 @@ import { CSS } from "@dnd-kit/utilities"
 import commonStyles from '../../css/Common.module.css'
 import { useSortable } from "@dnd-kit/sortable";
 import { EventItem } from '../utils/types';
+import EventDetail from './EventDetail';
+import { useState } from 'react';
 
 interface EventItemProps {
     id: number;
@@ -14,6 +16,7 @@ interface EventItemProps {
 }
 
 export default function Event(props: EventItemProps) {
+    const [showModal, setShowModal] = useState(false)
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
         id: props.id
     })
@@ -23,11 +26,18 @@ export default function Event(props: EventItemProps) {
         transition
     }
 
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+
     return (
-        <div ref={setNodeRef} style={style} className={styles.eventItemContainer}>
-            <button className={`${commonStyles.iconBtn} ${styles.dragHandle}`} {...listeners} {...attributes}><IconGripHorizontal /></button>
-            <div>{props.eventName}</div>
-            <button className={`${commonStyles.iconBtn} ${commonStyles.eventEditBtn}`}><IconPencil /></button>
-        </div>
+        <>
+            <div ref={setNodeRef} style={style} className={styles.eventItemContainer}>
+                <button onClick={handleShow}>showDetail</button>
+                <button className={`${commonStyles.iconBtn} ${styles.dragHandle}`} {...listeners} {...attributes}><IconGripHorizontal /></button>
+                <div>{props.eventName}</div>
+                <button className={`${commonStyles.iconBtn} ${commonStyles.eventEditBtn}`}><IconPencil /></button>
+            </div>
+            <EventDetail onClose={handleClose} show={showModal} eventItem={props.eventItem} />
+        </>
     )
 }
