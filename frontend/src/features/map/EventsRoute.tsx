@@ -1,14 +1,16 @@
-import { useLoadScript } from "@react-google-maps/api";
+import { useLoadScript} from "@react-google-maps/api";
 import { GoogleRoute } from "./GoogleRoute";
 import { useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
 
+type Libraries = ("drawing" | "geometry" | "localContext" | "places")[];
+const libraries: Libraries = ['places']
 
 export default function EventRoute() {
     const [showRoute, setShowRoute] = useState(true)
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY || "",
-        libraries: ['places'],
+        libraries : libraries,
     });
 
     const selectedDay = useAppSelector(state => state.day.selected_day_trip)
