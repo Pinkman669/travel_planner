@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { EventItem } from '../utils/types';
+import { format } from 'date-fns'
 
 interface EventDetailProps{
     show: boolean;
@@ -10,6 +11,8 @@ interface EventDetailProps{
 
 export default function EventDetail(props: EventDetailProps) {
     const eventItem = props.eventItem
+    const regex = /["'{},]+/gi
+    const clearBusinessHrs = eventItem.business_hours.split(regex)
 
     return (
         <Modal
@@ -25,16 +28,29 @@ export default function EventDetail(props: EventDetailProps) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h4>Centered Modal</h4>
-                <p>
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                    dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                    consectetur ac, vestibulum at eros.
-                </p>
+                <p>Address: {eventItem.location}</p>
+                <p>Date: {format(new Date(eventItem.date), 'PPPP')}</p>
+                <p>Time: {eventItem.time}</p>
+                <div>Business Hours: 
+                    <ul>
+                    {
+                        clearBusinessHrs.map((item) => {
+                            if (item.length){
+                                return <li key={eventItem.id+item}>{item}</li>
+                            }
+                            return null
+                        })
+                    }
+                    </ul>
+                </div>
+                <p>Phone No. : {eventItem.phone}</p>
+                <p>WebSite: <a href={eventItem.website}>
+                    {
+                        eventItem.website.length > 100 ? `${eventItem.website.slice(0, 100)}...` : eventItem.website
+                    }
+                    </a></p>
+                <p>Budget: {eventItem.budget}</p>
             </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={props.onClose}>Close</Button>
-            </Modal.Footer>
         </Modal>
     );
 }

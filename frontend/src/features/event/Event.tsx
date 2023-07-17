@@ -32,12 +32,16 @@ export default function Event(props: EventItemProps) {
     return (
         <>
             <div ref={setNodeRef} style={style} className={styles.eventItemContainer}>
-                <button onClick={handleShow}>showDetail</button>
+                <button className={`${styles.detailBtn}`} onClick={handleShow}></button>
                 <button className={`${commonStyles.iconBtn} ${styles.dragHandle}`} {...listeners} {...attributes}><IconGripHorizontal /></button>
-                <div>{props.eventName}</div>
+                <div>
+                    {
+                        props.eventName.length > 15 ? `${props.eventName.slice(0, 15)}...` : props.eventName 
+                    }
+                    </div>
                 <button className={`${commonStyles.iconBtn} ${commonStyles.eventEditBtn}`}><IconPencil /></button>
             </div>
-            <EventDetail onClose={handleClose} show={showModal} eventItem={props.eventItem} />
+            {showModal && <EventDetail onClose={handleClose} show={showModal} eventItem={props.eventItem} />}
         </>
     )
 }

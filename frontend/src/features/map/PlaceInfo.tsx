@@ -66,8 +66,8 @@ export default function PlaceInfo() {
         <div className="info_detail_title">
           Business Hours:
           <div className="info_detail">
-            {placeInfo?.opening_hours?.weekday_text?.map((hours) => (
-              <div>{hours}</div>
+            {placeInfo?.opening_hours?.weekday_text?.map((hours, index) => (
+              <div key={hours+index}>{hours}</div>
             ))}
           </div>
         </div>

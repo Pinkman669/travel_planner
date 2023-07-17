@@ -8,6 +8,7 @@
     flex-direction: column;
     align-items: center;
     padding: 10px;
+    overflow: hidden;
 }
 
 .dayHeader{
@@ -24,6 +25,7 @@
     flex-direction: column;
     align-items: center;
     padding: 10px;
+    overflow-X: hidden;
 }
 
 .dayTitle > div{
