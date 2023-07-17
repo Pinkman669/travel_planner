@@ -19,13 +19,22 @@ interface newEventModalProps {
   onHide: () => void;
 }
 
+export interface LocationInfo{
+  name: string;
+  address: string;
+  businessHours: string[] | null;
+  phone: string | null;
+  website: string | null;
+}
+
 export function NewEventModal(props: newEventModalProps) {
   const placeId = useAppSelector((state) => state.place.placeId);
-  const {tripId} = useParams()
-    const tripInfo = useAppSelector(state => state.trip.tripItems.find((item) => item.id === Number(tripId)))
-    const startDate = tripInfo?.start_date
-    
-  
+  const { tripId } = useParams();
+  const tripInfo = useAppSelector((state) =>
+    state.trip.tripItems.find((item) => item.id === Number(tripId))
+  );
+  const startDate = tripInfo?.start_date;
+
 
   const { register, handleSubmit } = useForm<NewEventItem>({
     defaultValues: {
@@ -43,31 +52,34 @@ export function NewEventModal(props: newEventModalProps) {
     },
   });
 
-
   const onSubmit = useMutation(
-    async (data:NewEventItem ) => {
-      console.log(placeId, startDate, tripId)
-    if (placeId && startDate && tripId){
-      return await addNewEvent(data,placeId,startDate,tripId)
-    }
+    async (data: NewEventItem) => {
+      console.log(placeId, startDate, tripId);
+      if (placeId && startDate && tripId) {
+        const locationInfo = {
+          name: props.name,
+          address: props.address,
+          businessHours: props.business_hours,
+          phone: props.phone,
+          website: props.website
+        }
+        return await addNewEvent(data, placeId, startDate, tripId,locationInfo);
+      }
     },
     {
-        onSuccess: () => {
-            queryClient.invalidateQueries(['tripItems'])
-            notify(true, 'Added new event')
-        },
-        onError: () => {
-            notify(false, 'Add new event fail')
-        }
+      onSuccess: () => {
+        queryClient.invalidateQueries(["tripItems"]);
+        notify(true, "Added new event");
+      },
+      onError: () => {
+        notify(false, "Add new event fail");
+      },
     }
-)
+  );
 
   async function submit(data: NewEventItem) {
-    onSubmit.mutate(
-      data
-    )
-}
-  
+    onSubmit.mutate(data);
+  }
 
   const hours = props.business_hours?.join("\n");
 
@@ -209,17 +221,15 @@ export function NewEventModal(props: newEventModalProps) {
               {...register("expense")}
             />
           </Form.Group>
-       
-      
 
-
-        <Button variant="secondary" onClick={props.onHide}>
-          Cancel
-        </Button>
-        <Button variant="primary" type="submit" >Add</Button>
-      </Form>
+          <Button variant="secondary" onClick={props.onHide}>
+            Cancel
+          </Button>
+          <Button variant="primary" type="submit" onClick={props.onHide}>
+            Add
+          </Button>
+        </Form>
       </Modal.Body>
     </Modal>
   );
 }
-

@@ -4,12 +4,24 @@ import { new_update_event_item } from './newEventSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { isSameDay } from 'date-fns';
 import { differenceInDays } from 'date-fns';
+import { LocationInfo } from './NewEventModal';
+import { getDetails } from "use-places-autocomplete";
+import { Interface } from "readline";
+
+export interface LocationDetail {
+    name?: string,
+    formatted_address?: string,
+    formatted_phone_number?: string,
+    opening_hours?: string[],
+    website?: string,
+    place_id?: string
+}
 
 export interface EventItem {
     id: number;
     name: string;
     date: Date;
-    time: Date;
+    time: string;
     location: string;
     business_hours: string;
     phone: string;
@@ -101,20 +113,20 @@ export async function updateDayEventOrder(
         return false
     }
 }
-export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date, tripId: string ) {
+export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date, tripId: string, locationInfo: LocationInfo) {
 
     console.log(addNewEvent!!!!)
     const eventDayString = eventList.date.toString()
     console.log(eventDayString)
     const eventDay = new Date(eventDayString)
-    const startDayString =startDay.toString().split("T")[0]
+    const startDayString = startDay.toString().split("T")[0]
     console.log(startDayString)
     const startDayDate = new Date(startDayString)
-    console.log("eventDay:"+ eventDay+" start :"+startDayDate )
+    console.log("eventDay:" + eventDay + " start :" + startDayDate)
 
-    const differenceInDay = differenceInDays(eventDay, startDayDate )
+    const differenceInDay = differenceInDays(eventDay, startDayDate)
     console.log(differenceInDay)
-    const day = differenceInDay +1
+    const day = differenceInDay + 1
 
 
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/addNewEvent`, {
@@ -124,9 +136,61 @@ export async function addNewEvent(eventList: NewEventItem, placeId: string, star
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-            eventList, placeId: placeId, day: day, tripId: tripId
+            eventList, placeId: placeId, day: day, tripId: tripId, locationInfo: locationInfo
         })
     })
+    if (res.status === 200) {
+        return true
+    } else {
+        return false
+    }
+}
+
+
+export default function usePlaceInfo() {
+    const placeId = useAppSelector((state) => state.place.placeId!);
+
+    const placeInfo = {
+        placeId: placeId,
+        fields: [
+            "name",
+            "formatted_address",
+            "formatted_phone_number",
+            "opening_hours",
+            "website",
+            "place_id"
+        ]
+    }
+    const { isLoading, error, data, isFetching } = useQuery(
+        ["placeDetail", placeId],
+        async () => {
+            const detail = (await getDetails(
+                placeInfo
+            )) as google.maps.places.PlaceResult;
+            return detail
+        }, {
+        refetchOnWindowFocus: false,
+    }
+    );
+
+    if (isLoading || error || !data || isFetching) {
+        return null;
+    }
+    return data
+}
+
+export async function addFavouriteLocation(data: LocationDetail, tripId: string) {
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/addFavouriteLocation`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            data, tripId
+        })
+    })
+
     if (res.status === 200) {
         return true
     } else {
