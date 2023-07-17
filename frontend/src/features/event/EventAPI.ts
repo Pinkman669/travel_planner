@@ -104,7 +104,8 @@ export async function addNewEvent(eventList: NewEventItem, placeId: string, star
     const startDayString = startDay.toString().split("T")[0]
     const startDayDate = new Date(startDayString)
     const differenceInDay = differenceInDays(eventDay, startDayDate)
-    const day = differenceInDay + 1
+    console.log('diff: ' + differenceInDay)
+    const day = differenceInDay
 
 
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/addNewEvent`, {

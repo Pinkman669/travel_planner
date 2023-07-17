@@ -1,0 +1,10 @@
+.TripEventContainer{
+    display: flex;
+    padding: 30px 15px;
+    height: 100%;
+}
+
+.scheduleOuterContainer{
+    height: 100%;
+    width: 100%;
+}
