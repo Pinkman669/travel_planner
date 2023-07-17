@@ -28,7 +28,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
     const [directionResponseArr, setDirectionResponseArr] = useState<DirectionsResponse[] | null>(null)
 
     const [travelModeValue, setTravelModeValue] = useState<any | null>(null)
-    const [location, setLocation] = useState<LatLngLiteral>();
+    // const [location, setLocation] = useState<LatLngLiteral>();
     const [animation, setAnimation] = useState(false)
     const [showRouteForm, setShowRouteForm] = useState(true);
     const [showRouteInfo, setShowRouteInfo] = useState(false)
@@ -173,7 +173,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
                         options={options}
                         onLoad={onLoad}
                     >
-                        {location && <Marker position={location} />}
+                        {/* {location && <Marker position={location} />} */}
                         {directionResponse && <DirectionsRenderer directions={directionResponse} />}
                         {
                             directionResponseArr ?
