@@ -159,4 +159,7 @@
         bottom: 7px;
         height: 50px;
     }
+    .tripHeader{
+        padding: 5px 15px;
+    }
 }

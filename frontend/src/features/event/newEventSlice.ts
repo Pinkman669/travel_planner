@@ -100,16 +100,26 @@ export const newEventSlice = createSlice({
             localStorage.setItem('newEventItems', JSON.stringify(state.new_eventItems))
         },
         new_update_event_order: (state: EventState, action: PayloadAction<New_update_order>) => {
+            const overIndex = action.payload.overIndex
+            const activeIndex = action.payload.activeIndex
             let newEventList = state.new_eventItems[action.payload.container].map((event) => {
                 if (event.id === action.payload.activeId) {
                     event.item_order = action.payload.overIndex
-                }
-                if (event.item_order > action.payload.activeIndex){
-                    event.item_order--
+                } else{
+                    if (activeIndex > overIndex){
+                        if (event.item_order >=  overIndex && event.item_order <= activeIndex){
+                            event.item_order++ 
+                        }
+                    } else if (activeIndex < overIndex){
+                        if (event.item_order >= activeIndex && event.item_order <= overIndex){
+                            event.item_order--
+                        }
+                    }
                 }
                 return event
             })
             newEventList = arrayMove(newEventList, action.payload.activeIndex - 1, action.payload.overIndex - 1)
+            console.log(newEventList)
             state.new_eventItems[action.payload.container] = newEventList
             localStorage.setItem('newEventItems', JSON.stringify(state.new_eventItems))
         }

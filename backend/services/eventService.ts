@@ -38,6 +38,7 @@ export class EventService {
             })
             .from('events')
             .where('id', eventId)
+            .andWhere('active', true)
             .returning(['trip_id', 'day'])
     }
 
@@ -50,6 +51,7 @@ export class EventService {
             })
             .from('events')
             .where('id', eventId)
+            .andWhere('active', true)
     }
 
     async getEventByDay(tripId: number, day: number) {
@@ -72,6 +74,7 @@ export class EventService {
             .first('item_order')
             .where('trip_id', trip_id)
             .andWhere('day', day)
+            .andWhere('active', true)
             .orderBy('item_order','desc')
             .from("events")
         

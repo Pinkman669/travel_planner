@@ -30,11 +30,19 @@ export class EventController {
             if (activeOrder < 0 || overOrder < 0) {
                 throw new Error('Missing update info')
             }
+            console.log('actO: ' + activeOrder, 'overO: ' + overOrder)
             await this.eventService.updateEventOrder(activeEventId, overOrder)
             eventList.forEach(async (event: any) => {
-                if (event.id !== activeEventId) {
-                    const newItemOrder = event.item_order > Number(activeOrder) ? event.item_order - 1 : event.item_order
-                    await this.eventService.updateEventOrder(event.id, newItemOrder)
+                if (activeOrder > overOrder){
+                    if (event.id !== activeEventId && event.item_order >= overOrder && event.item_order <= activeOrder) {
+                        const newItemOrder = event.item_order < Number(activeOrder) ? event.item_order + 1 : event.item_order
+                        await this.eventService.updateEventOrder(event.id, newItemOrder)
+                    }
+                } else if (overOrder > activeOrder){
+                    if (event.id !== activeEventId && event.item_order >= activeOrder && event.item_order <= overOrder) {
+                        const newItemOrder = event.item_order > Number(activeOrder) ? event.item_order - 1 : event.item_order
+                        await this.eventService.updateEventOrder(event.id, newItemOrder)
+                    }
                 }
             })
             res.status(200).json({ success: true })
@@ -53,18 +61,14 @@ export class EventController {
             }
 
             activeEventList.forEach(async (event: any) => {
-                console.log('newIndex: ' + activeIndex)
                 const newItemOrder = event.item_order > Number(activeIndex) ? event.item_order - 1 : event.item_order
-                console.log('origin: ' + event.item_order, 'newOrder: ' + newItemOrder, 'id: ' + event.id)
                 await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, newItemOrder)
             });
             overEventList.forEach(async (event: any) => {
                 if (event.id === Number(activeEventId)) {
                     await this.eventService.updateEventDate(event.id, new Date(newDate), newDay, newIndex)
                 } else {
-                    console.log('name: ' + event.name, 'order: ' + event.item_order, 'newIndex: ' + newIndex)
                     const newItemOrder = event.item_order >= Number(newIndex) ? event.item_order + 1 : event.item_order
-                    console.log('newOrder: ' + newItemOrder)
                     await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, newItemOrder)
                 }
             });
@@ -121,7 +125,7 @@ export class EventController {
             logger.error(`[ERR013] ${e}`)
             res.status(400).json({ success: false, msg: `[ERR013] ${errorCode.ERR013}` })
         }
-    } 
+    }
     getFavouriteEvent = async (req: Request, res: Response) => {
         try {
             const tripId = Number(req.params.tripId)
