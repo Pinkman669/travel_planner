@@ -188,7 +188,7 @@ export async function addFavouriteLocation(data: LocationDetail, tripId: string)
 
 export function useFavouriteEvent(tripId:string){
     const {isLoading, error, data, isFetching} = useQuery({
-        queryKey: ["eventItem"],
+        queryKey: ["eventItems"],
         queryFn: async ()=> {
             const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getFavouriteEvent/${tripId}`,{
                 method: 'GET',
