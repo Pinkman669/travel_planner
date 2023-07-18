@@ -23,13 +23,13 @@ export default function TripEvent() {
                     <Link to='/' id='sign-up-link'><IconCornerUpLeft /></Link>
                 </Button>
                 {
-                    screenWidth <= 400 && <Button variant="dark" onClick={handleShow}>Map</Button>
+                    screenWidth <= 450 && <Button variant="dark" onClick={handleShow}>Map</Button>
                 }
             </div>
             <div className={`${styles.TripEventContainer}`}>
                 <Schedule screenWidth={screenWidth} tripId={Number(tripId)} tripName={tripInfo?.name as string} userName={userName as string} />
                 {
-                    screenWidth <= 400 ?
+                    screenWidth <= 450 ?
                         <Offcanvas show={show} onHide={handleClose} placement="end">
                             <Offcanvas.Body>
                                 <Feature onClose={handleClose} screenWidth={screenWidth}/>

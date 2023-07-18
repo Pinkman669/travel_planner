@@ -2,6 +2,7 @@ import { useLoadScript} from "@react-google-maps/api";
 import { GoogleRoute } from "./GoogleRoute";
 import { useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
+import styles from '../../css/EventsRoute.module.css'
 
 
 export default function EventRoute() {
@@ -15,7 +16,9 @@ export default function EventRoute() {
                 {
                     showRoute && selectedDay && eventsByDay.length > 1 ? 
                     <GoogleRoute eventList={eventsByDay}/> :
-                    <div>Not Enough Info</div>
+                    <div id={styles.routeDisplayOffContainer}>
+                        <div id={styles.routeDisplayOffMsg}>At least Two events is required to be in a single day</div>
+                    </div>
                 }
         </div>
     );

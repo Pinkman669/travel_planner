@@ -97,7 +97,6 @@ export function GoogleRoute(props: GoogleRouteProps) {
         setDirectionResponse(null)
         setDirectionResponseArr(null)
         if (travelModeValue !== 'TRANSIT') {
-            console.log('start: ' + startPointId, 'end: ' + endPointId, 'wp: ' + wayPointArr)
             const res = await getGoogleRoute(
                 directionService,
                 startPointId,
@@ -119,9 +118,9 @@ export function GoogleRoute(props: GoogleRouteProps) {
             let promises = []
             for (let i = 0; i < wayPointArr.length - 1; i++) {
                 const result = await getGoogleRouteTransit(directionService, wayPointArr[i] as string, wayPointArr[i + 1] as string, travelModeValue)
-                if (result){
+                if (result) {
                     promises.push(result)
-                } else{
+                } else {
                     notify(false, 'Get Route error')
                     return
                 }
@@ -161,83 +160,71 @@ export function GoogleRoute(props: GoogleRouteProps) {
         }
     }
 
-    if (directionResponseArr && showRouteInfo && showOverlay) {
-        console.log('should show')
-    }
-    if (directionResponse && showRouteInfo) {
-        console.log('sth wrong')
-    }
-    if (process.env.REACT_APP_MAP_DISPLAY === "1") {
-
-        return (
-            <>
-                <div className={styles.searchPage}>
-                    <GoogleMap
-                        zoom={13}
-                        center={center}
-                        mapContainerClassName="map-container"
-                        options={options}
-                        onLoad={onLoad}
-                    >
-                        {/* {location && <Marker position={location} />} */}
-                        {directionResponse && <DirectionsRenderer directions={directionResponse} />}
-                        {
-                            directionResponseArr ?
-                                directionResponseArr.map((direction, index) => {
-                                    return <div key={index + 'secet123'}>
-                                        <DirectionsRenderer directions={direction}
-                                            options={{
-                                                suppressMarkers: true
-                                            }}
-                                        />
-                                        <Marker options={{
-                                            label: { fontSize: '15px', text: String.fromCharCode(index + 65), color: 'white', fontWeight: '1100' }
+    return (
+        <>
+            <div className={styles.searchPage}>
+                <GoogleMap
+                    zoom={13}
+                    center={center}
+                    mapContainerClassName="map-container"
+                    options={options}
+                    onLoad={onLoad}
+                >
+                    {directionResponse && <DirectionsRenderer directions={directionResponse} />}
+                    {
+                        directionResponseArr ?
+                            directionResponseArr.map((direction, index) => {
+                                return <div key={index + 'secet123'}>
+                                    <DirectionsRenderer directions={direction}
+                                        options={{
+                                            suppressMarkers: true
                                         }}
-                                            position={direction.routes[0].legs[0].start_location}
-                                        />
-                                        <Marker
-                                            options={{
-                                                label: { fontSize: '15px', text: String.fromCharCode(index + 1 + 65), color: 'white', fontWeight: '1100' }
-                                            }}
-                                            position={direction.routes[0].legs[0].end_location}
-                                        />
-                                    </div>
+                                    />
+                                    <Marker options={{
+                                        label: { fontSize: '15px', text: String.fromCharCode(index + 65), color: 'white', fontWeight: '1100' }
+                                    }}
+                                        position={direction.routes[0].legs[0].start_location}
+                                    />
+                                    <Marker
+                                        options={{
+                                            label: { fontSize: '15px', text: String.fromCharCode(index + 1 + 65), color: 'white', fontWeight: '1100' }
+                                        }}
+                                        position={direction.routes[0].legs[0].end_location}
+                                    />
+                                </div>
 
-                                }) :
-                                null
-                        }
-                    </GoogleMap>
-                    <div className={
-                        `${styles.RouteFormOverlay} 
+                            }) :
+                            null
+                    }
+                </GoogleMap>
+                <div className={
+                    `${styles.RouteFormOverlay} 
                         ${showOverlay ? styles.open : styles.close} 
                         ${animation ? styles.closing : null}
                         ${showRouteForm ? styles.RouteFormOverlayColour : styles.RouteInfoOverlayColour}`
-                    }>
-                        <button onClick={handleShowRouteFrom} className={styles.showRouteFromBtn}>
-                            <IconTableOptions />
-                        </button>
-                        <button onClick={handleShowRouteInfo} className={styles.showRouteInfoBtn}>
-                            <IconInfoSquareFilled />
-                        </button>
-                        <CloseButton variant='white' onClick={handleClose} className={styles.closeRouteFormBtn} />
-                        {
-                            showRouteInfo && directionResponseArr ?
+                }>
+                    <button onClick={handleShowRouteFrom} className={styles.showRouteFromBtn}>
+                        <IconTableOptions />
+                    </button>
+                    <button onClick={handleShowRouteInfo} className={styles.showRouteInfoBtn}>
+                        <IconInfoSquareFilled />
+                    </button>
+                    <CloseButton variant='white' onClick={handleClose} className={styles.closeRouteFormBtn} />
+                    {
+                        showRouteInfo && directionResponseArr ?
                             <RouteTransitInfo travelMode={travelModeValue} directionResponse={directionResponseArr} /> :
                             null
-                        }
-                        {
-                            showRouteInfo && directionResponse ?
-                                <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse} /> :
-                                null
-                        }
-                        {showRouteForm && <div className={`${styles.RouteFormContainer} ${showRouteForm ? null : styles.closeForm}`}>
-                            <RouteForm onSubmit={handleFormSubmit}></RouteForm>
-                        </div>}
-                    </div>
+                    }
+                    {
+                        showRouteInfo && directionResponse ?
+                            <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse} /> :
+                            null
+                    }
+                    {showRouteForm && <div className={`${styles.RouteFormContainer} ${showRouteForm ? null : styles.closeForm}`}>
+                        <RouteForm onSubmit={handleFormSubmit}></RouteForm>
+                    </div>}
                 </div>
-            </>
-        );
-    } else {
-        return <div>Map display off</div>;
-    }
+            </div>
+        </>
+    );
 }

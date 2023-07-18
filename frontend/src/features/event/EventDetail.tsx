@@ -21,7 +21,6 @@ interface EventDetailProps {
 export default function EventDetail(props: EventDetailProps) {
     const dispatch = useAppDispatch()
     const {tripId} = useParams()
-    console.log(tripId)
     const datesOfTrip = useAppSelector(state => state.trip.tripItems).find(trip => trip.id === Number(tripId))?.DatesOfTrip
 
     const eventItem = props.eventItem

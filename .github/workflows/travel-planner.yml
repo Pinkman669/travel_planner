@@ -49,6 +49,7 @@ jobs:
         env:
           REACT_APP_API_SERVER: https://api-travel-planner.pinkman.world
           REACT_APP_FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
+          REACT_APP_GOOGLE_MAP_API_KEY: ${{ secrets.REACT_APP_GOOGLE_MAP_API_KEY }}
         run: |
           yarn install
           yarn test

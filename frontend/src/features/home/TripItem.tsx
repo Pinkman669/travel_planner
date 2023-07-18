@@ -6,8 +6,6 @@ import DeleteConfirmModal from "./DeleteConfirmModal";
 export interface TripItemProps {
     tripName: string;
     location: string;
-    // showDeleteModal: boolean
-    // onShowDeleteModal: () => void;
     period: number;
     onRemove: () => void;
     onClickTrip: () => void

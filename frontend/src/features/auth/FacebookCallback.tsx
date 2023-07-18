@@ -15,10 +15,9 @@ export function FacebookCallback(){
         const code = searchParams.get('code') || '';
 
         (async function(){
-            console.log('facebook callback')
             const data = await facebookLogin(code)
             if (data){
-                dispatch(login(data.name))
+                dispatch(login({userId: data.userId, name: data.name}))
             } else{
                 notify(false, 'Login failed')
             }

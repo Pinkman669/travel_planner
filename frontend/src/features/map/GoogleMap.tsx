@@ -29,8 +29,6 @@ export function Map() {
     []
   );
 
-  if (process.env.REACT_APP_MAP_DISPLAY === "1") {
-
     return (
       <div className="search-page">
         <GoogleMap
@@ -52,7 +50,4 @@ export function Map() {
         {placeId && <PlaceInfo/>}
       </div>
     );
-  } else {
-    return <div>Map display off</div>;
-  }
 }

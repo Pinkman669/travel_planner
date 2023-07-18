@@ -75,9 +75,6 @@ export default function Login() {
 
                 <p className='makasar-font'>Login with</p>
                 <div id='social-login-div'>
-                    <button className='social-login-btn'>
-                        <IconBrandGoogle />
-                    </button>
                     <button onClick={loginViaFacebook} className='social-login-btn'>
                         <IconBrandFacebookFilled />
                     </button>

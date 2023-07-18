@@ -12,7 +12,7 @@ export default function Feature(props: FeatureProps) {
     return (
         <div className={styles.controlContainer}> 
         {
-            props.screenWidth && props.screenWidth <= 400 && <CloseButton id={styles.offcanvasCloseBtn} onClick={props.onClose}/>
+            props.screenWidth && props.screenWidth <= 450 && <CloseButton id={styles.offcanvasCloseBtn} onClick={props.onClose}/>
         }
             <FeatureTab/>
         </div>

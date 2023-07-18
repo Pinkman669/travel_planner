@@ -29,7 +29,6 @@ export default function Home() {
     const userId = useAppSelector(state => state.auth.userId)
 
     useEffect(() =>{
-        console.log('hi')
         dispatch(fetchTripItemByUserId({userId: userId as number}))
     },[dispatch, userId])
 
