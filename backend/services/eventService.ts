@@ -1,5 +1,6 @@
 import { Knex } from 'knex';
 
+
 export interface LocationDetail {
     name?:string ,
     formatted_address?: string,
@@ -9,7 +10,7 @@ export interface LocationDetail {
     place_id?: string
   }
 
-export interface LocationInfo{
+  export interface LocationInfo{
     name: string;
     address: string;
     businessHours: string[] | null;
@@ -107,7 +108,7 @@ export class EventService {
             "name":data.name,
             "address":data.formatted_address,
             "phone":data.formatted_phone_number,
-            "business_hours": data.opening_hours,
+            "business_hours": data.opening_hours!.toString(),
             "website": data.website,
             "place_id": data.place_id,
             "trip_id":tripId,
@@ -124,5 +125,19 @@ export class EventService {
             })
             .from('events')
             .where('id', eventId)
+    }
+    
+    async getFavouriteEvent(tripId: number) {
+        const result = await this.knex
+            .select('*')
+            .from('favourite_events')
+            .where('trip_id', tripId)
+            .andWhere('active', true)
+            .orderBy('id', 'asc')
+        
+    for (let i=0; i< result.length;i++) {
+        result[i].business_hours = result[i].business_hours.split()
+    }
+        return result
     }
 }

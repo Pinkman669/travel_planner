@@ -5,6 +5,7 @@ import EventsRoute from "../map/EventsRoute";
 import styles from '../../css/FeatureTabs.module.css'
 import { IconHeartPlus, IconRoute, IconWorld } from "@tabler/icons-react";
 import '../../css/customBSCss.css'
+import FavouriteEvent from "../event/FavouriteEvent";
 
 type Libraries = ("drawing" | "geometry" | "localContext" | "places")[];
 const libraries: Libraries = ['places']
@@ -26,7 +27,7 @@ export default function FeatureTab() {
           <Map />
         </Tab>
         <Tab eventKey="Fav" title={<IconHeartPlus id={styles.favIcon}/>}>
-          fav page
+          <FavouriteEvent/>
         </Tab>
         <Tab eventKey="Route" title={<IconRoute id={styles.routeIcon}/>}>
           <EventsRoute />

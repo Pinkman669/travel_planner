@@ -3,7 +3,10 @@ import { LocationInfo } from './NewEventModal';
 import { getDetails } from "use-places-autocomplete";
 import { EventItem } from '../utils/types'
 import { useQuery } from '@tanstack/react-query'
-import { useAppSelector } from '../../redux/hooks';
+// import { new_update_event_item } from './newEventSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { FavouriteDetail } from './FavouriteEvent';
+// import { isSameDay } from 'date-fns';
 
 
 export interface LocationDetail {
@@ -12,6 +15,15 @@ export interface LocationDetail {
     formatted_phone_number?: string,
     opening_hours?: string[],
     website?: string,
+    place_id?: string
+}
+
+export interface favouriteLocation {
+    name: string,
+    address: string,
+    phone: string,
+    business_hour: string[],
+    website: string,
     place_id?: string
 }
 
@@ -63,15 +75,11 @@ export async function updateDayEventOrder(
 }
 export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date, tripId: string, locationInfo: LocationInfo) {
 
-    console.log(addNewEvent!!!!)
+
     const eventDayString = eventList.date.toString()
-    console.log(eventDayString)
     const eventDay = new Date(eventDayString)
     const startDayString = startDay.toString().split("T")[0]
-    console.log(startDayString)
     const startDayDate = new Date(startDayString)
-    console.log("eventDay:" + eventDay + " start :" + startDayDate)
-
     const differenceInDay = differenceInDays(eventDay, startDayDate)
     console.log('diff: ' + differenceInDay)
     const day = differenceInDay
@@ -163,4 +171,26 @@ export async function removeEvent(eventId: number){
     } else{
         return false
     }
+}
+
+export function useFavouriteEvent(tripId:string){
+    const {isLoading, error, data, isFetching} = useQuery({
+        queryKey: ["eventItem"],
+        queryFn: async ()=> {
+            const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getFavouriteEvent/${tripId}`,{
+                method: 'GET',
+                headers:{
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            const result = await res.json()
+            return result.result as [EventItem]
+        }
+    })
+
+    if(isLoading || isFetching || error || !data){
+        return []
+    }
+
+    return data
 }

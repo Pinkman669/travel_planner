@@ -108,18 +108,32 @@ export class EventController {
         }
     }
 
-    removeEvent = async (req:Request, res:Response) =>{
-        try{
-            const {eventId} = req.body
-            if (!eventId){
+    removeEvent = async (req: Request, res: Response) => {
+        try {
+            const { eventId } = req.body
+            if (!eventId) {
                 throw new Error('Missing event info')
             }
 
             await this.eventService.removeEvent(eventId)
-            res.status(200).json({success:true})
-        }catch(e){
+            res.status(200).json({ success: true })
+        } catch (e) {
+            logger.error(`[ERR013] ${e}`)
+            res.status(400).json({ success: false, msg: `[ERR013] ${errorCode.ERR013}` })
+        }
+    } 
+    getFavouriteEvent = async (req: Request, res: Response) => {
+        try {
+            const tripId = Number(req.params.tripId)
+            if (!tripId) {
+                throw new Error('Missing tripId')
+            }
+            const favouriteList = await this.eventService.getEvents(tripId)
+            res.status(200).json({ success: true, result: favouriteList })
+        } catch (e) {
             logger.error(`[ERR012] ${e}`)
-            res.status(400).json({success:false, msg: `[ERR012] ${errorCode.ERR012}`})
+            res.status(400).json({ success: false, msg: `[ERR012] ${errorCode.ERR012}` })
         }
     }
 }
+

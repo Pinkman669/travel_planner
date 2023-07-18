@@ -25,7 +25,13 @@ export default function EventDetail(props: EventDetailProps) {
 
     const eventItem = props.eventItem
     const regex = /["'{},]+/gi
-    const clearBusinessHrs = eventItem.business_hours.split(regex)
+    
+    let clearBusinessHrs: string[]|[]
+    if (eventItem.business_hours){
+        clearBusinessHrs = (eventItem.business_hours as string).split(regex)
+    } else{
+        clearBusinessHrs = []
+    }
 
     const [showDeleteEvent, setShowDeleteEvent] = useState(false)
     const handleOpen = () => setShowDeleteEvent(true)

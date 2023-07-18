@@ -4,7 +4,7 @@ export interface EventItem {
     date: Date;
     time: string;
     location: string;
-    business_hours: string;
+    business_hours: string[]|string;
     phone: string;
     website: string;
     budget: number;

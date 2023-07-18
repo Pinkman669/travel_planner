@@ -10,7 +10,7 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import "../../css/GoogleMap.css";
+import "../../css/googleMap.css";
 import { change_placeId } from "./placeSlice";
 import { useAppDispatch } from "../../redux/hooks";
 
