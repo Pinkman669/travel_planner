@@ -97,6 +97,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
         setDirectionResponse(null)
         setDirectionResponseArr(null)
         if (travelModeValue !== 'TRANSIT') {
+            console.log('start: ' + startPointId, 'end: ' + endPointId, 'wp: ' + wayPointArr)
             const res = await getGoogleRoute(
                 directionService,
                 startPointId,
@@ -117,8 +118,13 @@ export function GoogleRoute(props: GoogleRouteProps) {
         } else {
             let promises = []
             for (let i = 0; i < wayPointArr.length - 1; i++) {
-                const result = getGoogleRouteTransit(directionService, wayPointArr[i] as string, wayPointArr[i + 1] as string, travelModeValue)
-                promises.push(result)
+                const result = await getGoogleRouteTransit(directionService, wayPointArr[i] as string, wayPointArr[i + 1] as string, travelModeValue)
+                if (result){
+                    promises.push(result)
+                } else{
+                    notify(false, 'Get Route error')
+                    return
+                }
             }
             Promise.all(promises)
                 .then((result) => {

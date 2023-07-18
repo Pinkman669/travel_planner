@@ -1,3 +1,5 @@
+import { notify } from "../utils/utils"
+
 export async function getGoogleRoute(
     directionService: google.maps.DirectionsService,
     originId: string,
@@ -15,6 +17,12 @@ export async function getGoogleRoute(
                 placeId: destinationId
             },
             travelMode: travelMode
+        }, (result, status)=> {
+            if (status === 'OK'){
+                return result
+            } else{
+                return null
+            }
         })
 
         return result
@@ -29,21 +37,6 @@ export async function getGoogleRouteTransit(
     destinationId: string,
     travelMode: google.maps.TravelMode
 ) {
-    // try{
-    //     const result = await directionService.route({
-    //         origin: {
-    //             placeId: originId
-    //         },
-    //         destination: {
-    //             placeId: destinationId
-    //         },
-    //         travelMode: travelMode
-    //     })
-
-    //     return result
-    // } catch(e){
-    //     return  null
-    // }
     return directionService.route({
         origin: {
             placeId: originId
@@ -52,6 +45,12 @@ export async function getGoogleRouteTransit(
             placeId: destinationId
         },
         travelMode: travelMode
+    }, (result, status) =>{
+        if (status === 'OK'){
+            return result
+        } else{
+            return null
+        }
     })
         .then((result) => {
             return result
