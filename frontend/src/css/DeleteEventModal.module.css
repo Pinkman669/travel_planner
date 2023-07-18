@@ -1,0 +1,23 @@
+.deleteEventBackdrop{
+    background-color: rgba(50,50,50,0.8);
+}
+
+.eventName{
+    padding: 15px 0;
+    font-weight: bolder;
+}
+
+.deleteTitle{
+    text-align: center;
+}
+
+.nameContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.deleteConfirmModalBtn{
+    display: flex;
+    justify-content: space-around;
+}

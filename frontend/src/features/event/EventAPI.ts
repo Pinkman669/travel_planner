@@ -3,9 +3,7 @@ import { LocationInfo } from './NewEventModal';
 import { getDetails } from "use-places-autocomplete";
 import { EventItem } from '../utils/types'
 import { useQuery } from '@tanstack/react-query'
-// import { new_update_event_item } from './newEventSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-// import { isSameDay } from 'date-fns';
+import { useAppSelector } from '../../redux/hooks';
 
 
 export interface LocationDetail {
@@ -19,38 +17,6 @@ export interface LocationDetail {
 
 
 export type NewEventItem = Omit<EventItem, "id" | "day" | "trip_id">
-
-// export function useEventItem(tripId: number) {
-//     const dispatch = useAppDispatch()
-//     const datesOfTrip = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === tripId)))?.DatesOfTrip
-//     const { isLoading, error, data, isFetching, status } = useQuery({
-//         queryKey: ['eventItems'],
-//         queryFn: async () => {
-//             const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getEvents/${tripId}`, {
-//                 headers: {
-//                     "Authorization": `Bearer ${localStorage.getItem('token')}`
-//                 }
-//             })
-//             const result = await res.json()
-//             return result.result as EventItem[]
-//         }
-//     })
-
-//     if (isLoading || isFetching || error || !data) {
-//         return []
-//     }
-//     if (status === 'success') {
-//     }
-//     dispatch(update_event_item(data))
-//     const sortedEventMap = new Map()
-//     datesOfTrip!.forEach((date, index) => {
-//         const currentDateList = data.filter((event) => isSameDay(new Date(event.date), new Date(date)))
-//         sortedEventMap.set(`day${index + 1}`, currentDateList)
-//     })
-//     const mapToObject = Object.fromEntries(sortedEventMap)
-//     dispatch(new_update_event_item(mapToObject))
-//     return data
-// }
 
 export async function updateEventOrder(activeEventId: number, activeOrder: number, overOrder: number, eventList: EventItem[]) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateEventOrder`, {
@@ -176,6 +142,25 @@ export async function addFavouriteLocation(data: LocationDetail, tripId: string)
     if (res.status === 200) {
         return true
     } else {
+        return false
+    }
+}
+
+export async function removeEvent(eventId: number){
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/removeEvent`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            eventId
+        })
+    })
+
+    if (res.status === 200){
+        return true
+    } else{
         return false
     }
 }

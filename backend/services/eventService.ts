@@ -116,4 +116,13 @@ export class EventService {
         })
         .into('favourite_events')
     }
+
+    async removeEvent(eventId: number){
+        await this.knex
+            .update({
+                'active': false
+            })
+            .from('events')
+            .where('id', eventId)
+    }
 }

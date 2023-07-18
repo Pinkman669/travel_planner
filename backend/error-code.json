@@ -3,5 +3,6 @@
     "ERR008": "Update event order failed",
     "ERR009": "Update event date failed",
     "ERR010": "Add New Event failed",
-    "ERR011": "Add Favourite Event failed"
+    "ERR011": "Add Favourite Event failed",
+    "ERR012": "Remove event failed"
 }

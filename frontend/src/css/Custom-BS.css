@@ -1,3 +1,9 @@
 .modal-content{
     background-color: #FFC7C2;
 }
+
+.delete-event-modal{
+    background-color: rgb(224, 209, 209);
+    padding: 20px;
+    border-radius: 5px;
+}

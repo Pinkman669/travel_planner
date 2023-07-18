@@ -1,0 +1,25 @@
+#websiteContainer{
+    display: flex;
+}
+
+#websiteContainer > a{
+    padding: 0 8px;
+}
+
+.eventDeleteBtn{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 2;
+    bottom: 0;
+    right: 0;
+}
+
+.eventDeleteBtn:hover{
+    color: red;
+}
+
+.iconBtn{
+    border: none;
+    background-color: transparent;
+}
