@@ -125,10 +125,14 @@ export class EventService {
             .where('trip_id', tripId)
             .andWhere('active', true)
             .orderBy('id', 'asc')
-        
+    
+            
     for (let i=0; i< result.length;i++) {
-        result[i].business_hours = result[i].business_hours.split()
+        result[i].business_hours = result[i].business_hours.split(",")
+        
     }
+        console.log(result)
         return result
+
     }
 }

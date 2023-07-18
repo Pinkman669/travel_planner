@@ -113,7 +113,7 @@ getFavouriteEvent = async (req: Request, res: Response) => {
         if (!tripId) {
             throw new Error('Missing tripId')
         }
-        const favouriteList = await this.eventService.getEvents(tripId)
+        const favouriteList = await this.eventService.getFavouriteEvent(tripId)
         res.status(200).json({ success: true, result: favouriteList})
     } catch (e) {
         logger.error(`[ERR012] ${e}`)

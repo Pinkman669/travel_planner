@@ -15,14 +15,13 @@ export interface FavouriteDetail {
   name?: string;
   address: string;
   phone?: string;
-  business_hours?: string;
+  business_hours?: string[];
   website?: string;
   place_id: string;
 }
 
 export default function FavouriteEvent() {
   const { tripId } = useParams();
-  const placeInfo = usePlaceInfo();
   const [showNewEventModal, setShowNewEventModal] = useState(false);
   const queryClient = useQueryClient();
   const favouriteEvent = useFavouriteEvent(tripId!);
@@ -30,7 +29,7 @@ export default function FavouriteEvent() {
   return (
     <div className="favourite-page">
 {favouriteEvent.map((item) => (
-      <div className="places-info-container">
+      <div className="favourite-places-info-container">
         <div className="place_info_top_container">
           <div className="place_name">{item.name}</div>
           <div className="feature_container">
@@ -44,7 +43,7 @@ export default function FavouriteEvent() {
         </div>
         <div className="info_detail_title">
           Address:{" "}
-          <div className="info_detail">{item.location}</div>
+          <div className="info_detail">{item.address}</div>
         </div>
 
         {item.business_hours && (
@@ -74,11 +73,11 @@ export default function FavouriteEvent() {
           </div>
         )}
 
-        {placeInfo?.formatted_address && (
+        {item.address && (
           <NewEventModal
             isShown={showNewEventModal}
             name={item.name || ""}
-            address={item.location}
+            address={item.address}
             business_hours={item.business_hours || null}
             phone={item.phone || ""}
             website={item.website || ""}

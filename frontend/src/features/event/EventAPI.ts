@@ -197,7 +197,7 @@ export function useFavouriteEvent(tripId:string){
                 }
             })
             const result = await res.json()
-            return result.result as [EventItem]
+            return result.result as [FavouriteDetail]
         }
     })
 
