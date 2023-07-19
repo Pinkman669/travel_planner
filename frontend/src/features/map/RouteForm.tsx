@@ -14,7 +14,7 @@ interface RouteFormStateProps{
 }
 
 export default function RouteForm(props: RouteFormStateProps) {
-    const { register, handleSubmit, reset, formState } = useForm<RouteFormState>({
+    const { register, handleSubmit } = useForm<RouteFormState>({
         defaultValues: {
             travelMode: "DRIVING"
         },

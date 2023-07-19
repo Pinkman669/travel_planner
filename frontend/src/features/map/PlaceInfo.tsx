@@ -81,7 +81,7 @@ export default function PlaceInfo() {
       {placeInfo?.website && (
         <div className="info_detail_title">
           Website: {"  "}
-          <a href={placeInfo?.website} target="_blank">
+          <a href={placeInfo?.website} target="_blank" rel="noreferrer noopener">
             {placeInfo?.website}
           </a>
         </div>

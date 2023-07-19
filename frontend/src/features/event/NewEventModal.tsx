@@ -1,7 +1,7 @@
 import { Button, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import "../../css/NewEvent.css";
-import { queryClient } from "../..";
+// import { queryClient } from "../..";
 import { useMutation } from "@tanstack/react-query";
 import { NewEventItem, addNewEvent } from "./EventAPI";
 import { useForm } from "react-hook-form";

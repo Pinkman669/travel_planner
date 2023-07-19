@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Form } from "react-bootstrap";
-import { IconBrandGoogle, IconBrandFacebookFilled } from '@tabler/icons-react';
+import { IconBrandFacebookFilled } from '@tabler/icons-react';
 import '../../css/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { localLogin } from './AuthAPI';

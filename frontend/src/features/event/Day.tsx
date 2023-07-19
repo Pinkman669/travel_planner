@@ -29,7 +29,7 @@ export default function Day(props: DayItemProps) {
         } else{
             setChangeStyle(null)
         }
-    }, [selectedDay])
+    }, [selectedDay, props.container])
 
     function onClickDayEffect() {
         setChangeStyle(styles.daySelectedEffect)

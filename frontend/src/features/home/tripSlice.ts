@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import TripEvent from "../event/TripEvent";
 
 export interface TripItem {
     id: number;
