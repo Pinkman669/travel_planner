@@ -37,6 +37,7 @@ export function NewEventModal(props: newEventModalProps) {
     state.trip.tripItems.find((item) => item.id === Number(tripId))
   );
   const startDate = tripInfo?.start_date;
+  const endDate = tripInfo?.end_date
 
 
   const { register, handleSubmit } = useForm<NewEventItem>({
@@ -65,16 +66,16 @@ export function NewEventModal(props: newEventModalProps) {
           phone: props.phone,
           website: props.website
         }
-        return await addNewEvent(data, placeId, startDate, tripId,locationInfo);
+        return await addNewEvent(data, placeId, startDate, endDate as Date, tripId,locationInfo);
       }
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["tripItems"]);
+        // queryClient.invalidateQueries(["tripItems"]);
         notify(true, "Added new event");
       },
-      onError: () => {
-        notify(false, "Add new event fail");
+      onError: (error) => {
+        notify(false, "Add new event fail" + error);
       },
       onSettled: () => dispatch(fetchEventByTrip({tripId: Number(tripId), datesOfTrip: datesOfTrip || []}))
     }

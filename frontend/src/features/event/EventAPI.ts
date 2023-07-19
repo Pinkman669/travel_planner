@@ -71,7 +71,7 @@ export async function updateDayEventOrder(
         return false
     }
 }
-export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date, tripId: string, locationInfo: LocationInfo) {
+export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date, endDay: Date,tripId: string, locationInfo: LocationInfo) {
 
 
     const eventDayString = eventList.date.toString()
@@ -79,8 +79,11 @@ export async function addNewEvent(eventList: NewEventItem, placeId: string, star
     const startDayString = startDay.toString().split("T")[0]
     const startDayDate = new Date(startDayString)
     const differenceInDay = differenceInDays(eventDay, startDayDate)
-    console.log('diff: ' + differenceInDay)
     const day = differenceInDay
+
+    if (eventDay < startDayDate || eventDay > new Date(endDay)){ // Reject any date is out of bound
+        throw new Error('Date out of bound')
+    }
 
 
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/addNewEvent`, {
@@ -93,10 +96,8 @@ export async function addNewEvent(eventList: NewEventItem, placeId: string, star
             eventList, placeId: placeId, day: day, tripId: tripId, locationInfo: locationInfo
         })
     })
-    if (res.status === 200) {
-        return true
-    } else {
-        return false
+    if (res.status !== 200){
+        throw new Error()
     }
 }
 
