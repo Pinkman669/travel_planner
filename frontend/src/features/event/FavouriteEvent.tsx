@@ -1,7 +1,7 @@
 import {
   useFavouriteEvent,
 } from "../event/EventAPI";
-import add from "../image/add.png";
+import add from "./images/add.png";
 import { useState } from "react";
 import { NewEventModal } from "../event/NewEventModal";
 // import { useQueryClient } from "@tanstack/react-query";
