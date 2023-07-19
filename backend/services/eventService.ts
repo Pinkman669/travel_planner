@@ -121,6 +121,15 @@ export class EventService {
             .into('favourite_events')
     }
 
+    async getSingleEvent(eventId: number){
+        const result = (await this.knex
+            .select('*')
+            .from('events')
+            .where('id', eventId)
+            .andWhere('active', true))[0]
+        return result
+    }
+
     async removeEvent(eventId: number) {
         await this.knex
             .update({

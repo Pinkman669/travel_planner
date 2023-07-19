@@ -118,7 +118,10 @@ export class EventController {
             if (!eventId) {
                 throw new Error('Missing event info')
             }
-
+            const isEventExist = await this.eventService.getSingleEvent(eventId)
+            if (!isEventExist){
+                throw new Error('Event not existed')
+            }
             await this.eventService.removeEvent(eventId)
             res.status(200).json({ success: true })
         } catch (e) {

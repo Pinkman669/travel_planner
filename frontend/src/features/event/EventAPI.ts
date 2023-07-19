@@ -165,10 +165,8 @@ export async function removeEvent(eventId: number){
         })
     })
 
-    if (res.status === 200){
-        return true
-    } else{
-        return false
+    if (res.status !== 200){
+        throw new Error()
     }
 }
 
