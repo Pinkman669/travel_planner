@@ -3,10 +3,8 @@ import { LocationInfo } from './NewEventModal';
 import { getDetails } from "use-places-autocomplete";
 import { EventItem } from '../utils/types'
 import { useQuery } from '@tanstack/react-query'
-// import { new_update_event_item } from './newEventSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '../../redux/hooks';
 import { FavouriteDetail } from './FavouriteEvent';
-// import { isSameDay } from 'date-fns';
 
 
 export interface LocationDetail {
@@ -175,7 +173,7 @@ export async function removeEvent(eventId: number){
 
 export function useFavouriteEvent(tripId:string){
     const {isLoading, error, data, isFetching} = useQuery({
-        queryKey: ["eventItem"],
+        queryKey: ["eventItems"],
         queryFn: async ()=> {
             const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getFavouriteEvent/${tripId}`,{
                 method: 'GET',
@@ -184,7 +182,7 @@ export function useFavouriteEvent(tripId:string){
                 }
             })
             const result = await res.json()
-            return result.result as [EventItem]
+            return result.result as [FavouriteDetail]
         }
     })
 

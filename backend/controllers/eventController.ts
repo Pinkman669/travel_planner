@@ -99,7 +99,7 @@ export class EventController {
         try {
             console.log('Favourite event')
             const { data, tripId } = req.body
-            if (!data) {
+            if (!data || !tripId) {
                 throw new Error('Missing favourite event info')
             }
 
@@ -132,8 +132,8 @@ export class EventController {
             if (!tripId) {
                 throw new Error('Missing tripId')
             }
-            const favouriteList = await this.eventService.getEvents(tripId)
-            res.status(200).json({ success: true, result: favouriteList })
+            const favouriteList = await this.eventService.getFavouriteEvent(tripId)
+            res.status(200).json({ success: true, result: favouriteList})
         } catch (e) {
             logger.error(`[ERR012] ${e}`)
             res.status(400).json({ success: false, msg: `[ERR012] ${errorCode.ERR012}` })

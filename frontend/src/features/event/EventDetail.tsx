@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Modal } from 'react-bootstrap';
+import React, { useState } from 'react'
+import { Modal } from 'react-bootstrap';
 import { EventItem } from '../utils/types';
 import { format } from 'date-fns'
 import styles from '../../css/EventDetail.module.css'
@@ -90,7 +90,7 @@ export default function EventDetail(props: EventDetailProps) {
                     <div id={styles.websiteContainer}>
                         <p>WebSite:
                         </p>
-                            <a href={eventItem.website}>
+                            <a href={eventItem.website} rel="noreferrer noopener" target="_blank">
                                 {
                                     eventItem.website.length > 100 ? `${eventItem.website.slice(0, 100)}...` : eventItem.website
                                 }

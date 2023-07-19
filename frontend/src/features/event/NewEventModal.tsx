@@ -45,7 +45,7 @@ export function NewEventModal(props: newEventModalProps) {
       date: new Date(),
       time: "",
       location: "",
-      business_hours: [""],
+      business_hours: [],
       phone: "",
       website: "",
       budget: Number(),
@@ -57,7 +57,6 @@ export function NewEventModal(props: newEventModalProps) {
 
   const onSubmit = useMutation(
     async (data: NewEventItem) => {
-      console.log(placeId, startDate, tripId);
       if (placeId && startDate && tripId) {
         const locationInfo = {
           name: props.name,
@@ -84,7 +83,7 @@ export function NewEventModal(props: newEventModalProps) {
   async function submit(data: NewEventItem) {
     onSubmit.mutate(data);
   }
-
+  console.log(props)
   const hours = props.business_hours?.join("\n");
 
   return (

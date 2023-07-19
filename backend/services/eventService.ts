@@ -2,21 +2,21 @@ import { Knex } from 'knex';
 
 
 export interface LocationDetail {
-    name?:string ,
+    name?: string,
     formatted_address?: string,
-    formatted_phone_number?: string ,
+    formatted_phone_number?: string,
     opening_hours?: string[],
     website?: string,
     place_id?: string
-  }
+}
 
-  export interface LocationInfo{
+export interface LocationInfo {
     name: string;
     address: string;
     businessHours: string[] | null;
     phone: string | null;
     website: string | null;
-  }
+}
 
 export class EventService {
     constructor(private knex: Knex) { }
@@ -75,10 +75,10 @@ export class EventService {
             .where('trip_id', trip_id)
             .andWhere('day', day)
             .andWhere('active', true)
-            .orderBy('item_order','desc')
+            .orderBy('item_order', 'desc')
             .from("events")
-        
-       const order = res?.item_order ? res.item_order +1 :1
+
+        const order = res?.item_order ? res.item_order + 1 : 1
         await this.knex
             .insert({
                 'name': locationInfo.name,
@@ -91,7 +91,7 @@ export class EventService {
                 'budget': data.budget,
                 'expense': data.expense,
                 'category': data.category,
-                'item_order':order,
+                'item_order': order,
                 'day': day,
                 'active': true,
                 'place_id': place_id,
@@ -100,28 +100,28 @@ export class EventService {
             .into('events')
 
     }
-    async addFavouriteEvent(data: LocationDetail, tripId: string){
+    async addFavouriteEvent(data: LocationDetail, tripId: string) {
 
-        const userId =  await this.knex
-        .select('user_id')
-        .where('id', tripId)
-        .from("trips")
+        const userId = await this.knex
+            .select('user_id')
+            .where('id', tripId)
+            .from("trips")
 
         await this.knex.insert({
-            "name":data.name,
-            "address":data.formatted_address,
-            "phone":data.formatted_phone_number,
-            "business_hours": data.opening_hours!.toString(),
+            "name": data.name,
+            "address": data.formatted_address,
+            "phone": data.formatted_phone_number,
+            "business_hours": data.opening_hours ? data.opening_hours?.toString() : '',
             "website": data.website,
             "place_id": data.place_id,
-            "trip_id":tripId,
-            "user_id":userId[0].user_id,
+            "trip_id": tripId,
+            "user_id": userId[0].user_id,
             "active": true
         })
-        .into('favourite_events')
+            .into('favourite_events')
     }
 
-    async removeEvent(eventId: number){
+    async removeEvent(eventId: number) {
         await this.knex
             .update({
                 'active': false
@@ -129,7 +129,7 @@ export class EventService {
             .from('events')
             .where('id', eventId)
     }
-    
+
     async getFavouriteEvent(tripId: number) {
         const result = await this.knex
             .select('*')
@@ -137,10 +137,13 @@ export class EventService {
             .where('trip_id', tripId)
             .andWhere('active', true)
             .orderBy('id', 'asc')
-        
-    for (let i=0; i< result.length;i++) {
-        result[i].business_hours = result[i].business_hours.split()
-    }
+
+        for (let i = 0; i < result.length; i++) {
+            result[i].business_hours = result[i].business_hours.split(",")
+
+        }
+        console.log(result)
         return result
+
     }
 }

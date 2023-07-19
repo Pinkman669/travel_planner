@@ -121,8 +121,7 @@ export default function Schedule(props: ScheduleProps) {
             overOrder: overIndex,
             eventList: eventList
         })
-        
-
+    
         setOverLayActiveState(null)
     }
     const onUpdateEventOrder = useMutation(
