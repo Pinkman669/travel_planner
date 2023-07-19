@@ -25,6 +25,16 @@ export class TripService{
         return result as TripItem[]
     }
 
+    async getSingelTrip(tripId: number){
+        const result = (await this.knex
+            .select('*')
+            .from('trips')
+            .where('id', tripId)
+            .andWhere('active', true))[0]
+
+        return result
+    }
+
     async removeTrip(tripId: number){
         await this.knex.update({
             'active': false

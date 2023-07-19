@@ -44,7 +44,12 @@ export class TripController{
         try{
             const tripId = Number(req.params.tripId)
             if (!tripId){
-                throw new Error('TripID missing')
+                throw new Error('Info missing')
+            }
+            const isTripExist = await this.tripService.getSingelTrip(tripId)
+            console.log("trip??? " + isTripExist)
+            if (!isTripExist){
+                throw new Error('Trip not existed')
             }
             await this.tripService.removeTrip(tripId)
             res.status(200).json({success: true})
