@@ -9,7 +9,7 @@ export class TripController{
     addTrip = async(req: Request, res: Response) =>{
         try{
             const {tripName, location, startDate, endDate, userId} = req.body
-            if (!tripName || !location || !startDate || !endDate){
+            if (!tripName || !location || !startDate || !endDate || !userId){
                 throw new Error('Info missing')
             }
             await this.tripService.addTrip(tripName, location, startDate, endDate, userId)

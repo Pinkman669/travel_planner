@@ -1,41 +1,6 @@
 import { addDays } from 'date-fns'
 
 
-
-// interface TripItem{
-//     id: number;
-//     start_date: Date;
-//     end_date: Date;
-//     location: string;
-//     name: string;
-//     user_id: number;
-//     DatesOfTrip? : Date[]
-// }
-
-// export function useTripItems(userId: number){
-//     const dispatch = useAppDispatch()
-//     const {isLoading, error, data, isFetching, status } = useQuery({
-//         queryKey: ['tripItems'],
-//         queryFn : async() =>{
-//             const res = await fetch(`${process.env.REACT_APP_API_SERVER}/home/getTrip/${userId}`,{
-//                 headers : {
-//                     "Authorization":`Bearer ${localStorage.getItem('token')}`
-//                 }
-//             })
-//             const result = await res.json()
-//             return result.result as TripItem[]
-//         }
-//     })
-
-//     if (isLoading || isFetching || error || !data){
-//         return []
-//     }
-//     if (status === 'success'){
-//         dispatch(update_trip_item(data))
-//     }
-//     return data
-// }
-
 export async function addTrip(tripName: string, numberOfDays: number, location: string, startDate: Date, userId: number) {
     const endDate: Date = addDays(startDate, numberOfDays)
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/home/addTrip`, {
@@ -49,10 +14,8 @@ export async function addTrip(tripName: string, numberOfDays: number, location: 
         })
     })
 
-    if (res.status === 200){
-        return true
-    } else{
-        return false
+    if (res.status !== 200){
+        throw new Error()
     }
 }
 
