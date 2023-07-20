@@ -1,5 +1,6 @@
 .modal-content{
-    background-color: #FFC7C2;
+    background-color: #F3F4F6;
+    box-shadow: 0 0 10px rgba(50, 50, 50, 1);
 }
 
 .delete-event-modal{

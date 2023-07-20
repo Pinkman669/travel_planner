@@ -23,3 +23,30 @@
     border: none;
     background-color: transparent;
 }
+
+.eventDetailField{
+    display: flex;
+    width: 90%;
+    margin: 8px 0;
+    align-items: baseline;
+}
+
+.eventDetailDate > div{
+    height: 40px;
+    width: 170px;
+}
+
+
+.eventDetailTitle{
+    padding: 5px 10px;
+}
+
+.eventDetailTime > div{
+    height: 40px;
+    width: 170px;
+}
+
+.eventDetailField > input{
+    width: 50%;
+    background-color: transparent;
+}
