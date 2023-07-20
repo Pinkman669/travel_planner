@@ -27,10 +27,11 @@ export default function Home() {
     const dispatch = useAppDispatch()
     const username = useAppSelector(state => state.auth.name)
     const userId = useAppSelector(state => state.auth.userId)
+    const screenWidth = window.innerWidth
 
-    useEffect(() =>{
-        dispatch(fetchTripItemByUserId({userId: userId as number}))
-    },[dispatch, userId])
+    useEffect(() => {
+        dispatch(fetchTripItemByUserId({ userId: userId as number }))
+    }, [dispatch, userId])
 
     const tripItemInfo = useAppSelector(state => state.trip.tripItems)
 
@@ -56,7 +57,7 @@ export default function Home() {
             onError: () => {
                 notify(false, 'Add trip failed')
             },
-            onSettled: () => dispatch(fetchTripItemByUserId({userId: userId as number}))
+            onSettled: () => dispatch(fetchTripItemByUserId({ userId: userId as number }))
         }
     )
 
@@ -72,7 +73,7 @@ export default function Home() {
             onError: () => {
                 notify(false, 'Trip remove failed')
             },
-            onSettled: () => dispatch(fetchTripItemByUserId({userId: userId as number}))
+            onSettled: () => dispatch(fetchTripItemByUserId({ userId: userId as number }))
         }
     )
 
@@ -83,7 +84,7 @@ export default function Home() {
         })
     }
 
-    function calculatePeriod(startDate: Date, endDate: Date){
+    function calculatePeriod(startDate: Date, endDate: Date) {
         const result = differenceInDays(startDate, endDate)
         return result
     }
@@ -96,8 +97,8 @@ export default function Home() {
         }
     }
 
-    useEffect(() =>{
-        if (formState.isSubmitSuccessful){
+    useEffect(() => {
+        if (formState.isSubmitSuccessful) {
             reset(formState.defaultValues)
             setShowModal(false)
             setStartDate(null)
@@ -106,6 +107,7 @@ export default function Home() {
 
     return (
         <div className="container-fluid">
+
             <div className={styles.tripHeader}>
                 <p id={styles.username}>{username}</p>
                 <Button variant="light" onClick={() => dispatch(logout())}>Logout</Button>
@@ -114,21 +116,31 @@ export default function Home() {
                 {
                     tripItemInfo.map((item) => (
                         <TripItem
-                             onRemove={() => {
+                            onRemove={() => {
                                 onRemoveTrip.mutate({ tripId: item.id, tripName: item.name })
                             }}
-                            onClickTrip={()=>navigate(`/trip-event/${item.id}`)}
+                            onClickTrip={() => navigate(`/trip-event/${item.id}`)}
                             key={item.id} tripName={item.name} location={item.location}
                             period={calculatePeriod(new Date(item.end_date), new Date(item.start_date))}
                         />
                     ))
                 }
-                <div className={styles.addTripItems}>
+                {
+                    screenWidth > 450 && <div className={styles.addTripItems}>
+                        <button onClick={handleModal} className={styles.addTripBtn}>
+                            <IconPlus />
+                        </button>
+                    </div>
+                }
+            </div>
+
+            {
+                screenWidth <= 450 && <div className={styles.addTripItems}>
                     <button onClick={handleModal} className={styles.addTripBtn}>
                         <IconPlus />
                     </button>
                 </div>
-            </div>
+            }
 
             {/* modal */}
             <Modal
@@ -137,7 +149,7 @@ export default function Home() {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 onHide={handleModal}
-            >   
+            >
                 <div>
                     <button className={styles.iconBtn} onClick={handleModal}><IconX /></button>
                 </div>

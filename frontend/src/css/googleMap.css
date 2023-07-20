@@ -1,6 +1,6 @@
 .search-page{
   width:100%;
-  height: 95vh;
+  height: 96.5%;
   position: relative;
 }
 .map-container {
@@ -76,5 +76,9 @@
 @media screen and (max-width: 450px){
   .comboBox-popover{
     z-index: 9999;
+  }
+
+  .search-page{
+    height: 95%;
   }
 }

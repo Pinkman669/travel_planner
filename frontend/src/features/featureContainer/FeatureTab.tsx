@@ -18,7 +18,7 @@ export default function FeatureTab() {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div id={styles.featuresContainer}>
       <Tabs
         defaultActiveKey="Map"
         id="feature-tabs"

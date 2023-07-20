@@ -13,3 +13,11 @@
 .nav.nav-tabs{
     background-color: white;
 }
+
+.tab-content{
+    height: 100%;
+}
+
+.tab-content > div{
+    height: 100%;
+}

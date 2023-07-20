@@ -1,5 +1,5 @@
 .mainContainer{
-    height: 80vh;
+    height: 80%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -8,6 +8,7 @@
     border-radius: 20px;
     background-color: #BDE3FF;
     padding: 15px;
+    position: relative;
 }
 
 .tripHeader{
@@ -155,8 +156,8 @@
     }
     .addTripItems{
         width: 93%;
-        position: fixed;
-        bottom: 7px;
+        /* position: absolute;
+        bottom: -70px; */
         height: 50px;
     }
     .tripHeader{

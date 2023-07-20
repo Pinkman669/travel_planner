@@ -9,7 +9,7 @@ export default function EventRoute() {
     const eventsByDay = useAppSelector(state => state.new_event.new_eventItems)[selectedDay as string]
 
     return (
-        <div>
+        <div id={styles.googleRouteContainer}>
                 {
                     selectedDay && eventsByDay.length > 1 ? 
                     <GoogleRoute eventList={eventsByDay}/> :
