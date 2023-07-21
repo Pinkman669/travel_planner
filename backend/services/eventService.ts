@@ -151,7 +151,6 @@ export class EventService {
             result[i].business_hours = result[i].business_hours.split(",")
 
         }
-        console.log(result)
         return result
 
     }

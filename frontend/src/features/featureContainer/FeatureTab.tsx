@@ -6,6 +6,7 @@ import styles from '../../css/FeatureTabs.module.css'
 import { IconHeartPlus, IconRoute, IconWorld } from "@tabler/icons-react";
 import '../../css/customBSCss.css'
 import FavouriteEvent from "../event/FavouriteEvent";
+import { Expense } from "../expense/Expense";
 
 type Libraries = ("drawing" | "geometry" | "localContext" | "places")[];
 const libraries: Libraries = ['places']
@@ -31,6 +32,9 @@ export default function FeatureTab() {
         </Tab>
         <Tab eventKey="Route" title={<IconRoute id={styles.routeIcon}/>}>
           <EventsRoute />
+        </Tab>
+        <Tab eventKey="Expenses" title={<IconRoute id={styles.routeIcon}/>}>
+          <Expense />
         </Tab>
       </Tabs>
     </div>
