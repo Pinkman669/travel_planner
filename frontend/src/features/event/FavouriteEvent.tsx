@@ -27,7 +27,7 @@ export default function FavouriteEvent() {
   return (
     <div className="favourite-page">
       {favouriteEvent.map((item) => (
-        <div className="favourite-places-info-container">
+        <div key={item.place_id} className="favourite-places-info-container">
           <div className="place_info_top_container">
             <div className="place_name">{item.name}</div>
             <div className="feature_container">

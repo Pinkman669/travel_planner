@@ -1,4 +1,5 @@
 import { Knex } from 'knex';
+import { UpdateEventInfo } from '../util/type';
 
 
 export interface LocationDetail {
@@ -54,13 +55,13 @@ export class EventService {
             .andWhere('active', true)
     }
 
-    async getEventByDay(tripId: number, day: number) {
+    async getEventByDate(tripId: number, date: Date) {
         const result = await this.knex
             .select('*')
             .from('events')
             .where('trip_id', tripId)
             .andWhere('active', true)
-            .andWhere('day', day)
+            .andWhere('date', date)
         return result
     }
 
@@ -153,5 +154,24 @@ export class EventService {
         }
         return result
 
+    }
+
+    async updateEvent(data: UpdateEventInfo, newDate: Date, eventId: number, item_order: number, newDay: number){
+        await this.knex
+            .update({
+                'name': data.name,
+                'time': data.time,
+                'phone': data.phone,
+                'category': data.category,
+                'budget': data.budget,
+                'expense': data.expense,
+                'website': data.website,
+                'date': newDate,
+                'item_order': item_order,
+                'day': newDay
+            })
+            .from('events')
+            .where('id' , eventId)
+            .andWhere('active', true)
     }
 }

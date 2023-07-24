@@ -84,6 +84,7 @@ export function NewEventModal(props: newEventModalProps) {
   async function submit(data: NewEventItem) {
     onSubmit.mutate(data);
   }
+
   const hours = props.business_hours?.join("\n");
 
   return (

@@ -33,6 +33,7 @@ export function eventRouter() {
     route.post('/addNewEvent', isLoggedIn, eventController.addNewEvent)
     route.post('/addFavouriteLocation', isLoggedIn, eventController.addFavouriteEvent)
     route.get('/getFavouriteEvent/:tripId', isLoggedIn, eventController.getFavouriteEvent)
+    route.put('/updateEventInfo', isLoggedIn, eventController.updateEventInfo)
 
     return route
 }

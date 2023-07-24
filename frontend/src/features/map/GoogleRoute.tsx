@@ -144,6 +144,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
         setAnimation(true)
         await new Promise(r => setTimeout(r, 100))
         setAnimation(false)
+        setShowRouteForm(false)
         setShowOverlay(false)
     };
     const handleShowRouteFrom = () => {
@@ -159,6 +160,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
             setShowRouteForm(false)
         }
     }
+
 
     return (
         <>
@@ -220,7 +222,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
                             <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse} /> :
                             null
                     }
-                    {showRouteForm && <div className={`${styles.RouteFormContainer} ${showRouteForm ? null : styles.closeForm}`}>
+                    {showRouteForm && <div className={`${styles.RouteFormContainer}`}>
                         <RouteForm onSubmit={handleFormSubmit}></RouteForm>
                     </div>}
                 </div>

@@ -1,5 +1,5 @@
 import styles from '../../css/Event.module.css'
-import { IconGripHorizontal, IconPencil } from "@tabler/icons-react";
+import { IconGripHorizontal } from "@tabler/icons-react";
 import { CSS } from "@dnd-kit/utilities"
 import commonStyles from '../../css/Common.module.css'
 import { useSortable } from "@dnd-kit/sortable";
@@ -39,7 +39,6 @@ export default function Event(props: EventItemProps) {
                         props.eventName.length > 15 ? `${props.eventName.slice(0, 15)}...` : props.eventName 
                     }
                     </div>
-                <button className={`${commonStyles.iconBtn} ${commonStyles.eventEditBtn}`}><IconPencil /></button>
             </div>
             {showModal && <EventDetail onClose={handleClose} show={showModal} eventItem={props.eventItem} />}
         </>
