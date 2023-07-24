@@ -16,3 +16,13 @@ export interface EventItem {
     active: boolean;
     place_id: string;
 }
+
+export interface UpdateEventInfo{
+    time: string;
+    budget: number;
+    category: string;
+    expense: number;
+    website: string;
+    phone: string;
+    name: string;
+}

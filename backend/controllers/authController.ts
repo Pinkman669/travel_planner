@@ -57,6 +57,7 @@ export class AuthController {
     loginFacebook = async (req: Request, res: Response) => {
         try {
             const { code } = req.body
+            console.log(`backend fb code: ${code}`)
             if (!code) {
                 throw new Error('Invalid code')
             }
@@ -76,6 +77,7 @@ export class AuthController {
             });
 
             const data = await fetchResponse.json()
+            console.log(`backend fb access_token: ${data.access_token}`)
             if (!data.access_token) {
                 throw new Error('No access token')
             }

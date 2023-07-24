@@ -2,6 +2,7 @@ import { EventService } from "../services/eventService";
 import { logger } from "../logger";
 import { Request, Response } from "express";
 import errorCode from '../error-code.json'
+import { isSameDay } from 'date-fns'
 
 export class EventController {
     constructor(private eventService: EventService) { }
@@ -22,7 +23,6 @@ export class EventController {
 
     updateEventOrder = async (req: Request, res: Response) => {
         try {
-            console.log('changing order!!!!!!!!!!!')
             const { activeEventId, activeOrder, overOrder, eventList } = req.body
             if (!activeEventId || !eventList) {
                 throw new Error('Missing update info')
@@ -30,7 +30,6 @@ export class EventController {
             if (activeOrder < 0 || overOrder < 0) {
                 throw new Error('Missing update info')
             }
-            console.log('actO: ' + activeOrder, 'overO: ' + overOrder)
             await this.eventService.updateEventOrder(activeEventId, overOrder)
             eventList.forEach(async (event: any) => {
                 if (activeOrder > overOrder){
@@ -54,7 +53,6 @@ export class EventController {
 
     updateDayEventOrder = async (req: Request, res: Response) => {
         try {
-            console.log('change order and date!!!!!!!')
             const { activeEventList, overEventList, newDate, newDay, newIndex, activeEventId, activeIndex } = req.body
             if (!activeEventList || !overEventList || !newDate || !newDay || !newIndex || !activeEventId || !activeIndex) {
                 throw new Error('Missing info')
@@ -140,6 +138,40 @@ export class EventController {
         } catch (e) {
             logger.error(`[ERR012] ${e}`)
             res.status(400).json({ success: false, msg: `[ERR012] ${errorCode.ERR012}` })
+        }
+    }
+
+    updateEventInfo = async (req: Request, res: Response) =>{
+        try{
+            const {data, newDate, eventId} = req.body
+            if (!data || !newDate || !eventId){
+                throw new Error('Missing info')
+            }
+            const newDatePlus = new Date(newDate)
+            const eventItem = await this.eventService.getSingleEvent(eventId)
+            if (!eventItem){
+                throw new Error('Event not existed')
+            }
+            if (isSameDay(eventItem.date, newDatePlus)){
+                await this.eventService.updateEvent(data, newDatePlus, eventId, eventItem.item_order, eventItem.day)
+            } else{
+                const oldDateEventList = await this.eventService.getEventByDate(eventItem.trip_id, eventItem.date)
+                oldDateEventList.forEach(async (event) =>{
+                    if (event.item_order > eventItem.item_order){
+                        const newItemOrder = event.item_order - 1
+                        await this.eventService.updateEventOrder(event.id, newItemOrder)
+                    }
+                })
+
+                const newDateEventList = await this.eventService.getEventByDate(eventItem.trip_id, newDatePlus)
+                const newItemOrder = newDateEventList.length + 1
+                await this.eventService.updateEvent(data, newDatePlus, eventId, newItemOrder, newDateEventList[0].day)
+
+            }
+            res.status(200).json({success: true})
+        }catch(e){
+            logger.error(`[ERR014] ${e}`)
+            res.status(400).json({ success: false, msg: `[ERR014] ${errorCode.ERR014}` })
         }
     }
 }

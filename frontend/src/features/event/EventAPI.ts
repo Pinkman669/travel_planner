@@ -1,7 +1,7 @@
 import { differenceInDays } from 'date-fns';
 import { LocationInfo } from './NewEventModal';
 import { getDetails } from "use-places-autocomplete";
-import { EventItem } from '../utils/types'
+import { EventItem, UpdateEventInfo } from '../utils/types'
 import { useQuery } from '@tanstack/react-query'
 import { useAppSelector } from '../../redux/hooks';
 import { FavouriteDetail } from './FavouriteEvent';
@@ -190,4 +190,21 @@ export function useFavouriteEvent(tripId:string){
     }
 
     return data
+}
+
+export async function updateEventInfo(data: UpdateEventInfo, newDate: Date, eventId: number){
+    const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateEventInfo`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            data, newDate , eventId
+        })
+    })
+
+    if (res.status !== 200){
+        throw new Error()
+    }
 }

@@ -8,3 +8,13 @@ export interface TripItem{
     active: boolean;
     DatesOfTrip?: Date[];
 }
+
+export interface UpdateEventInfo{
+    time: string;
+    budget: number;
+    category: string;
+    expense: number;
+    website: string;
+    phone: string;
+    name: string;
+}
