@@ -11,7 +11,7 @@ export interface ExpenseDetail{
     totalExpense: number
 }
 
-export function useExpenseInfo(tripId:string){
+export function useExpenseInfo (tripId:string){
     const {isLoading, error, data, isFetching} = useQuery({
         queryKey: ["expense"],
         queryFn: async ()=> {

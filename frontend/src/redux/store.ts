@@ -4,6 +4,7 @@ import tripReducer from '../features/home/tripSlice'
 import placeReducer from '../features/map/placeSlice'
 import newEventReducer from '../features/event/newEventSlice'
 import dayReducer from '../features/event/daySlice'
+import expenseReducer from '../features/expense/ExpenseSlice'
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
         trip: tripReducer,
         place: placeReducer,
         new_event: newEventReducer,
-        day: dayReducer
+        day: dayReducer,
+        expense:expenseReducer
     }
 })
 
