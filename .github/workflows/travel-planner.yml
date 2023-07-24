@@ -29,11 +29,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Docker Build and Push
-        env:
-          FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
-          FACEBOOK_CLIENT_SECRET: ${{ secrets.FACEBOOK_CLIENT_SECRET }}
-          jwt_secret: ${{ secrets.JWT_SECRET }}
-          REACT_PUBLIC_HOSTNAME: https://travel-planner.pinkman.world
         working-directory: backend
         run: |
           docker build -t pinkman667/travel_planner:latest .
@@ -75,6 +70,12 @@ jobs:
             docker compose pull
             docker image prune -f 
             docker compose up -d
+        env:
+          FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
+          FACEBOOK_CLIENT_SECRET: ${{ secrets.FACEBOOK_CLIENT_SECRET }}
+          jwt_secret: ${{ secrets.JWT_SECRET }}
+          REACT_PUBLIC_HOSTNAME: https://travel-planner.pinkman.world
+          
   deploy-react:
     needs: build-react
     runs-on: ubuntu-latest
