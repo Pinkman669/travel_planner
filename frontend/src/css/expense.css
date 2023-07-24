@@ -19,3 +19,15 @@
     bottom:10px;
     background-color: #d3f35f;
 }
+
+.subTab{
+    height: 5vh;
+    padding:0.5rem  ;
+    border-radius: 10px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh;
+    left:2%;
+    width: 80%;
+}
