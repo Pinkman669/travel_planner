@@ -1,0 +1,21 @@
+.expense-container{
+    height: 5vh;
+    padding:0.5rem  ;
+    border-radius: 10px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh;
+    left:2%;
+    width: 90%;
+}
+
+.expense-container:hover{
+    background-color: #b4b1b1;
+}
+
+.total-container{
+    position:absolute;
+    bottom:10px;
+    background-color: #d3f35f;
+}

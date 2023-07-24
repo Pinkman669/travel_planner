@@ -170,8 +170,8 @@ export class EventController {
             }
             res.status(200).json({success: true})
         }catch(e){
-            logger.error(`[ERR014] ${e}`)
-            res.status(400).json({ success: false, msg: `[ERR014] ${errorCode.ERR014}` })
+            logger.error(`[ERR015] ${e}`)
+            res.status(400).json({ success: false, msg: `[ERR015] ${errorCode.ERR015}` })
         }
     }
 }

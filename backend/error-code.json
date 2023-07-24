@@ -6,5 +6,6 @@
     "ERR011": "Add Favourite Event failed",
     "ERR012": "Get Favourite Event failed",
     "ERR013": "Remove event failed",
-    "ERR014": "Event update failed"
+    "ERR015": "Event update failed",
+    "ERR014": "Get expense failed"
 }
