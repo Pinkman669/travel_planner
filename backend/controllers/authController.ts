@@ -75,6 +75,9 @@ export class AuthController {
                     redirect_uri: `${process.env.REACT_PUBLIC_HOSTNAME}/facebook-callback`
                 })
             });
+            console.log(`fb client_id: ${process.env.FACEBOOK_CLIENT_ID}`)
+            console.log(`fb client_secret: ${process.env.FACEBOOK_CLIENT_SECRET}`)
+            console.log(`redirect_hostname: ${process.env.REACT_PUBLIC_HOSTNAME}`)
 
             const data = await fetchResponse.json()
             console.log(`backend fb access_token: ${data.access_token}`)
