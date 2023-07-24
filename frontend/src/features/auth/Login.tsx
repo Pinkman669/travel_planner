@@ -26,6 +26,7 @@ export default function Login() {
     });
 
     const loginViaFacebook = () =>{
+        console.log(`frontend fb app id: ${process.env.REACT_APP_FACEBOOK_APP_ID}`)
         const authURL = 'https://www.facebook.com/dialog/oauth'
         const search = new URLSearchParams()
         search.set('client_id', process.env.REACT_APP_FACEBOOK_APP_ID + '')

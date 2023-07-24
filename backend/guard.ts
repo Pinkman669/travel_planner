@@ -20,6 +20,7 @@ export async function isLoggedIn(
         }
 
         const decoded: Omit<User, 'password'> = jwtSimple.decode(token, jwt.jwtSecret)
+        console.log(jwt.jwtSecret)
         req.user = decoded
 
         console.log("guard check", req.user)
