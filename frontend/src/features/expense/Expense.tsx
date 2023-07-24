@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useExpenseInfo } from "./ExpenseAPI";
-import "../../css/Expense.css";
+import "../../css/expense.css";
 import { BudgetSubTab, ExpenseSubTab } from "./ExpenseSubTab";
 import { useState } from "react";
 
