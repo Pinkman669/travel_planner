@@ -41,7 +41,7 @@ export default function RouteInfo(props: RouteInfoProps) {
                     return legs.map((routeInfo: google.maps.DirectionsLeg) =>{
                         return <div key={index+'secret456789'} className={styles.routeInfoDiv}>
                             <OverlayTrigger
-                            trigger={'focus'}
+                            trigger={'click'}
                             key={index}
                             placement='bottom'
                             overlay={
