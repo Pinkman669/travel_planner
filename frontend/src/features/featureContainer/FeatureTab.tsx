@@ -3,7 +3,7 @@ import { Map } from "../map/GoogleMap";
 import { useLoadScript } from "@react-google-maps/api";
 import EventsRoute from "../map/EventsRoute";
 import styles from '../../css/FeatureTabs.module.css'
-import { IconHeartPlus, IconRoute, IconWorld } from "@tabler/icons-react";
+import { IconBrandCashapp, IconHeartPlus, IconRoute, IconWorld } from "@tabler/icons-react";
 import '../../css/customBSCss.css'
 import FavouriteEvent from "../event/FavouriteEvent";
 import { Expense } from "../expense/Expense";
@@ -33,10 +33,11 @@ export default function FeatureTab() {
         <Tab eventKey="Route" title={<IconRoute id={styles.routeIcon}/>}>
           <EventsRoute />
         </Tab>
-        <Tab eventKey="Expenses" title={<IconRoute id={styles.routeIcon}/>}>
+        <Tab eventKey="Expenses" title= {<IconBrandCashapp/>}>
           <Expense />
         </Tab>
       </Tabs>
     </div>
   );
 }
+
