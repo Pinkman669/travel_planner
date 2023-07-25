@@ -17,10 +17,9 @@ export interface subTabDetail{
 }
 export function BudgetSubTab(props:subTabProps){
     const detail = props.result
-    console.log(`budget:${detail}`)
     return ( <div>{detail && detail.map((tab:subTabDetail) => (
         <div className="subTab">
-          <div>{tab.category} </div>
+          <div>{tab.category?tab.category:"Other"} </div>
           <div>${tab.budget}</div>
         </div>
       ))}</div>
@@ -29,12 +28,11 @@ export function BudgetSubTab(props:subTabProps){
 }
 export function ExpenseSubTab(props:subTabProps){
     const detail = props.result
-    console.log(`expense:${detail}`)
     return ( <div>{detail &&
     
         detail.map((tab:subTabDetail) => (
         <div className="subTab">
-          <div>{tab.category} </div>
+          <div>{tab.category?tab.category:"Other"}</div>
           <div>${tab.expense}</div>
         </div>
       ))}</div>
