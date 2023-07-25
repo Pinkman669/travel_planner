@@ -79,8 +79,14 @@ export default function EventDetail(props: EventDetailProps) {
     )
 
     function submit(data: FormState) {
-        onSubmitEventUpdate.mutate({ eventUpdateInfo: data, newDate: eventDate, eventId: eventItem.id })
-        setEditMode(false)
+        if (datesOfTrip){
+            if (eventDate < new Date(datesOfTrip[0]) || eventDate > new Date(datesOfTrip[datesOfTrip.length-1])){
+                notify(false, 'Date out of bound')
+            } else{
+                onSubmitEventUpdate.mutate({ eventUpdateInfo: data, newDate: eventDate, eventId: eventItem.id })
+                setEditMode(false)
+            }
+        }
     }
 
     const onRemoveEvent = useMutation(
