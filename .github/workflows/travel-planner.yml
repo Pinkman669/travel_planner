@@ -30,11 +30,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Docker Build and Push
         working-directory: backend
-        env:
-          FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
-          FACEBOOK_CLIENT_SECRET: ${{ secrets.FACEBOOK_CLIENT_SECRET }}
-          jwt_secret: ${{ secrets.JWT_SECRET }}
-          REACT_PUBLIC_HOSTNAME: https://travel-planner.pinkman.world
         run: |
           docker build -t pinkman667/travel_planner:latest .
           docker push pinkman667/travel_planner:latest
@@ -66,20 +61,21 @@ jobs:
     steps:
       - name: Executing remote ssh
         uses: appleboy/ssh-action@master
-        with:
-          host: api-travel-planner.pinkman.world
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          username: ubuntu
-          script: |
-            cd api.travel_planner
-            docker compose pull
-            docker image prune -f 
-            docker compose up -d
         env:
           FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
           FACEBOOK_CLIENT_SECRET: ${{ secrets.FACEBOOK_CLIENT_SECRET }}
           jwt_secret: ${{ secrets.JWT_SECRET }}
           REACT_PUBLIC_HOSTNAME: https://travel-planner.pinkman.world
+        with:
+          host: api-travel-planner.pinkman.world
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ubuntu
+          envs: FACEBOOK_CLIENT_ID,FACEBOOK_CLIENT_SECRET,jwt_secret,REACT_PUBLIC_HOSTNAME
+          script: |
+            cd api.travel_planner
+            docker compose pull
+            docker image prune -f 
+            docker compose up -d
           
   deploy-react:
     needs: build-react
