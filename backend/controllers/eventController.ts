@@ -2,7 +2,7 @@ import { EventService } from "../services/eventService";
 import { logger } from "../logger";
 import { Request, Response } from "express";
 import errorCode from '../error-code.json'
-import { isSameDay } from 'date-fns'
+import { isSameDay, differenceInDays  } from 'date-fns'
 
 export class EventController {
     constructor(private eventService: EventService) { }
@@ -147,13 +147,13 @@ export class EventController {
             if (!data || !newDate || !eventId){
                 throw new Error('Missing info')
             }
-            const newDatePlus = new Date(newDate)
+            const correctNewDate = new Date(newDate)
             const eventItem = await this.eventService.getSingleEvent(eventId)
             if (!eventItem){
                 throw new Error('Event not existed')
             }
-            if (isSameDay(eventItem.date, newDatePlus)){
-                await this.eventService.updateEvent(data, newDatePlus, eventId, eventItem.item_order, eventItem.day)
+            if (isSameDay(eventItem.date, correctNewDate)){
+                await this.eventService.updateEvent(data, correctNewDate, eventId, eventItem.item_order, eventItem.day)
             } else{
                 const oldDateEventList = await this.eventService.getEventByDate(eventItem.trip_id, eventItem.date)
                 oldDateEventList.forEach(async (event) =>{
@@ -163,10 +163,11 @@ export class EventController {
                     }
                 })
 
-                const newDateEventList = await this.eventService.getEventByDate(eventItem.trip_id, newDatePlus)
+                const newDateEventList = await this.eventService.getEventByDate(eventItem.trip_id, correctNewDate)
                 const newItemOrder = newDateEventList.length + 1
-                await this.eventService.updateEvent(data, newDatePlus, eventId, newItemOrder, newDateEventList[0].day)
-
+                const dayDifference = differenceInDays(new Date(eventItem.date), correctNewDate)
+                const newDay = eventItem.day - dayDifference
+                await this.eventService.updateEvent(data, correctNewDate, eventId, newItemOrder, newDay)
             }
             res.status(200).json({success: true})
         }catch(e){
