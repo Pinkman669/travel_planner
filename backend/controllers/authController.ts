@@ -57,7 +57,6 @@ export class AuthController {
     loginFacebook = async (req: Request, res: Response) => {
         try {
             const { code } = req.body
-            console.log(`backend fb code: ${code}`)
             if (!code) {
                 throw new Error('Invalid code')
             }
@@ -75,13 +74,8 @@ export class AuthController {
                     redirect_uri: `${process.env.REACT_PUBLIC_HOSTNAME}/facebook-callback`
                 })
             });
-            console.log(`fb client_id: ${process.env.FACEBOOK_CLIENT_ID}`)
-            console.log(`fb client_secret: ${process.env.FACEBOOK_CLIENT_SECRET}`)
-            console.log(`redirect_hostname: ${process.env.REACT_PUBLIC_HOSTNAME}`)
-            console.log(`jwt_secret: ${process.env.jwt_secret}`)
 
             const data = await fetchResponse.json()
-            console.log(`backend fb access_token: ${data.access_token}`)
             if (!data.access_token) {
                 throw new Error('No access token')
             }
@@ -91,7 +85,6 @@ export class AuthController {
             let user: User = await this.authService.userInfo(userInfo.email)
 
             if (!user){
-                console.log('backend creating account')
                 const hashedPassword = await hashPassword(crypto.randomBytes(48).toString())
                 user = await this.authService.signUp(userInfo.name, userInfo.email, hashedPassword, userInfo.birthday)
             }
