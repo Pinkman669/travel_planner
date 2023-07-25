@@ -12,7 +12,7 @@ export class TripController{
             if (!tripName || !location || !startDate || !endDate || !userId){
                 throw new Error('Info missing')
             }
-            await this.tripService.addTrip(tripName, location, startDate, endDate, userId)
+            await this.tripService.addTrip(tripName, location, new Date(startDate), new Date(endDate), userId)
             res.status(200).json({success: true, msg: 'Trip added'})
         }catch(e){
             logger.error(`[ERR004] ${e}`)
