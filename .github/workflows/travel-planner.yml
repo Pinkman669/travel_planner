@@ -30,6 +30,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Docker Build and Push
         working-directory: backend
+        env:
+          FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
+          FACEBOOK_CLIENT_SECRET: ${{ secrets.FACEBOOK_CLIENT_SECRET }}
+          jwt_secret: ${{ secrets.JWT_SECRET }}
+          REACT_PUBLIC_HOSTNAME: https://travel-planner.pinkman.world
         run: |
           docker build -t pinkman667/travel_planner:latest .
           docker push pinkman667/travel_planner:latest
