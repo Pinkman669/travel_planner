@@ -81,6 +81,8 @@ export async function addNewEvent(eventList: NewEventItem, placeId: string, star
     const differenceInDay = differenceInDays(eventDay, startDayDate)
     const day = differenceInDay
 
+    console.log(`add event date: ${startDayDate} ${eventDay}`)
+
     if (eventDay < startDayDate || eventDay > new Date(endDay)){ // Reject any date is out of bound
         throw new Error('Date out of bound')
     }
