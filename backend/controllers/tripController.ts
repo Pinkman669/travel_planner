@@ -8,12 +8,12 @@ export class TripController{
 
     addTrip = async(req: Request, res: Response) =>{
         try{
-            const {tripName, location, startDate, endDate, userId} = req.body
-            if (!tripName || !location || !startDate || !endDate || !userId){
+            const {tripName, location, startDateStr, endDateStr, userId} = req.body
+            if (!tripName || !location || !startDateStr || !endDateStr || !userId){
                 throw new Error('Info missing')
             }
-            console.log(`backend new trip startDate: ${new Date(startDate)}`)
-            await this.tripService.addTrip(tripName, location, new Date(startDate), new Date(endDate), userId)
+            console.log(`backend new trip startDate: ${startDateStr}`)
+            await this.tripService.addTrip(tripName, location, startDateStr, endDateStr, userId)
             res.status(200).json({success: true, msg: 'Trip added'})
         }catch(e){
             logger.error(`[ERR004] ${e}`)

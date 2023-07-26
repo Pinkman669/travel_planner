@@ -3,7 +3,10 @@ import { addDays } from 'date-fns'
 
 export async function addTrip(tripName: string, numberOfDays: number, location: string, startDate: Date, userId: number) {
     const endDate: Date = addDays(startDate, numberOfDays)
-    console.log(`frontend add trip startdate: ${startDate}`)
+
+    const startDateStr = startDate.toDateString()
+    const endDateStr = endDate.toDateString()
+
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/home/addTrip`, {
         method: 'POST',
         headers: {
@@ -11,7 +14,7 @@ export async function addTrip(tripName: string, numberOfDays: number, location: 
             "Authorization":`Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-            tripName, location, startDate, endDate, userId
+            tripName, location, startDateStr, endDateStr, userId
         })
     })
 
