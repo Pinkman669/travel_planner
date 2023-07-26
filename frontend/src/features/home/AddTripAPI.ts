@@ -1,7 +1,7 @@
 import { addDays } from 'date-fns'
 
 
-export async function addTrip(tripName: string, numberOfDays: number, location: string, startDate: Date, userId: number) {
+export async function addTrip(location: string, numberOfDays: number, tripName: string, startDate: Date, userId: number) {
     const endDate: Date = addDays(startDate, numberOfDays)
 
     const startDateStr = startDate.toDateString()

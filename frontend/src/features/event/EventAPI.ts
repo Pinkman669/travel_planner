@@ -78,6 +78,7 @@ export async function addNewEvent(eventList: NewEventItem, placeId: string, star
     const eventDay = new Date(eventDayString)
     const startDayString = startDay.toString().split("T")[0]
     const startDayDate = new Date(startDayString)
+    console.log(startDay)
     const differenceInDay = differenceInDays(eventDay, startDayDate)
     const day = differenceInDay
 

@@ -39,6 +39,7 @@ export function NewEventModal(props: newEventModalProps) {
   const startDate = tripInfo?.start_date;
   const endDate = tripInfo?.end_date
 
+  console.log(datesOfTrip)
 
   const { register, handleSubmit } = useForm<NewEventItem>({
     defaultValues: {
