@@ -142,6 +142,7 @@ export function GoogleRoute(props: GoogleRouteProps) {
 
     const handleClose = async () => {
         setAnimation(true)
+        // extract this to util
         await new Promise(r => setTimeout(r, 100))
         setAnimation(false)
         setShowRouteForm(false)
@@ -213,14 +214,12 @@ export function GoogleRoute(props: GoogleRouteProps) {
                     </button>
                     <CloseButton variant='white' onClick={handleClose} className={styles.closeRouteFormBtn} />
                     {
-                        showRouteInfo && directionResponseArr ?
-                            <RouteTransitInfo travelMode={travelModeValue} directionResponse={directionResponseArr} /> :
-                            null
+                        showRouteInfo && directionResponseArr &&
+                            <RouteTransitInfo travelMode={travelModeValue} directionResponse={directionResponseArr} /> 
                     }
                     {
-                        showRouteInfo && directionResponse ?
-                            <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse} /> :
-                            null
+                        showRouteInfo && directionResponse &&
+                            <RouteInfo travelMode={travelModeValue} directionResponse={directionResponse} /> 
                     }
                     {showRouteForm && <div className={`${styles.RouteFormContainer}`}>
                         <RouteForm onSubmit={handleFormSubmit}></RouteForm>

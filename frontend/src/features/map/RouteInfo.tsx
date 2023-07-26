@@ -51,6 +51,7 @@ export default function RouteInfo(props: RouteInfoProps) {
                                                                     <div>{step.instructions}</div>
                                                                     {
                                                                         step.transit?.line.agencies?.map((agency) => {
+                                                                            // use ? :
                                                                             if (agency) {
                                                                                 return <div key={index + agency?.name}>By {agency?.name}</div>
                                                                             }

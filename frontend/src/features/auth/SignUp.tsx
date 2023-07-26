@@ -7,15 +7,15 @@ import { Link } from "react-router-dom";
 import { localSignUp } from "./AuthAPI";
 import { notify } from '../utils/utils'
 
+interface FormState {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    birthday: Date | string;
+}
 
 export default function SignUp() {
-    interface FormState {
-        name: string;
-        email: string;
-        password: string;
-        confirmPassword: string;
-        birthday: Date | string;
-    }
 
     const { register, handleSubmit, reset, formState } = useForm<FormState>({
         defaultValues: {
@@ -37,6 +37,7 @@ export default function SignUp() {
         const result = await localSignUp(data.email, data.password, data.name, data.birthday as Date)
         if (result){
             notify(result, 'Account created')
+            // maybe reset the form here
         } else{
             notify(result, 'Sign up failed')
         }

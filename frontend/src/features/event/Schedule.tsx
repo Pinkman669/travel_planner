@@ -28,13 +28,16 @@ interface OverLayState {
 
 export default function Schedule(props: ScheduleProps) {
     const dispatch = useAppDispatch()
+    // use a shorter name
     const arrOfTripDate = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === props.tripId)))?.DatesOfTrip
     
     useEffect(() => {
+        // datesOfTrip is not necessary
         dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: arrOfTripDate || [] }))
     }, [dispatch, arrOfTripDate, props.tripId])
     
     const [overLayActiveState, setOverLayActiveState] = useState<OverLayState | null>(null)
+    // rename: newEventItemss
     const mapToObject = useAppSelector(state => state.new_event.new_eventItems)
 
     const sensors = useSensors(
@@ -54,7 +57,7 @@ export default function Schedule(props: ScheduleProps) {
             coordinateGetter: sortableKeyboardCoordinates,
         })
     );
-    const findContainer = (id: string | number) => {
+    const findContainer = (id: string) => {
         if (id in mapToObject) { // If Day container is empty, overId will be the droppable table's id
             return id
         }
@@ -71,8 +74,8 @@ export default function Schedule(props: ScheduleProps) {
     }
 
     function handleDragStart(event: DragStartEvent) {
-        const activeContainer = findContainer(event.active.id)
-        const eventInfo = mapToObject[activeContainer as string].find((e) => e.id === event.active.id)
+        const activeContainer = findContainer(event.active.id.toString())
+        const eventInfo = mapToObject[activeContainer!].find((e) => e.id === event.active.id)
         setOverLayActiveState({
             eventItem: eventInfo as EventItem,
             id: Number(event.active.id),
@@ -228,6 +231,7 @@ export default function Schedule(props: ScheduleProps) {
                     <div id={styles.ScheduleLine}></div>
                     <div id={styles.allDaysContainer}>
                         {arrOfTripDate!.map((date, index) => {
+                            // don't need `day` in key
                             const evenList = mapToObject[`day${index + 1}`] ? mapToObject[`day${index + 1}`] : []
                             return <Day container={`day${index + 1}`} eventList={evenList as EventItem[]} key={index + date.toString()} dayNumber={index + 1} date={date} tripId={props.tripId} />
                         })}

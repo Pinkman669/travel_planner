@@ -18,6 +18,7 @@ interface DayItemProps {
 export default function Day(props: DayItemProps) {
     const eventList = props.eventList
     const selectedDay = useAppSelector(state => state.day.selected_day_trip)
+    // rename
     const [changeStyle, setChangeStyle] = useState<string | null>(null)
     const { setNodeRef } = useDroppable({
         id: props.container

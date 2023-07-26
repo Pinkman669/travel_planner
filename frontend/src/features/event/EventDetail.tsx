@@ -60,6 +60,7 @@ export default function EventDetail(props: EventDetailProps) {
     }
 
     const [showDeleteEvent, setShowDeleteEvent] = useState(false)
+    // onModalOpen / onModalClose
     const handleOpen = () => setShowDeleteEvent(true)
     const handleClose = () => setShowDeleteEvent(false)
 
