@@ -80,6 +80,7 @@ export class EventController {
     addNewEvent = async (req: Request, res: Response) => {
         try {
             const { eventList, placeId, day, tripId, locationInfo } = req.body
+            console.log('new event: !!!!!!!' + eventList,placeId,day,tripId)
             if (!eventList || !placeId || !day || !tripId) {
                 throw new Error('Missing new event info')
             }
