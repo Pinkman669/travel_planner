@@ -12,7 +12,7 @@ export class TripController{
             if (!tripName || !location || !startDateStr || !endDateStr || !userId){
                 throw new Error('Info missing')
             }
-            console.log(`backend new trip startDate: ${startDateStr}`)
+
             await this.tripService.addTrip(tripName, location, startDateStr, endDateStr, userId)
             res.status(200).json({success: true, msg: 'Trip added'})
         }catch(e){
@@ -48,7 +48,7 @@ export class TripController{
                 throw new Error('Info missing')
             }
             const isTripExist = await this.tripService.getSingelTrip(tripId)
-            console.log("trip??? " + isTripExist)
+
             if (!isTripExist){
                 throw new Error('Trip not existed')
             }
