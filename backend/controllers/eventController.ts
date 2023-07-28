@@ -147,13 +147,13 @@ export class EventController {
 
     updateEventInfo = async (req: Request, res: Response) =>{
         try{
-            const {data, newDate, eventId} = req.body
+            const {data, newDateStr, eventId} = req.body
 
-            if (!data || !newDate || !eventId){
+            if (!data || !newDateStr || !eventId){
                 throw new Error('Missing info')
             }
             
-            const correctNewDate = new Date(newDate)
+            const correctNewDate = new Date(newDateStr)
             const eventItem = await this.eventService.getSingleEvent(eventId)
 
             if (!eventItem){

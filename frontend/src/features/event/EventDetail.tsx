@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchEventByTrip } from './newEventSlice';
 import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { DatePicker } from '@mui/x-date-pickers';
+import { format } from 'date-fns';
 
 
 interface EventDetailProps {
@@ -22,6 +22,7 @@ interface EventDetailProps {
 
 interface FormState {
     time: string;
+    date: Date|string;
     budget: number;
     category: string;
     expense: number;
@@ -35,12 +36,16 @@ export default function EventDetail(props: EventDetailProps) {
     const { tripId } = useParams()
     const dispatch = useAppDispatch()
     const datesOfTrip = useAppSelector(state => state.trip.tripItems).find(trip => trip.id === Number(tripId))?.DatesOfTrip
-    const [eventDate, setEventDate] = useState<Date>(new Date(eventItem.date))
+    // const [eventDate, setEventDate] = useState<Date>(new Date(eventItem.date))
     const [editMode, setEditMode] = useState(false)
+    const formatedEventDate = format(new Date(eventItem.date), 'yyyy-MM-dd')
+    const formatedStartDate = format(new Date(datesOfTrip![0]), 'yyyy-MM-dd')
+    const formatedEndDate = format(new Date(datesOfTrip![datesOfTrip!.length - 1]), 'yyyy-MM-dd')
 
     const { register, handleSubmit } = useForm<FormState>({
         defaultValues: {
             time: eventItem.time,
+            date: formatedEventDate,
             budget: eventItem.budget,
             category: eventItem.category,
             website: eventItem.website,
@@ -80,13 +85,12 @@ export default function EventDetail(props: EventDetailProps) {
     )
 
     function submit(data: FormState) {
-        if (datesOfTrip){
-            if (eventDate < new Date(datesOfTrip[0]) || eventDate > new Date(datesOfTrip[datesOfTrip.length-1])){
-                notify(false, 'Date out of bound')
-            } else{
-                onSubmitEventUpdate.mutate({ eventUpdateInfo: data, newDate: eventDate, eventId: eventItem.id })
-                setEditMode(false)
-            }
+        const formatedNewDate = format(new Date(data.date), 'yyyy-MM-dd')
+        if (formatedNewDate < formatedStartDate || formatedNewDate > formatedEndDate) {
+            notify(false, 'Date out of bound')
+        } else {
+            onSubmitEventUpdate.mutate({ eventUpdateInfo: data, newDate: data.date as Date, eventId: eventItem.id })
+            setEditMode(false)
         }
     }
 
@@ -128,10 +132,11 @@ export default function EventDetail(props: EventDetailProps) {
                 <Modal.Body>
                     <div className={styles.eventDetailTitle}>Address: {eventItem.location}</div>
                     <Form id='evenDetailForm'>
-                        <div className={styles.eventDetailField}>
-                            <div className={styles.eventDetailTitle}>Date: </div>
-                            <DatePicker disabled={!editMode} value={new Date(eventItem.date)} className={styles.eventDetailDate} onChange={(newDate) => { setEventDate(newDate as Date) }} />
-                        </div>
+
+                        <Form.Group className={styles.eventDetailField}>
+                            <Form.Label className={styles.eventDetailTitle}>Date : </Form.Label>
+                            <Form.Control disabled={!editMode} type='date' {...register('date')}></Form.Control>
+                        </Form.Group>
 
                         <Form.Group className={styles.eventDetailField}>
                             <Form.Label className={styles.eventDetailTitle}>Time : </Form.Label>

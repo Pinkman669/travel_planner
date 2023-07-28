@@ -193,6 +193,8 @@ export function useFavouriteEvent(tripId:string){
 }
 
 export async function updateEventInfo(data: UpdateEventInfo, newDate: Date, eventId: number){
+    const newDateStr = formatISO(new Date(newDate))
+
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateEventInfo`, {
         method: 'PUT',
         headers: {
@@ -200,7 +202,7 @@ export async function updateEventInfo(data: UpdateEventInfo, newDate: Date, even
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-            data, newDate , eventId
+            data, newDateStr , eventId
         })
     })
 
