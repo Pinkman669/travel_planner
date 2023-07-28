@@ -4,7 +4,6 @@ import { logout } from "../auth/AuthSlice";
 import styles from "../../css/Home-and-itsModal.module.css"
 import { IconPlus, IconX } from "@tabler/icons-react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { DatePicker } from "@mui/x-date-pickers";
 import { useForm } from "react-hook-form";
 import { addTrip, removeTrip } from "./AddTripAPI";
 import { notify } from "../utils/utils";
@@ -18,6 +17,7 @@ import { fetchTripItemByUserId } from "./tripSlice";
 interface FormState {
     tripName: string;
     numberOfDays: number | null;
+    startDate: Date;
     location: string;
 }
 
@@ -35,10 +35,11 @@ export default function Home() {
     const tripItemInfo = useAppSelector(state => state.trip.tripItems)
 
     const [showModal, setShowModal] = useState(false)
-    const [startDate, setStartDate] = useState<Date | null>(null)
+    // const [startDate, setStartDate] = useState<Date | null>(null)
     const { register, handleSubmit, reset, formState } = useForm<FormState>({
         defaultValues: {
             tripName: "",
+            startDate: new Date(),
             location: '',
             numberOfDays: null
         },
@@ -77,7 +78,7 @@ export default function Home() {
     async function submit(data: FormState) {
         onSubmit.mutate({
             location: data.location, numberOfDays: data.numberOfDays as number,
-            tripName: data.tripName, startDate: startDate as Date, userId: userId as number
+            tripName: data.tripName, startDate: data.startDate, userId: userId as number
         })
     }
 
@@ -102,7 +103,6 @@ export default function Home() {
         if (formState.isSubmitSuccessful) {
             reset(formState.defaultValues)
             setShowModal(false)
-            setStartDate(null)
         }
     }, [formState, reset])
 
@@ -162,7 +162,10 @@ export default function Home() {
                                 <Form.Control className={styles.addTripInputs} type="text" {...register("tripName")} />
                             </Form.Group>
 
-                            <DatePicker className={styles.addTripDate} value={startDate} onChange={(newDate) => { setStartDate(newDate) }} label='Start Date' />
+                            <Form.Group>
+                                <Form.Label className='login-labels'>StartDate</Form.Label>
+                                <Form.Control className={styles.addTripInputs} type="date" {...register("startDate")} />
+                            </Form.Group>
 
                             <Form.Group>
                                 <Form.Label className='login-labels'>Number of days</Form.Label>

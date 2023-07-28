@@ -1,4 +1,4 @@
-import { differenceInDays, compareAsc, formatISO } from 'date-fns';
+import { differenceInDays, formatISO, format } from 'date-fns';
 import { LocationInfo } from './NewEventModal';
 import { getDetails } from "use-places-autocomplete";
 import { EventItem, UpdateEventInfo } from '../utils/types'
@@ -77,7 +77,11 @@ export async function addNewEvent(eventList: NewEventItem, placeId: string, star
     const differenceInDay = differenceInDays(eventDate, startDate)
     const day = differenceInDay + 1
 
-    if (compareAsc(eventDate, startDate) < 0 || compareAsc(eventDate, endDate) > 0){ // Reject any date is out of bound 
+    const formatedEventDate = format(eventDate, 'dd/MM/yyyy')
+    const formatedEndDate = format(endDate, 'dd/MM/yyyy')
+    const formatedStartDate = format(startDate, 'dd/MM/yyyy')
+
+    if (formatedEventDate < formatedStartDate || formatedEventDate > formatedEndDate){
         throw new Error('Date out of bound')
     }
 

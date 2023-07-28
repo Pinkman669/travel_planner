@@ -36,7 +36,6 @@ export class TripController{
                     tripItem.DatesOfTrip = DatesOfTrip
                 }
             }
-            console.log('result1 start date!!' + JSON.stringify(result[0].start_date))
             res.status(200).json({success: true, result: result})
         }catch(e){
             logger.error(`[ERR005] ${e}`)

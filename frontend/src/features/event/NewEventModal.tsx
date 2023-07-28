@@ -1,7 +1,6 @@
 import { Button, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import "../../css/NewEvent.css";
-// import { queryClient } from "../..";
 import { useMutation } from "@tanstack/react-query";
 import { NewEventItem, addNewEvent } from "./EventAPI";
 import { useForm } from "react-hook-form";
@@ -9,8 +8,6 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 import { notify } from "../utils/utils";
 import { fetchEventByTrip } from "./newEventSlice";
-import { useState } from "react";
-import { DatePicker } from "@mui/x-date-pickers";
 
 interface newEventModalProps {
   isShown: boolean;
@@ -38,7 +35,6 @@ export function NewEventModal(props: newEventModalProps) {
   const tripInfo = useAppSelector((state) =>
     state.trip.tripItems.find((item) => item.id === Number(tripId))
   );
-  const [eventDate, setEventDate] = useState<Date|null>(null)
 
   const startDate = new Date(tripInfo!.start_date);
   const endDate = new Date(tripInfo!.end_date)
