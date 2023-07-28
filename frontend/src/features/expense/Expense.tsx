@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useExpenseInfo } from "./ExpenseAPI";
-import "../../css/expense.css";
 import { BudgetSubTab } from "./ExpenseSubTab";
 import { useState } from "react";
+import "../../css/expense.css";
 
 export function Expense() {
   const { tripId } = useParams();
