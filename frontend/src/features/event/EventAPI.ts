@@ -1,4 +1,4 @@
-import { differenceInDays } from 'date-fns';
+import { differenceInDays, compareAsc, formatISO } from 'date-fns';
 import { LocationInfo } from './NewEventModal';
 import { getDetails } from "use-places-autocomplete";
 import { EventItem, UpdateEventInfo } from '../utils/types'
@@ -71,24 +71,17 @@ export async function updateDayEventOrder(
         return false
     }
 }
-export async function addNewEvent(eventList: NewEventItem, placeId: string, startDay: Date, endDay: Date,tripId: string, locationInfo: LocationInfo) {
+export async function addNewEvent(eventList: NewEventItem, placeId: string, startDate: Date, endDate: Date,tripId: string, locationInfo: LocationInfo) {
 
+    const eventDate = new Date(eventList.date)
+    const differenceInDay = differenceInDays(eventDate, startDate)
+    const day = differenceInDay + 1
 
-    const eventDayString = eventList.date.toString()
-    const eventDay = new Date(eventDayString)
-    const startDayString = startDay.toString().split("T")[0]
-    const startDayDate = new Date(startDayString)
-    console.log(startDay)
-    const differenceInDay = differenceInDays(eventDay, startDayDate)
-    const day = differenceInDay
-
-    console.log(`add event date: ${startDayDate} ${eventDay}`)
-
-    if (eventDay < startDayDate || eventDay > new Date(endDay)){ // Reject any date is out of bound
+    if (compareAsc(eventDate, startDate) < 0 || compareAsc(eventDate, endDate) > 0){ // Reject any date is out of bound 
         throw new Error('Date out of bound')
     }
 
-
+    const formatedDate = formatISO(eventDate)
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/addNewEvent`, {
         method: 'POST',
         headers: {
@@ -96,7 +89,7 @@ export async function addNewEvent(eventList: NewEventItem, placeId: string, star
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-            eventList, placeId: placeId, day: day, tripId: tripId, locationInfo: locationInfo
+            eventList, placeId: placeId, day: day, tripId: tripId, locationInfo: locationInfo, formatedDate
         })
     })
     if (res.status !== 200){

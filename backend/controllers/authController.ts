@@ -75,6 +75,7 @@ export class AuthController {
                 })
             });
 
+            // remove
             console.log(`id: ${process.env.FACEBOOK_CLIENT_ID}`)
             console.log(`'fb secret ${process.env.FACEBOOK_CLIENT_SECRET}`)
             console.log(`code: ${code}`)

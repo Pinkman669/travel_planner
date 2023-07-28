@@ -6,7 +6,7 @@ export interface TripItem{
     location: string;
     user_id: number;
     active: boolean;
-    DatesOfTrip?: Date[];
+    DatesOfTrip?: string[];
 }
 
 export interface UpdateEventInfo{

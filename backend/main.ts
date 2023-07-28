@@ -43,6 +43,7 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// remove
 app.get("/", function (req: Request, res: Response) {
   res.end("backend testing");
 });

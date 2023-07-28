@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 import { notify } from "../utils/utils";
 import { fetchEventByTrip } from "./newEventSlice";
+import { useState } from "react";
+import { DatePicker } from "@mui/x-date-pickers";
 
 interface newEventModalProps {
   isShown: boolean;
@@ -36,10 +38,10 @@ export function NewEventModal(props: newEventModalProps) {
   const tripInfo = useAppSelector((state) =>
     state.trip.tripItems.find((item) => item.id === Number(tripId))
   );
-  const startDate = tripInfo?.start_date;
-  const endDate = tripInfo?.end_date
+  const [eventDate, setEventDate] = useState<Date|null>(null)
 
-  console.log(datesOfTrip)
+  const startDate = new Date(tripInfo!.start_date);
+  const endDate = new Date(tripInfo!.end_date)
 
   const { register, handleSubmit } = useForm<NewEventItem>({
     defaultValues: {
@@ -67,12 +69,11 @@ export function NewEventModal(props: newEventModalProps) {
           phone: props.phone,
           website: props.website
         }
-        return await addNewEvent(data, placeId, startDate, endDate as Date, tripId,locationInfo);
+        return await addNewEvent(data, placeId, startDate, endDate, tripId, locationInfo);
       }
     },
     {
       onSuccess: () => {
-        // queryClient.invalidateQueries(["tripItems"]);
         notify(true, "Added new event");
       },
       onError: (error) => {
@@ -127,7 +128,6 @@ export function NewEventModal(props: newEventModalProps) {
             <Form.Label>Date</Form.Label>
             <Form.Control
               type="date"
-              placeholder="DD/MM/YY"
               {...register("date")}
             />
           </Form.Group>

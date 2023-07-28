@@ -2,6 +2,12 @@ import { Knex } from 'knex';
 import { UpdateEventInfo } from '../util/type';
 
 
+interface AddNewEventRequest {
+    name: string, date: Date, time?: TimeRanges, location: string, business_hours?: string[],
+    phone?: string, website?: string, budget?: number, expense?: number, category: string
+}
+
+// put types in models.ts / type.ts
 export interface LocationDetail {
     name?: string,
     formatted_address?: string,
@@ -66,10 +72,7 @@ export class EventService {
     }
 
 
-    async addNewEvent(data: {
-        name: string, date: Date, time?: TimeRanges, location: string, business_hours?: string[],
-        phone?: string, website?: string, budget?: number, expense?: number, category: string
-    }, place_id: string, day: Number, trip_id: string, locationInfo: LocationInfo) {
+    async addNewEvent(data: AddNewEventRequest, place_id: string, day: Number, trip_id: string, locationInfo: LocationInfo) {
 
         const res = await this.knex
             .first('item_order')

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useExpenseInfo } from "./ExpenseAPI";
 import "../../css/expense.css";
-import { BudgetSubTab, ExpenseSubTab } from "./ExpenseSubTab";
+import { BudgetSubTab } from "./ExpenseSubTab";
 import { useState } from "react";
 
 export function Expense() {
@@ -10,7 +10,7 @@ export function Expense() {
   const [showBudgetSubTab, setBudgetSubTab] = useState(false);
   const [showExpenseSubTab, setExpenseSubTab] = useState(false);
   const detail = expenseResult?.detail;
-  console.log(`result: ${detail}`);
+
   return (
     <div className="expense-page">
       <div className="expense-container" onClick={() => setBudgetSubTab(!showBudgetSubTab)}>
@@ -23,6 +23,7 @@ export function Expense() {
         isShown={showBudgetSubTab}
         result={detail!}
         onHide={() => setBudgetSubTab(false)}
+        isBudget
       />
 
       <div className="expense-container"onClick={() => setExpenseSubTab(!showExpenseSubTab)}>
@@ -31,10 +32,11 @@ export function Expense() {
           ${expenseResult?.totalExpense}
         </div>
       </div>
-      <ExpenseSubTab
+      <BudgetSubTab
         isShown={showExpenseSubTab}
         result={detail!}
         onHide={() => setExpenseSubTab(false)}
+        isBudget={false}
       />
 
       <div className="expense-container total-container">

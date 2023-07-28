@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { addTrip, removeTrip } from "./AddTripAPI";
 import { notify } from "../utils/utils";
 import TripItem from './TripItem'
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { differenceInDays } from 'date-fns'
 import '../../css/Custom-BS.css'
 import { useNavigate } from "react-router-dom";
@@ -23,11 +23,10 @@ interface FormState {
 
 export default function Home() {
     const navigate = useNavigate()
-    const queryClient = useQueryClient()
     const dispatch = useAppDispatch()
     const username = useAppSelector(state => state.auth.name)
     const userId = useAppSelector(state => state.auth.userId)
-    const screenWidth = window.innerWidth
+    const isLargeScreen = window.innerWidth  > 450
 
     useEffect(() => {
         dispatch(fetchTripItemByUserId({ userId: userId as number }))
@@ -51,7 +50,6 @@ export default function Home() {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries(['tripItems'])
                 notify(true, 'Added Trip')
             },
             onError: () => {
@@ -67,7 +65,6 @@ export default function Home() {
         },
         {
             onSuccess: (success, data) => {
-                queryClient.invalidateQueries(['tripItems'])
                 notify(true, `Removed Trip ${data.tripName}`)
             },
             onError: () => {
@@ -84,10 +81,13 @@ export default function Home() {
         })
     }
 
+    // useCallback
     function calculatePeriod(startDate: Date, endDate: Date) {
         const result = differenceInDays(startDate, endDate)
         return result
     }
+
+    // const toggleModal = useCallback(() => setShowModal(!showModal), [showModal])
 
     const handleModal = () => {
         if (showModal) {
@@ -96,6 +96,7 @@ export default function Home() {
             setShowModal(true)
         }
     }
+
 
     useEffect(() => {
         if (formState.isSubmitSuccessful) {
@@ -126,8 +127,8 @@ export default function Home() {
                     ))
                 }
                 {
-                    screenWidth > 450 && <div className={styles.addTripItems}>
-                        <button onClick={handleModal} className={styles.addTripBtn}>
+                    isLargeScreen && <div className={styles.addTripItems}>
+                        <button onClick={() => setShowModal(true)} className={styles.addTripBtn}>
                             <IconPlus />
                         </button>
                     </div>
@@ -135,7 +136,7 @@ export default function Home() {
             </div>
 
             {
-                screenWidth <= 450 && <div className={styles.addTripItems}>
+                !isLargeScreen && <div className={styles.addTripItems}>
                     <button onClick={handleModal} className={styles.addTripBtn}>
                         <IconPlus />
                     </button>

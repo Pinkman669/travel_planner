@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Form } from "react-bootstrap";
 import { IconBrandFacebookFilled } from '@tabler/icons-react';
@@ -25,7 +25,7 @@ export default function Login() {
         },
     });
 
-    const loginViaFacebook = () =>{
+    const loginViaFacebook = useCallback(() => {
         console.log(`frontend fb app id: ${process.env.REACT_APP_FACEBOOK_APP_ID}`)
         const authURL = 'https://www.facebook.com/dialog/oauth'
         const search = new URLSearchParams()
@@ -35,7 +35,7 @@ export default function Login() {
         search.set('state', '')
         search.set('scope', 'email, public_profile')
         window.location.href = `${authURL}?${search.toString()}`
-    }
+    }, [])
 
     useEffect(() => {
         if (formState.isSubmitSuccessful) {
@@ -43,7 +43,7 @@ export default function Login() {
         }
     }, [formState, reset]);
 
-    async function submit(data: FormState) {
+    const submit = useCallback(async (data: FormState)=> {
         const result = await localLogin(data.email, data.password)
         if (result.success) {
             dispatch(login({name: result.name, userId: result.userId}))
@@ -52,7 +52,18 @@ export default function Login() {
         } else {
             notify(result.success, 'Email or password not match')
         }
-    }
+    }, [dispatch, navigate])
+
+    // async function submit(data: FormState) {
+    //     const result = await localLogin(data.email, data.password)
+    //     if (result.success) {
+    //         dispatch(login({name: result.name, userId: result.userId}))
+    //         notify(result.success, 'Login success!')
+    //         navigate('/')
+    //     } else {
+    //         notify(result.success, 'Email or password not match')
+    //     }
+    // }
 
     return (
         <div className='container-fluid login-page'>

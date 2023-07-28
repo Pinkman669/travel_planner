@@ -1,11 +1,11 @@
-import { addDays } from 'date-fns'
+import { addDays, formatISO  } from 'date-fns'
 
 
 export async function addTrip(location: string, numberOfDays: number, tripName: string, startDate: Date, userId: number) {
-    const endDate: Date = addDays(startDate, numberOfDays)
+    const endDate: Date = addDays(startDate, numberOfDays - 1)
 
-    const startDateStr = startDate.toDateString()
-    const endDateStr = endDate.toDateString()
+    const startDateStr = formatISO(startDate)
+    const endDateStr = formatISO(endDate)
 
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/home/addTrip`, {
         method: 'POST',

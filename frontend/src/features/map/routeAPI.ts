@@ -37,6 +37,7 @@ export async function getGoogleRouteTransit(
     destinationId: string,
     travelMode: google.maps.TravelMode
 ) {
+    // use await
     return directionService.route({
         origin: {
             placeId: originId

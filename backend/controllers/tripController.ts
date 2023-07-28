@@ -6,13 +6,14 @@ import { calculateNumberOfDays } from "../util/utilFn";
 export class TripController{
     constructor(private tripService: TripService){}
 
-    addTrip = async(req: Request, res: Response) =>{
+    addTrip = async(req: Request, res: Response) => {
         try{
             const {tripName, location, startDateStr, endDateStr, userId} = req.body
             if (!tripName || !location || !startDateStr || !endDateStr || !userId){
                 throw new Error('Info missing')
             }
-
+            // remove
+            console.log(`backend new trip startDate: ${startDateStr}`)
             await this.tripService.addTrip(tripName, location, startDateStr, endDateStr, userId)
             res.status(200).json({success: true, msg: 'Trip added'})
         }catch(e){
@@ -28,12 +29,14 @@ export class TripController{
                 throw new Error('UserID missing')
             }
             const result = await this.tripService.getTrip(userId)
+            // do the calculation in service
             if (result.length){
                 for (let tripItem of result){
                     const DatesOfTrip = calculateNumberOfDays(tripItem)
                     tripItem.DatesOfTrip = DatesOfTrip
                 }
             }
+            console.log('result1 start date!!' + JSON.stringify(result[0].start_date))
             res.status(200).json({success: true, result: result})
         }catch(e){
             logger.error(`[ERR005] ${e}`)

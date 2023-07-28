@@ -31,6 +31,8 @@ export class EventController {
                 throw new Error('Missing update info')
             }
             await this.eventService.updateEventOrder(activeEventId, overOrder)
+            // don't async callback in forEach
+            // use for in
             eventList.forEach(async (event: any) => {
                 if (activeOrder > overOrder){
                     if (event.id !== activeEventId && event.item_order >= overOrder && event.item_order <= activeOrder) {
@@ -58,6 +60,7 @@ export class EventController {
                 throw new Error('Missing info')
             }
 
+            // don't async callback in forEach
             activeEventList.forEach(async (event: any) => {
                 const newItemOrder = event.item_order > Number(activeIndex) ? event.item_order - 1 : event.item_order
                 await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, newItemOrder)
@@ -79,9 +82,9 @@ export class EventController {
 
     addNewEvent = async (req: Request, res: Response) => {
         try {
-            const { eventList, placeId, day, tripId, locationInfo } = req.body
-            console.log('new event: !!!!!!!' + eventList,placeId,day,tripId)
-            if (!eventList || !placeId || !day || !tripId) {
+            const { eventList, placeId, day, tripId, locationInfo} = req.body
+
+            if (!eventList || !placeId || !day || !tripId || !locationInfo) {
                 throw new Error('Missing new event info')
             }
 
@@ -145,17 +148,21 @@ export class EventController {
     updateEventInfo = async (req: Request, res: Response) =>{
         try{
             const {data, newDate, eventId} = req.body
+
             if (!data || !newDate || !eventId){
                 throw new Error('Missing info')
             }
+            
             const correctNewDate = new Date(newDate)
             const eventItem = await this.eventService.getSingleEvent(eventId)
+
             if (!eventItem){
                 throw new Error('Event not existed')
             }
+
             if (isSameDay(eventItem.date, correctNewDate)){
                 await this.eventService.updateEvent(data, correctNewDate, eventId, eventItem.item_order, eventItem.day)
-            } else{
+            } else {
                 const oldDateEventList = await this.eventService.getEventByDate(eventItem.trip_id, eventItem.date)
                 oldDateEventList.forEach(async (event) =>{
                     if (event.item_order > eventItem.item_order){
