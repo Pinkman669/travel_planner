@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useExpenseInfo } from "./ExpenseAPI";
 import { BudgetSubTab } from "./ExpenseSubTab";
 import { useState } from "react";
-import "../../css/expense.css";
+import styles from '../../css/Expense.module.css';
 
 export function Expense() {
   const { tripId } = useParams();
@@ -12,8 +12,8 @@ export function Expense() {
   const detail = expenseResult?.detail;
 
   return (
-    <div className="expense-page">
-      <div className="expense-container" onClick={() => setBudgetSubTab(!showBudgetSubTab)}>
+    <div className={styles.expensePage}>
+      <div className={styles.expenseContainer} onClick={() => setBudgetSubTab(!showBudgetSubTab)}>
         <div>Budget</div>
         <div>
           ${expenseResult?.totalBudget}
@@ -26,7 +26,7 @@ export function Expense() {
         isBudget
       />
 
-      <div className="expense-container"onClick={() => setExpenseSubTab(!showExpenseSubTab)}>
+      <div className={styles.expenseContainer} onClick={() => setExpenseSubTab(!showExpenseSubTab)}>
         <div>Expense</div>
         <div onClick={() => setExpenseSubTab(true)}>
           ${expenseResult?.totalExpense}
@@ -39,7 +39,7 @@ export function Expense() {
         isBudget={false}
       />
 
-      <div className="expense-container total-container">
+      <div className={`${styles.expenseContainer} ${styles.totalContainer}`}>
         <div>Total</div>
         <div>${expenseResult?.totalExpense}</div>
       </div>

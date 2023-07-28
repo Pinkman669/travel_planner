@@ -1,4 +1,4 @@
-.expense-container{
+.expenseContainer{
     height: 5vh;
     padding:0.5rem  ;
     border-radius: 10px;
@@ -10,11 +10,11 @@
     width: 90%;
 }
 
-.expense-container:hover{
+.expenseContainer:hover{
     background-color: #b4b1b1;
 }
 
-.total-container{
+.totalContainer{
     position:absolute;
     bottom:10px;
     background-color: #d3f35f;

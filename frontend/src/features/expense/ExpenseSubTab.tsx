@@ -1,3 +1,5 @@
+import styles from '../../css/Expense.module.css';
+
 export interface subTabProps {
   isShown: boolean;
   result: { name: string; category: string; budget: number; expense: number }[];
@@ -19,7 +21,7 @@ export function BudgetSubTab(props: subTabProps) {
       {detail &&
         show &&
         detail.map((tab: subTabDetail) => (
-          <div className="subTab">
+          <div className={styles.subTab}>
             <div>{tab.category ? tab.category : "Other"} </div>
             <div>${props.isBudget ? tab.budget: tab.expense}</div>
           </div>
