@@ -1,5 +1,4 @@
 import express from "express";
-import { Request, Response } from "express";
 import dotenv from 'dotenv'
 import  Knex  from "knex";
 import { AuthService } from "./services/authService";
@@ -43,10 +42,6 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// remove
-app.get("/", function (req: Request, res: Response) {
-  res.end("backend testing");
-});
 
 app.use('/auth', authRouter())
 app.use('/home', tripRouter())

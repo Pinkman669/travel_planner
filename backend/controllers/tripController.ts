@@ -12,8 +12,6 @@ export class TripController{
             if (!tripName || !location || !startDateStr || !endDateStr || !userId){
                 throw new Error('Info missing')
             }
-            // remove
-            console.log(`backend new trip startDate: ${startDateStr}`)
             await this.tripService.addTrip(tripName, location, startDateStr, endDateStr, userId)
             res.status(200).json({success: true, msg: 'Trip added'})
         }catch(e){

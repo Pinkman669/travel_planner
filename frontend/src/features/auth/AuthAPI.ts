@@ -42,7 +42,6 @@ export async function localSignUp(
 }
 
 export async function facebookLogin(code: string){
-    console.log('fb login request!!')
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/auth/login/facebook`,{
         method:'POST',
         headers:{

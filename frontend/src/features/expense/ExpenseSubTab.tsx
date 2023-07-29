@@ -3,6 +3,7 @@ import styles from '../../css/Expense.module.css';
 export interface subTabProps {
   isShown: boolean;
   result: { name: string; category: string; budget: number; expense: number }[];
+  category:{};
   onHide: () => void;
   isBudget: boolean;
 }
@@ -16,6 +17,8 @@ export interface subTabDetail {
 export function BudgetSubTab(props: subTabProps) {
   const show = props.isShown;
   const detail = props.result;
+  const category = props.category;
+  
   return (
     <div>
       {detail &&

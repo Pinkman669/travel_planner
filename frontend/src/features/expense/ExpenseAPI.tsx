@@ -7,6 +7,7 @@ export interface ExpenseDetail{
         budget: number,
         expense: number,
     }[],
+    allCategoryBudget:{},
     totalBudget: number, 
     totalExpense: number
 }
