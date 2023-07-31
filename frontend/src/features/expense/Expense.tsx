@@ -10,6 +10,7 @@ export function Expense() {
   const [showBudgetSubTab, setBudgetSubTab] = useState(false);
   const [showExpenseSubTab, setExpenseSubTab] = useState(false);
   const detail = expenseResult?.detail;
+  const category= expenseResult?.allCategoryBudget;
 
   return (
     <div className={styles.expensePage}>
@@ -22,6 +23,7 @@ export function Expense() {
       <BudgetSubTab
         isShown={showBudgetSubTab}
         result={detail!}
+        category ={category!}
         onHide={() => setBudgetSubTab(false)}
         isBudget
       />
@@ -35,6 +37,7 @@ export function Expense() {
       <BudgetSubTab
         isShown={showExpenseSubTab}
         result={detail!}
+        category ={category!}
         onHide={() => setExpenseSubTab(false)}
         isBudget={false}
       />

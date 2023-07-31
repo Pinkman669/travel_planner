@@ -99,7 +99,6 @@ export class EventController {
 
     addFavouriteEvent = async (req: Request, res: Response) => {
         try {
-            console.log('Favourite event')
             const { data, tripId } = req.body
             if (!data || !tripId) {
                 throw new Error('Missing favourite event info')

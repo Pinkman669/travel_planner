@@ -13,15 +13,27 @@ export class ExpenseService{
 
         let totalExpense:number = 0
         let totalBudget:number = 0
-        console.log(detail)
+        let allCategoryBudget = {}
 
             for (let i = 0; i < detail.length; i++) {
 
                 totalExpense += detail[i].expense
                 totalBudget +=detail[i].budget
-            }
 
+                
+                let categoryName = detail[i].category
+                let categoryBudget= detail[i].budget
+                if (detail[i].category === detail[i-1].category ){
+                
+                    allCategoryBudget[categoryName]+= categoryBudget
+
+                }else {
+
+                    allCategoryBudget[categoryName]= categoryBudget
+
+                }
+            }
         
-        return {detail,totalBudget,totalExpense} 
+        return {detail,allCategoryBudget,totalBudget,totalExpense} 
     }
 }

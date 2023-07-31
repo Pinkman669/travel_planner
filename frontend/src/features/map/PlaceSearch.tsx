@@ -37,7 +37,6 @@ export default function PlaceSearch ({ setLocation }: PlacesProps) {
     const results =await getGeocode({placeId});
     const {lat, lng} =await getLatLng(results[0]);
     setLocation({lat, lng});
-    console.log(placeId)
   }
 
   return (

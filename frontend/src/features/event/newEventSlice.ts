@@ -119,7 +119,7 @@ export const newEventSlice = createSlice({
                 return event
             })
             newEventList = arrayMove(newEventList, action.payload.activeIndex - 1, action.payload.overIndex - 1)
-            console.log(newEventList)
+
             state.new_eventItems[action.payload.container] = newEventList
             localStorage.setItem('newEventItems', JSON.stringify(state.new_eventItems))
         }
