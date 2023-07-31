@@ -9,7 +9,6 @@ import { addTrip, removeTrip } from "./AddTripAPI";
 import { notify } from "../utils/utils";
 import TripItem from './TripItem'
 import { useMutation } from "@tanstack/react-query";
-import { differenceInDays } from 'date-fns'
 import '../../css/Custom-BS.css'
 import { useNavigate } from "react-router-dom";
 import { fetchTripItemByUserId } from "./tripSlice";
