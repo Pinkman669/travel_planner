@@ -44,13 +44,13 @@ export default function PlaceInfo() {
         <div className="place_name">{placeInfo?.name}</div>
         <div className="feature_container">
           <button
-            className="feature_button"
+            className="feature_btn"
             onClick={() => addFavourite.mutate(placeInfo!)}
           >
             <img src={favourite} alt="Favourite" />
           </button>
           <button
-            className="feature_button"
+            className="feature_btn"
             onClick={() => setShowNewEventModal(true)}
           >
             <img src={add} alt="add" />
@@ -58,13 +58,12 @@ export default function PlaceInfo() {
         </div>
       </div>
       <div className="info_detail_title">
-        {" "}
-        Address:{" "}
+        <span className="placeInfo-field">Address:{" "}</span>
         <div className="info_detail">{placeInfo?.formatted_address}</div>
       </div>
       {placeInfo?.opening_hours?.weekday_text && (
         <div className="info_detail_title">
-          Business Hours:
+          <span className="placeInfo-field">Business Hours:{" "}</span>
           <div className="info_detail">
             {placeInfo?.opening_hours?.weekday_text?.map((hours, index) => (
               <div key={hours+index}>{hours}</div>
@@ -74,14 +73,14 @@ export default function PlaceInfo() {
       )}
       {placeInfo?.formatted_phone_number && (
         <div className="info_detail_title">
-          Phone No. :{" "}
+          <span className="placeInfo-field">Phone No. :{" "}</span>
           <div className="info_detail">{placeInfo?.formatted_phone_number}</div>
         </div>
       )}
       {placeInfo?.website && (
         <div className="info_detail_title">
-          Website: {"  "}
-          <a href={placeInfo?.website} target="_blank" rel="noreferrer noopener">
+          <span className="placeInfo-field">Website: {"  "}</span>
+          <a href={placeInfo?.website} target="_blank" rel="noreferrer noopener" className="info_detail">
             {placeInfo?.website}
           </a>
         </div>

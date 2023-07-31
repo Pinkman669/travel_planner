@@ -1,27 +1,27 @@
-#feature-tabs-tab-Map{
+#feature-tabs-tab-Map {
     background-color: #AFF4C6;
 }
 
-#feature-tabs-tab-Fav{
+#feature-tabs-tab-Fav {
     background-color: #FFD8D5;
 }
 
-#feature-tabs-tab-Route{
+#feature-tabs-tab-Route {
     background-color: #D1ECFF;
 }
 
-#feature-tabs-tab-Expense{
+#feature-tabs-tab-Expenses {
     background-color: #faca51;
 }
 
-.nav.nav-tabs{
+.nav.nav-tabs {
     background-color: white;
 }
 
-.tab-content{
+.tab-content {
     height: 100%;
 }
 
-.tab-content > div{
+.tab-content>div {
     height: 100%;
 }

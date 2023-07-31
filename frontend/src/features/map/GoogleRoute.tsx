@@ -45,9 +45,9 @@ export function GoogleRoute(props: GoogleRouteProps) {
         () => ({
             mapId: "cb967ffe6985ef4e", // the style of the map
             //   disableDefaultUI: true, // the option to change the view of the map, it's set to street view right now
-            clickableIcons: false,
             streetViewControl: false,
-            mapTypeControl: false
+            mapTypeControl: false,
+            fullscreenControl: false
         }),
         []
     );

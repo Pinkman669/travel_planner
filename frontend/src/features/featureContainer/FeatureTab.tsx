@@ -33,7 +33,7 @@ export default function FeatureTab() {
         <Tab eventKey="Route" title={<IconRoute id={styles.routeIcon}/>}>
           <EventsRoute />
         </Tab>
-        <Tab eventKey="Expenses" title= {<IconBrandCashapp/>}>
+        <Tab eventKey="Expenses" title= {<IconBrandCashapp id={styles.expenseIcon}/>}>
           <Expense />
         </Tab>
       </Tabs>

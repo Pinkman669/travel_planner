@@ -24,7 +24,6 @@ export function Map() {
     () => ({
       mapId: "cb967ffe6985ef4e", // the style of the map
       disableDefaultUI: true, // the option to change the view of the map, it's set to street view right now
-      clickableIcons: false, // the option to click on the icons that shows up on the map
     }),
     []
   );

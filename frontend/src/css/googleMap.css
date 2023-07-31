@@ -13,10 +13,13 @@
     left:5%;
     padding:0.5rem;
     border-radius: 25px;
+    border: none;
     position: absolute;
     z-index: 10;
     top:10px;
+    box-shadow: 0 1px 3px grey;
 }
+
 .places-container {
   position: absolute;
   top: 10px;
@@ -26,10 +29,11 @@
 }
 
 .places-info-container{
+  box-shadow: 0 1px 3px grey;
   position:absolute;
   padding:0.5rem  ;
   border-radius: 25px;
-  background-color: #ffffff;
+  background-color: #f9f9f9;
   width: 90%;
   left:5%;
   bottom:10px;
@@ -45,9 +49,11 @@
 }
 
 .place_name{
-  font-weight: 900;
   font-size: 36px;
+  font-family: 'Edu SA Beginner', 'serif';
+  padding: 0 1rem;
 }
+
 .info_detail_title {
   font-weight: 900;
   display: flex;
@@ -56,21 +62,32 @@
 }
 
 .info_detail{
+  font-family: 'Quicksand';
   font-weight: 500;
   padding:0 1rem ;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
-.feature_button{
+.feature_btn{
   margin: 4px;
   border:none;
-  background-color: #ffffff;
+  background-color: transparent;
+  height: 50px;
+  width: 50px;
+  padding: 0;
+}
+ 
+.feature_btn > img{
   height: 50px;
   width: 50px;
 }
- 
-.feature_button > img{
-  height: 50px;
-  width: 50px;
+
+.placeInfo-field{
+  font-family: 'Dancing Script', 'serif';
+  font-size: 23px;
 }
 
 @media screen and (max-width: 450px){

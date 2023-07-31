@@ -13,7 +13,7 @@
 
 .favourite-page{
   width:100%;
-  height: 90vh;
+  height: 100%;
  background-color: #FFD7D5;
  overflow-y: scroll;
 }

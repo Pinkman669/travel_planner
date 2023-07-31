@@ -17,7 +17,7 @@ export interface subTabDetail {
 export function BudgetSubTab(props: subTabProps) {
   const show = props.isShown;
   const detail = props.result;
-  const category = props.category;
+  // const category = props.category;
   
   return (
     <div>

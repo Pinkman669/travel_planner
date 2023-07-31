@@ -4,7 +4,6 @@ import {
 import add from "./images/add.png";
 import { useState } from "react";
 import { NewEventModal } from "../event/NewEventModal";
-// import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import "../../css/Favourite.css";
 import "../../css/googleMap.css";

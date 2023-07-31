@@ -3,6 +3,15 @@
     color: black;
 }
 
+#expenseIcon{
+    color: black;
+    fill: black;
+}
+
+#routeIcon{
+    color: black;
+}
+
 #featuresContainer{
     height: 100%;
 }
