@@ -31,9 +31,8 @@ export class EventController {
                 throw new Error('Missing update info')
             }
             await this.eventService.updateEventOrder(activeEventId, overOrder)
-            // don't async callback in forEach
-            // use for in
-            eventList.forEach(async (event: any) => {
+
+            for (const event of eventList){
                 if (activeOrder > overOrder){
                     if (event.id !== activeEventId && event.item_order >= overOrder && event.item_order <= activeOrder) {
                         const newItemOrder = event.item_order < Number(activeOrder) ? event.item_order + 1 : event.item_order
@@ -45,7 +44,8 @@ export class EventController {
                         await this.eventService.updateEventOrder(event.id, newItemOrder)
                     }
                 }
-            })
+            }
+
             res.status(200).json({ success: true })
         } catch (e) {
             logger.error(`[ERR008] ${e}`)
@@ -60,19 +60,19 @@ export class EventController {
                 throw new Error('Missing info')
             }
 
-            // don't async callback in forEach
-            activeEventList.forEach(async (event: any) => {
+            for (const event of activeEventList){
                 const newItemOrder = event.item_order > Number(activeIndex) ? event.item_order - 1 : event.item_order
                 await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, newItemOrder)
-            });
-            overEventList.forEach(async (event: any) => {
+            }
+            for (const event of overEventList){
                 if (event.id === Number(activeEventId)) {
                     await this.eventService.updateEventDate(event.id, new Date(newDate), newDay, newIndex)
                 } else {
                     const newItemOrder = event.item_order >= Number(newIndex) ? event.item_order + 1 : event.item_order
                     await this.eventService.updateEventDate(event.id, new Date(event.date), event.day, newItemOrder)
                 }
-            });
+            }
+
             res.status(200).json({ success: true })
         } catch (e) {
             logger.error(`[ERR009] ${e}`)
@@ -163,12 +163,12 @@ export class EventController {
                 await this.eventService.updateEvent(data, correctNewDate, eventId, eventItem.item_order, eventItem.day)
             } else {
                 const oldDateEventList = await this.eventService.getEventByDate(eventItem.trip_id, eventItem.date)
-                oldDateEventList.forEach(async (event) =>{
+                for (const event of oldDateEventList){
                     if (event.item_order > eventItem.item_order){
                         const newItemOrder = event.item_order - 1
                         await this.eventService.updateEventOrder(event.id, newItemOrder)
                     }
-                })
+                }
 
                 const newDateEventList = await this.eventService.getEventByDate(eventItem.trip_id, correctNewDate)
                 const newItemOrder = newDateEventList.length + 1
