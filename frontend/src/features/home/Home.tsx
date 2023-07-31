@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout } from "../auth/AuthSlice";
 import styles from "../../css/Home-and-itsModal.module.css"
@@ -80,16 +80,7 @@ export default function Home() {
         })
     }
 
-    // const toggleModal = useCallback(() => setShowModal(!showModal), [showModal])
-
-    const handleModal = () => {
-        if (showModal) {
-            setShowModal(false)
-        } else {
-            setShowModal(true)
-        }
-    }
-
+    const toggleModal = useCallback(() => setShowModal(!showModal), [showModal])
 
     useEffect(() => {
         if (formState.isSubmitSuccessful) {
@@ -130,7 +121,7 @@ export default function Home() {
 
             {
                 !isLargeScreen && <div className={styles.addTripItems}>
-                    <button onClick={handleModal} className={styles.addTripBtn}>
+                    <button onClick={toggleModal} className={styles.addTripBtn}>
                         <IconPlus />
                     </button>
                 </div>
@@ -142,10 +133,10 @@ export default function Home() {
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                onHide={handleModal}
+                onHide={toggleModal}
             >
                 <div>
-                    <button className={styles.iconBtn} onClick={handleModal}><IconX /></button>
+                    <button className={styles.iconBtn} onClick={toggleModal}><IconX /></button>
                 </div>
                 <Modal.Body>
                     <div>
