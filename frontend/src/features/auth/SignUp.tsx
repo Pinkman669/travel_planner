@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import '../../css/SignUp.css'
@@ -33,15 +33,14 @@ export default function SignUp() {
         }
     }, [formState, reset]);
 
-    async function submit(data: FormState) {
+    const submit = useCallback(async (data: FormState) => {
         const result = await localSignUp(data.email, data.password, data.name, data.birthday as Date)
         if (result){
             notify(result, 'Account created')
-            // maybe reset the form here
         } else{
             notify(result, 'Sign up failed')
         }
-    }
+    }, [])
 
     return (
         <div className="container-fluid">

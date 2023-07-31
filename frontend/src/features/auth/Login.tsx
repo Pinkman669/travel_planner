@@ -26,7 +26,6 @@ export default function Login() {
     });
 
     const loginViaFacebook = useCallback(() => {
-        // console.log(`frontend fb app id: ${process.env.REACT_APP_FACEBOOK_APP_ID}`)
         const authURL = 'https://www.facebook.com/dialog/oauth'
         const search = new URLSearchParams()
         search.set('client_id', process.env.REACT_APP_FACEBOOK_APP_ID + '')
@@ -53,17 +52,6 @@ export default function Login() {
             notify(result.success, 'Email or password not match')
         }
     }, [dispatch, navigate])
-
-    // async function submit(data: FormState) {
-    //     const result = await localLogin(data.email, data.password)
-    //     if (result.success) {
-    //         dispatch(login({name: result.name, userId: result.userId}))
-    //         notify(result.success, 'Login success!')
-    //         navigate('/')
-    //     } else {
-    //         notify(result.success, 'Email or password not match')
-    //     }
-    // }
 
     return (
         <div className='container-fluid login-page'>
