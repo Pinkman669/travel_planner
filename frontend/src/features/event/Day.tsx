@@ -6,6 +6,7 @@ import { EventItem } from '../utils/types'
 import { useDroppable } from "@dnd-kit/core";
 import DaySelector from "./DaySelector";
 import { useAppSelector } from "../../redux/hooks";
+import { format } from "date-fns";
 
 interface DayItemProps {
     tripId: number;
@@ -41,11 +42,15 @@ export default function Day(props: DayItemProps) {
         <>
             <div className={`${styles.dayContainer} ${changeStyle}`}>
                 <div className={styles.dayHeader}>
-                    <div className={styles.dayTitle}>
-                        <div>Day {props.dayNumber}</div>
+                    <div>
+                        <div className={styles.dayTitle}>
+                            <div className={styles.tripDayNumber}>Day {props.dayNumber}</div>
+                        </div>
+                        <div className={styles.tripDate}>{format(new Date(props.date), 'E, d-MMM-yy')}</div>
+                    </div>
+                    <div>
                         <DaySelector onClickDayEffect={onClickDayEffect} dayNumber={props.container} />
                     </div>
-                    <div>{new Date(props.date).toDateString()}</div>
                 </div>
                 <div className={styles.eventContainer}>
                     <SortableContext id={props.container} items={eventList}>

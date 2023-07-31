@@ -1,10 +1,11 @@
 .controlContainer {
-  width: 30%;
+  width: 50%;
   background-color: #9c8e8e;
   border-radius: 10px;
   overflow: hidden;
   height: 100%;
   position: relative;
+  box-shadow: 0 1px 3px grey;
 }
 
 @media screen and (max-width: 450px){

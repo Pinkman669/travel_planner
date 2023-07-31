@@ -1,7 +1,7 @@
 .eventItemContainer {
-    background-color: #DEF1FF;
-    width: 150px;
-    height: 120px;
+    background-color: #F3F4F6;
+    width: 250px;
+    height: 80px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -11,17 +11,15 @@
     margin: 10px 0;
     padding: 10px;
     touch-action: pan-y;
+    box-shadow: 0 1px 3px grey;
 }
 
 .dragHandle {
     font-size: 5px;
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translate(-50%, 0);
     padding: 0 5px;
     margin: 0;
     cursor: grab;
+    z-index: 3;
 }
 
 .dragHandle:hover {
@@ -45,6 +43,23 @@
 
 .detailBtn:hover {
     background-color: rgba(50, 50, 50, 0.5);
+}
+
+.eventItemDiv{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.eventItemCategory{
+    color: rgba(50, 50, 50, 0.5);
+    font-family: 'Quicksand', 'serif';
+    font-size: 14px;
+}
+
+.eventItemName{
+    font-family: 'Edu SA Beginner', 'serif';
+    font-size: 23px;
 }
 
 @media screen and (max-width: 450px) {

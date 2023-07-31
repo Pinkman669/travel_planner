@@ -23,6 +23,7 @@
 }
 
 .addTripItems{
+    box-shadow: 0 1px 3px grey;
     width: 220px;
     height: 180px;
     background-color: #FFFFFF;
@@ -38,6 +39,7 @@
 }
 
 .tripItems{
+    box-shadow: 0 1px 3px grey;
     width: 220px;
     height: 180px;
     background-color: #FFFFFF;

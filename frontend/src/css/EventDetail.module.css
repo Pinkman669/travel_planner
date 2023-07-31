@@ -24,10 +24,8 @@
     background-color: transparent;
 }
 
-.eventDetailField{
-    display: flex;
-    width: 90%;
-    margin: 8px 0;
+.eventDetailField, .eventAddressContainer{
+    padding: 0 15px;
     align-items: baseline;
 }
 
@@ -39,6 +37,8 @@
 
 .eventDetailTitle{
     padding: 5px 10px;
+    font-family: 'Dancing Script', 'serif';
+    font-size: 25px;
 }
 
 .eventDetailTime > div{
@@ -46,7 +46,28 @@
     width: 170px;
 }
 
-.eventDetailField > input{
-    width: 50%;
-    background-color: transparent;
+.eventDetailInput{
+    background-color: transparent!important;
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid black;
+    font-size: 15px;
+    font-family: 'Quicksand', 'serif';
+}
+
+.eventAddressContainer .eventDetailInput{
+    padding: 0 15px;
+}
+
+.eventDetailField > a{
+    display: block;
+}
+
+.eventName{
+    font-family: 'Edu SA Beginner', 'serif';
+    font-size: 35px;
+}
+
+.businessHourContent{
+    font-family: 'Edu SA Beginner', 'serif';
 }

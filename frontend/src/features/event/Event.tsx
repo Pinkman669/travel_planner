@@ -1,5 +1,5 @@
 import styles from '../../css/Event.module.css'
-import { IconGripHorizontal } from "@tabler/icons-react";
+import { IconArrowsMove } from "@tabler/icons-react";
 import { CSS } from "@dnd-kit/utilities"
 import commonStyles from '../../css/Common.module.css'
 import { useSortable } from "@dnd-kit/sortable";
@@ -33,12 +33,19 @@ export default function Event(props: EventItemProps) {
         <>
             <div ref={setNodeRef} style={style} className={styles.eventItemContainer}>
                 <button className={`${styles.detailBtn}`} onClick={handleShow}></button>
-                <button className={`${commonStyles.iconBtn} ${styles.dragHandle}`} {...listeners} {...attributes}><IconGripHorizontal /></button>
-                <div>
-                    {
-                        props.eventName.length > 15 ? `${props.eventName.slice(0, 15)}...` : props.eventName 
-                    }
+                <div className={styles.eventItemDiv}>
+                    <div>
+                        <div className={styles.eventItemName}>
+                            {
+                                props.eventName.length > 15 ? `${props.eventName.slice(0, 15)}...` : props.eventName
+                            }
+                        </div>
+                        <div className={styles.eventItemCategory}>
+                            {`#${props.eventItem.category}`}
+                        </div>
                     </div>
+                    <button className={`${commonStyles.iconBtn} ${styles.dragHandle}`} {...listeners} {...attributes}><IconArrowsMove /></button>
+                </div>
             </div>
             {showModal && <EventDetail onClose={handleClose} show={showModal} eventItem={props.eventItem} />}
         </>

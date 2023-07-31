@@ -225,8 +225,8 @@ export default function Schedule(props: ScheduleProps) {
             >
                 <div id={styles.scheduleContainer}>
                     <div id={styles.ScheduleHeader}>
-                        <h3 id={styles.tripTitle}>{props.tripName}</h3>
-                        <div>{props.userName}</div>
+                        <h3 className={styles.tripTitle}>{props.tripName}</h3>
+                        <div className={styles.ScheduleUserName}>{props.userName}</div>
                     </div>
                     <div id={styles.ScheduleLine}></div>
                     <div id={styles.allDaysContainer}>

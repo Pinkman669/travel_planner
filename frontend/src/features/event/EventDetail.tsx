@@ -22,7 +22,7 @@ interface EventDetailProps {
 
 interface FormState {
     time: string;
-    date: Date|string;
+    date: Date | string;
     budget: number;
     category: string;
     expense: number;
@@ -36,7 +36,6 @@ export default function EventDetail(props: EventDetailProps) {
     const { tripId } = useParams()
     const dispatch = useAppDispatch()
     const datesOfTrip = useAppSelector(state => state.trip.tripItems).find(trip => trip.id === Number(tripId))?.DatesOfTrip
-    // const [eventDate, setEventDate] = useState<Date>(new Date(eventItem.date))
     const [editMode, setEditMode] = useState(false)
     const formatedEventDate = format(new Date(eventItem.date), 'yyyy-MM-dd')
     const formatedStartDate = format(new Date(datesOfTrip![0]), 'yyyy-MM-dd')
@@ -125,22 +124,25 @@ export default function EventDetail(props: EventDetailProps) {
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         <Form id='evenDetailForm' onSubmit={handleSubmit(submit)}>
-                            <Form.Control type='text' placeholder={eventItem.name} {...register('name')} disabled={!editMode}></Form.Control>
+                            <Form.Control className={`${styles.eventDetailInput} ${styles.eventName}`} type='text' placeholder={eventItem.name} {...register('name')} disabled={!editMode}></Form.Control>
                         </Form>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className={styles.eventDetailTitle}>Address: {eventItem.location}</div>
+                    <div className={styles.eventAddressContainer}>
+                        <div className={styles.eventDetailTitle}>Address: </div>
+                        <div className={styles.eventDetailInput}>{eventItem.location}</div>
+                    </div>
                     <Form id='evenDetailForm'>
 
                         <Form.Group className={styles.eventDetailField}>
                             <Form.Label className={styles.eventDetailTitle}>Date : </Form.Label>
-                            <Form.Control disabled={!editMode} type='date' {...register('date')}></Form.Control>
+                            <Form.Control className={styles.eventDetailInput} disabled={!editMode} type='date' {...register('date')}></Form.Control>
                         </Form.Group>
 
                         <Form.Group className={styles.eventDetailField}>
                             <Form.Label className={styles.eventDetailTitle}>Time : </Form.Label>
-                            <Form.Control disabled={!editMode} type='text' placeholder={eventItem.time} {...register('time')}></Form.Control>
+                            <Form.Control className={styles.eventDetailInput} disabled={!editMode} type='text' placeholder={eventItem.time} {...register('time')}></Form.Control>
                         </Form.Group>
 
                         <div>
@@ -151,7 +153,7 @@ export default function EventDetail(props: EventDetailProps) {
                                 {
                                     clearBusinessHrs.map((item) => {
                                         if (item.length) {
-                                            return <li key={eventItem.id + item}>{item}</li>
+                                            return <li className={styles.businessHourContent} key={eventItem.id + item}>{item}</li>
                                         }
                                         return null
                                     })
@@ -161,7 +163,7 @@ export default function EventDetail(props: EventDetailProps) {
 
                         <Form.Group className={styles.eventDetailField}>
                             <Form.Label className={styles.eventDetailTitle}>Phone No. : </Form.Label>
-                            <Form.Control disabled={!editMode} type='text' placeholder={eventItem.phone} {...register('phone')}></Form.Control>
+                            <Form.Control className={styles.eventDetailInput} disabled={!editMode} type='text' placeholder={eventItem.phone} {...register('phone')}></Form.Control>
                         </Form.Group>
 
                         <Form.Group className={styles.eventDetailField}>
@@ -180,17 +182,17 @@ export default function EventDetail(props: EventDetailProps) {
 
                         <Form.Group className={styles.eventDetailField}>
                             <Form.Label className={styles.eventDetailTitle}>Budget: $</Form.Label>
-                            <Form.Control disabled={!editMode} type='number' placeholder={eventItem.budget + ''} {...register('budget')}></Form.Control>
+                            <Form.Control className={styles.eventDetailInput} disabled={!editMode} type='number' placeholder={eventItem.budget + ''} {...register('budget')}></Form.Control>
                         </Form.Group>
 
                         <Form.Group className={styles.eventDetailField}>
                             <Form.Label className={styles.eventDetailTitle}>Expense: $</Form.Label>
-                            <Form.Control disabled={!editMode} type='number' placeholder={eventItem.expense ? eventItem.expense + '' : '0'} {...register('expense')}></Form.Control>
+                            <Form.Control className={styles.eventDetailInput} disabled={!editMode} type='number' placeholder={eventItem.expense ? eventItem.expense + '' : '0'} {...register('expense')}></Form.Control>
                         </Form.Group>
 
                         <Form.Group className={styles.eventDetailField}>
                             <Form.Label className={styles.eventDetailTitle}>category: </Form.Label>
-                            <Form.Control disabled={!editMode} type='text' placeholder={eventItem.category} {...register('category')}></Form.Control>
+                            <Form.Control className={styles.eventDetailInput} disabled={!editMode} type='text' placeholder={eventItem.category} {...register('category')}></Form.Control>
                         </Form.Group>
                     </Form>
 

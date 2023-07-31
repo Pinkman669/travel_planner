@@ -23,7 +23,7 @@ export default function TripEvent() {
                     <Link to='/' id='sign-up-link'><IconCornerUpLeft /></Link>
                 </Button>
                 {
-                    screenWidth <= 450 && <Button variant="dark" onClick={handleShow}>Map</Button>
+                    screenWidth <= 450 && <Button id={styles.mapBtn} variant="dark" onClick={handleShow}>Map</Button>
                 }
             </div>
             <div className={`${styles.TripEventContainer}`}>
