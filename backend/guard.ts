@@ -1,7 +1,7 @@
 import jwt from "./jwt";
 import jwtSimple from "jwt-simple";
 import express from "express";
-import { User } from "./services/models";
+import { User } from "./util/type";
 import { Bearer } from "permit";
 
 const permit = new Bearer({
@@ -20,10 +20,7 @@ export async function isLoggedIn(
         }
 
         const decoded: Omit<User, 'password'> = jwtSimple.decode(token, jwt.jwtSecret)
-        // console.log(jwt.jwtSecret)
         req.user = decoded
-
-        // console.log("guard check", req.user)
 
         return next()
     } catch(e){

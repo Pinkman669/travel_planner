@@ -18,3 +18,28 @@ export interface UpdateEventInfo{
     phone: string;
     name: string;
 }
+
+export interface LocationDetail {
+    name?: string,
+    formatted_address?: string,
+    formatted_phone_number?: string,
+    opening_hours?: string[],
+    website?: string,
+    place_id?: string
+}
+
+export interface LocationInfo {
+    name: string;
+    address: string;
+    businessHours: string[] | null;
+    phone: string | null;
+    website: string | null;
+}
+
+export interface User{
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+    birthday: Date;
+}

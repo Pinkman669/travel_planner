@@ -1,28 +1,10 @@
 import { Knex } from 'knex';
-import { UpdateEventInfo } from '../util/type';
+import { UpdateEventInfo, LocationDetail, LocationInfo} from '../util/type';
 
 
 interface AddNewEventRequest {
     name: string, date: Date, time?: TimeRanges, location: string, business_hours?: string[],
     phone?: string, website?: string, budget?: number, expense?: number, category: string
-}
-
-// put types in models.ts / type.ts
-export interface LocationDetail {
-    name?: string,
-    formatted_address?: string,
-    formatted_phone_number?: string,
-    opening_hours?: string[],
-    website?: string,
-    place_id?: string
-}
-
-export interface LocationInfo {
-    name: string;
-    address: string;
-    businessHours: string[] | null;
-    phone: string | null;
-    website: string | null;
 }
 
 export class EventService {

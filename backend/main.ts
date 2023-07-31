@@ -4,7 +4,7 @@ import  Knex  from "knex";
 import { AuthService } from "./services/authService";
 import { AuthController } from "./controllers/authController";
 import { authRouter, eventRouter, expenseRouter, tripRouter } from "./Router";
-import { User } from "./services/models";
+import { User } from "./util/type";
 import cors from 'cors'
 import { TripService } from "./services/tripService";
 import { TripController } from "./controllers/tripController";
