@@ -1,9 +1,7 @@
 import { arrayMove } from "@dnd-kit/sortable";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { isSameDay } from "date-fns";
 import { EventItem } from '../utils/types'
-import { useAppSelector } from "../../redux/hooks";
 
 interface Days {
     [key: string]: EventItem[]

@@ -32,12 +32,10 @@ export default function Schedule(props: ScheduleProps) {
     const datesOfTrip = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === props.tripId)))?.DatesOfTrip
     
     useEffect(() => {
-        // datesOfTrip is not necessary
         dispatch(fetchEventByTrip({ tripId: props.tripId }))
     }, [dispatch, datesOfTrip, props.tripId])
     
     const [overLayActiveState, setOverLayActiveState] = useState<OverLayState | null>(null)
-    // rename: newEventItems
     const newEventItems = useAppSelector(state => state.new_event.new_eventItems)
 
     const sensors = useSensors(
@@ -231,7 +229,6 @@ export default function Schedule(props: ScheduleProps) {
                     <div id={styles.ScheduleLine}></div>
                     <div id={styles.allDaysContainer}>
                         {datesOfTrip!.map((date, index) => {
-                            // don't need `day` in key
                             const evenList = newEventItems[`day${index + 1}`] ? newEventItems[`day${index + 1}`] : []
                             return <Day isLargeScreen={isLargeScreen} container={`day${index + 1}`} eventList={evenList as EventItem[]} key={index + date.toString()} dayNumber={index + 1} date={date} tripId={props.tripId} />
                         })}
