@@ -31,7 +31,6 @@ export function NewEventModal(props: newEventModalProps) {
   const dispatch = useAppDispatch()
   const placeId = useAppSelector((state) => state.place.placeId);
   const { tripId } = useParams();
-  const datesOfTrip = useAppSelector(state => state.trip.tripItems).find((trip) => trip.id === Number(tripId))?.DatesOfTrip
   const tripInfo = useAppSelector((state) =>
     state.trip.tripItems.find((item) => item.id === Number(tripId))
   );
@@ -75,7 +74,7 @@ export function NewEventModal(props: newEventModalProps) {
       onError: (error) => {
         notify(false, "Add new event fail" + error);
       },
-      onSettled: () => dispatch(fetchEventByTrip({tripId: Number(tripId), datesOfTrip: datesOfTrip || []}))
+      onSettled: () => dispatch(fetchEventByTrip({tripId: Number(tripId) }))
     }
   );
 

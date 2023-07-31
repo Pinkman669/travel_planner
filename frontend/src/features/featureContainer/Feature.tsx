@@ -4,15 +4,16 @@ import { CloseButton } from "react-bootstrap";
 
 interface FeatureProps{
     onClose?: () => void;
-    screenWidth?: number;
+    isLargeScreen?: boolean;
 }
 
 export default function Feature(props: FeatureProps) {
+    const isLargeScreen = props.isLargeScreen
 
     return (
         <div className={styles.controlContainer}> 
         {
-            props.screenWidth && props.screenWidth <= 450 && <CloseButton id={styles.offcanvasCloseBtn} onClick={props.onClose}/>
+            !isLargeScreen && <CloseButton id={styles.offcanvasCloseBtn} onClick={props.onClose}/>
         }
             <FeatureTab/>
         </div>

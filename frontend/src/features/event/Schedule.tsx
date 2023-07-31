@@ -15,7 +15,6 @@ interface ScheduleProps {
     tripName: string;
     userName: string;
     tripId: number;
-    screenWidth: number;
     isLargeScreen: boolean
 }
 
@@ -30,17 +29,16 @@ interface OverLayState {
 export default function Schedule(props: ScheduleProps) {
     const isLargeScreen = props.isLargeScreen
     const dispatch = useAppDispatch()
-    // use a shorter name
     const datesOfTrip = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === props.tripId)))?.DatesOfTrip
     
     useEffect(() => {
         // datesOfTrip is not necessary
-        dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: datesOfTrip || [] }))
+        dispatch(fetchEventByTrip({ tripId: props.tripId }))
     }, [dispatch, datesOfTrip, props.tripId])
     
     const [overLayActiveState, setOverLayActiveState] = useState<OverLayState | null>(null)
-    // rename: newEventItemss
-    const mapToObject = useAppSelector(state => state.new_event.new_eventItems)
+    // rename: newEventItems
+    const newEventItems = useAppSelector(state => state.new_event.new_eventItems)
 
     const sensors = useSensors(
         useSensor(TouchSensor, {
@@ -60,11 +58,11 @@ export default function Schedule(props: ScheduleProps) {
         })
     );
     const findContainer = (id: string) => {
-        if (id in mapToObject) { // If Day container is empty, overId will be the droppable table's id
+        if (id in newEventItems) { // If Day container is empty, overId will be the droppable table's id
             return id
         }
-        const result = Object.keys(mapToObject).find((key) => {
-            return mapToObject[key].find((event) => {
+        const result = Object.keys(newEventItems).find((key) => {
+            return newEventItems[key].find((event) => {
                 if (event.id === Number(id)) {
                     return true
                 } else{
@@ -77,7 +75,7 @@ export default function Schedule(props: ScheduleProps) {
 
     function handleDragStart(event: DragStartEvent) {
         const activeContainer = findContainer(event.active.id.toString())
-        const eventInfo = mapToObject[activeContainer!].find((e) => e.id === event.active.id)
+        const eventInfo = newEventItems[activeContainer!].find((e) => e.id === event.active.id)
         setOverLayActiveState({
             eventItem: eventInfo as EventItem,
             id: Number(event.active.id),
@@ -103,7 +101,7 @@ export default function Schedule(props: ScheduleProps) {
         if (activeContainer !== overContainer) {
             return
         }
-        const eventList = mapToObject[activeContainer as string]
+        const eventList = newEventItems[activeContainer as string]
         const activeInfo = eventList.find((event) => event.id === activeId)
         const overInfo = eventList.find((event) => event.id === overId)
         const activeIndex = eventList.indexOf(activeInfo as EventItem) + 1
@@ -137,7 +135,7 @@ export default function Schedule(props: ScheduleProps) {
             onError: () => {
                 notify(false, 'Event rearrange failed')
             },
-            onSettled: () => dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: datesOfTrip || [] }))
+            onSettled: () => dispatch(fetchEventByTrip({ tripId: props.tripId }))
         }
     )
 
@@ -153,17 +151,17 @@ export default function Schedule(props: ScheduleProps) {
         if (!activeContainer || !overContainer || activeContainer === overContainer) {
             return
         }
-        const indexOfOverContainer = Object.keys(mapToObject).indexOf(overContainer as string)
+        const indexOfOverContainer = Object.keys(newEventItems).indexOf(overContainer as string)
         const newDay = indexOfOverContainer + 1
-        const activeEventList = mapToObject[activeContainer as string]
-        const overEventList = mapToObject[overContainer as string]
+        const activeEventList = newEventItems[activeContainer as string]
+        const overEventList = newEventItems[overContainer as string]
         const activeInfo = activeEventList.find((event) => event.id === activeId)
         const overInfo = overEventList.find((event) => event.id === overId)
         const activeIndex = activeEventList.indexOf(activeInfo as EventItem) + 1
         const overIndex = overEventList.indexOf(overInfo as EventItem) + 1
 
         let newIndex: number
-        if (overId as string in mapToObject) { // Moved to empty Day
+        if (overId as string in newEventItems) { // Moved to empty Day
             newIndex = 1
         } else {
             const isLastItem = over && overIndex === overEventList.length
@@ -212,7 +210,7 @@ export default function Schedule(props: ScheduleProps) {
             )
         },
         {
-            onSettled: () => dispatch(fetchEventByTrip({ tripId: props.tripId, datesOfTrip: datesOfTrip || [] }))
+            onSettled: () => dispatch(fetchEventByTrip({ tripId: props.tripId }))
         }
     )
 
@@ -234,7 +232,7 @@ export default function Schedule(props: ScheduleProps) {
                     <div id={styles.allDaysContainer}>
                         {datesOfTrip!.map((date, index) => {
                             // don't need `day` in key
-                            const evenList = mapToObject[`day${index + 1}`] ? mapToObject[`day${index + 1}`] : []
+                            const evenList = newEventItems[`day${index + 1}`] ? newEventItems[`day${index + 1}`] : []
                             return <Day isLargeScreen={isLargeScreen} container={`day${index + 1}`} eventList={evenList as EventItem[]} key={index + date.toString()} dayNumber={index + 1} date={date} tripId={props.tripId} />
                         })}
                     </div>

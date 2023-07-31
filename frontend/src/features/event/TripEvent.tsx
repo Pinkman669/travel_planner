@@ -14,7 +14,6 @@ export default function TripEvent() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const screenWidth = window.innerWidth
     const isLargeScreen = window.innerWidth > 450
 
     return (
@@ -24,19 +23,19 @@ export default function TripEvent() {
                     <Link to='/' id='sign-up-link'><IconCornerUpLeft /></Link>
                 </Button>
                 {
-                    screenWidth <= 450 && <Button id={styles.mapBtn} variant="dark" onClick={handleShow}>Map</Button>
+                    !isLargeScreen && <Button id={styles.mapBtn} variant="dark" onClick={handleShow}>Map</Button>
                 }
             </div>
             <div className={`${styles.TripEventContainer}`}>
-                <Schedule isLargeScreen={isLargeScreen} screenWidth={screenWidth} tripId={Number(tripId)} tripName={tripInfo?.name as string} userName={userName as string} />
+                <Schedule isLargeScreen={isLargeScreen} tripId={Number(tripId)} tripName={tripInfo?.name as string} userName={userName as string} />
                 {
-                    screenWidth <= 450 ?
+                    !isLargeScreen ?
                         <Offcanvas show={show} onHide={handleClose} placement="end">
                             <Offcanvas.Body>
-                                <Feature onClose={handleClose} screenWidth={screenWidth}/>
+                                <Feature onClose={handleClose} isLargeScreen={isLargeScreen}/>
                             </Offcanvas.Body>
                         </Offcanvas>
-                        : <Feature />
+                        : <Feature isLargeScreen={isLargeScreen}/>
                 }
             </div>
         </div>

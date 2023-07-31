@@ -1,7 +1,7 @@
 import { AuthService } from "../services/authService";
 import { checkPassword, hashPassword } from "../hash";
 import { Request, Response } from "express";
-import { User } from '../services/models'
+import { User } from '../util/type'
 import { logger } from "../logger";
 import jwtSimple from "jwt-simple";
 import jwt from "../jwt";

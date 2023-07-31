@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { isSameDay } from "date-fns";
 import { EventItem } from '../utils/types'
+import { useAppSelector } from "../../redux/hooks";
 
 interface Days {
     [key: string]: EventItem[]
@@ -39,21 +40,14 @@ interface New_update_order {
 
 export const fetchEventByTrip = createAsyncThunk(
     'getEventList',
-    async (data: { tripId: number, datesOfTrip: Date[] }) => {
+    async (data: { tripId: number }) => {
         const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/getEvents/${data.tripId}`, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
             }
         })
         const result = await res.json()
-        const eventList = result.result
-        const sortedEventMap = new Map()
-        data.datesOfTrip.forEach((date, index) => {
-            const currentDateList = eventList.filter((event: EventItem) => isSameDay(new Date(event.date), new Date(date)))
-            sortedEventMap.set(`day${index + 1}`, currentDateList)
-        })
-        const mapToObject = Object.fromEntries(sortedEventMap)
-        return mapToObject
+        return result.result
     }
 )
 

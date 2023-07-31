@@ -79,7 +79,7 @@ export default function EventDetail(props: EventDetailProps) {
             onError: () => {
                 notify(false, `Event update failed`)
             },
-            onSettled: () => dispatch(fetchEventByTrip({ tripId: Number(tripId), datesOfTrip: datesOfTrip || [] }))
+            onSettled: () => dispatch(fetchEventByTrip({ tripId: Number(tripId) }))
         }
     )
 
@@ -104,7 +104,7 @@ export default function EventDetail(props: EventDetailProps) {
             onError: () => {
                 notify(false, 'Event remove failed')
             },
-            onSettled: () => dispatch(fetchEventByTrip({ tripId: Number(tripId), datesOfTrip: datesOfTrip || [] }))
+            onSettled: () => dispatch(fetchEventByTrip({ tripId: Number(tripId) }))
         }
     )
     function handleRemoveEvent() {
