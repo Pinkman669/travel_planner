@@ -34,7 +34,6 @@ export default function Home() {
     const tripItemInfo = useAppSelector(state => state.trip.tripItems)
 
     const [showModal, setShowModal] = useState(false)
-    // const [startDate, setStartDate] = useState<Date | null>(null)
     const { register, handleSubmit, reset, formState } = useForm<FormState>({
         defaultValues: {
             tripName: "",
