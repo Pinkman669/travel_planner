@@ -68,8 +68,8 @@ export default function Login() {
                         <Form.Control type="password" {...register("password")} />
                     </Form.Group>
 
-                    <Button className='submit-btn' variant="primary" type="submit">
-                        Submit
+                    <Button className='submit-btn' variant="dark" type="submit">
+                        Login
                     </Button>
                 </Form>
 

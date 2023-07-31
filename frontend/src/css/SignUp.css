@@ -24,14 +24,23 @@ h2{
 
 .sign-up-row {
     position: relative;
+    margin-top: 38px;
+}
+
+.sign-up-row:last-of-type{
+    margin-bottom: 10px;
 }
 
 .error-msg {
     position: absolute;
-    padding: 10px;
+    padding: 0;
     margin-top: 3px;
     right: 0;
     z-index: 1;
+    color: red;
+    background-color: transparent;
+    font-size: 13px;
+    border: none;
 }
 
 #login-link-div {
@@ -41,4 +50,14 @@ h2{
 #login-link {
     font-weight: bolder;
     color: black;
+}
+
+.form-lbale{
+    margin: 0;
+}
+
+@media screen and (max-width: 450){
+    .error-msg {
+        font-size: 10px;
+    }
 }
