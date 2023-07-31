@@ -82,12 +82,6 @@ export default function Home() {
         })
     }
 
-    // useCallback
-    function calculatePeriod(startDate: Date, endDate: Date) {
-        const result = differenceInDays(startDate, endDate)
-        return result
-    }
-
     // const toggleModal = useCallback(() => setShowModal(!showModal), [showModal])
 
     const handleModal = () => {
@@ -110,8 +104,8 @@ export default function Home() {
         <div className="container-fluid">
 
             <div className={styles.tripHeader}>
-                <p id={styles.username}>{username}</p>
-                <Button variant="light" onClick={() => dispatch(logout())}>Logout</Button>
+                <p id={styles.username}>Hi, {username}</p>
+                <Button id={styles.logoutBtn} variant="light" onClick={() => dispatch(logout())}>Logout</Button>
             </div>
             <div className={styles.mainContainer}>
                 {
@@ -122,7 +116,8 @@ export default function Home() {
                             }}
                             onClickTrip={() => navigate(`/trip-event/${item.id}`)}
                             key={item.id} tripName={item.name} location={item.location}
-                            period={calculatePeriod(new Date(item.end_date), new Date(item.start_date))}
+                            startDate={new Date(item.start_date)}
+                            endDate={new Date(item.end_date)}
                         />
                     ))
                 }

@@ -14,9 +14,11 @@ interface DayItemProps {
     dayNumber: number;
     eventList: EventItem[]
     container: string;
+    isLargeScreen: boolean;
 }
 
 export default function Day(props: DayItemProps) {
+    const isLargeScreen = props.isLargeScreen
     const eventList = props.eventList
     const selectedDay = useAppSelector(state => state.day.selected_day_trip)
     // rename
@@ -57,7 +59,7 @@ export default function Day(props: DayItemProps) {
                         <div ref={setNodeRef}>
                             {
                                 eventList.map((event) => (
-                                    <Event eventItem={event} key={event.id} id={event.id} eventName={event.name} location={event.location} date={event.date} />
+                                    <Event isLargeScreen={isLargeScreen} eventItem={event} key={event.id} id={event.id} eventName={event.name} location={event.location} date={event.date} />
                                 ))
                             }
                         </div>

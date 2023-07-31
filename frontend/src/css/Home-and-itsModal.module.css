@@ -9,6 +9,7 @@
     background-color: #BDE3FF;
     padding: 15px;
     position: relative;
+    box-shadow: 0 1px 3px grey;
 }
 
 .tripHeader{
@@ -19,7 +20,20 @@
 }
 
 #username{
-    font-size: 24px;
+    font-size: 28px;
+    font-family: 'Acme', 'serif';
+}
+
+#logoutBtn{
+    font-family: 'Quicksand', 'serif';
+}
+
+.contentName{
+    font-family: 'Lexend', 'serif';
+}
+
+.content{
+    font-family: 'Quicksand', 'serif';
 }
 
 .addTripItems{
@@ -150,7 +164,7 @@
 @media screen and (max-width: 450px){
     .mainContainer{
         justify-content: center;
-        overflow: scroll;
+        overflow-y: auto;
     }
     .tripItems{
         width: 300px;
@@ -158,8 +172,6 @@
     }
     .addTripItems{
         width: 93%;
-        /* position: absolute;
-        bottom: -70px; */
         height: 50px;
     }
     .tripHeader{

@@ -16,6 +16,7 @@ interface ScheduleProps {
     userName: string;
     tripId: number;
     screenWidth: number;
+    isLargeScreen: boolean
 }
 
 interface OverLayState {
@@ -27,6 +28,7 @@ interface OverLayState {
 }
 
 export default function Schedule(props: ScheduleProps) {
+    const isLargeScreen = props.isLargeScreen
     const dispatch = useAppDispatch()
     // use a shorter name
     const datesOfTrip = (useAppSelector(state => state.trip.tripItems.find((trip) => trip.id === props.tripId)))?.DatesOfTrip
@@ -233,7 +235,7 @@ export default function Schedule(props: ScheduleProps) {
                         {datesOfTrip!.map((date, index) => {
                             // don't need `day` in key
                             const evenList = mapToObject[`day${index + 1}`] ? mapToObject[`day${index + 1}`] : []
-                            return <Day container={`day${index + 1}`} eventList={evenList as EventItem[]} key={index + date.toString()} dayNumber={index + 1} date={date} tripId={props.tripId} />
+                            return <Day isLargeScreen={isLargeScreen} container={`day${index + 1}`} eventList={evenList as EventItem[]} key={index + date.toString()} dayNumber={index + 1} date={date} tripId={props.tripId} />
                         })}
                     </div>
                 </div>
@@ -244,6 +246,7 @@ export default function Schedule(props: ScheduleProps) {
                     {
                         overLayActiveState ? (
                             <Event
+                                isLargeScreen={isLargeScreen}
                                 eventItem={overLayActiveState.eventItem} 
                                 id={overLayActiveState.id}
                                 location={overLayActiveState.location}

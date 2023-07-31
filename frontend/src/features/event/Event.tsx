@@ -13,6 +13,7 @@ interface EventItemProps {
     location: string;
     date: Date;
     eventItem: EventItem
+    isLargeScreen: boolean;
 }
 
 export default function Event(props: EventItemProps) {
@@ -20,6 +21,13 @@ export default function Event(props: EventItemProps) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
         id: props.id
     })
+    const isLargeScreen = props.isLargeScreen
+    let eventItemName: string
+    if (isLargeScreen){
+        eventItemName = props.eventName.length > 15 ? `${props.eventName.slice(0, 15)}...` : props.eventName
+    } else {
+        eventItemName = props.eventName.length > 8 ? `${props.eventName.slice(0, 8)}...` : props.eventName
+    }
 
     const style = {
         transform: CSS.Transform.toString(transform),
@@ -36,9 +44,7 @@ export default function Event(props: EventItemProps) {
                 <div className={styles.eventItemDiv}>
                     <div>
                         <div className={styles.eventItemName}>
-                            {
-                                props.eventName.length > 15 ? `${props.eventName.slice(0, 15)}...` : props.eventName
-                            }
+                            {eventItemName}
                         </div>
                         <div className={styles.eventItemCategory}>
                             {`#${props.eventItem.category}`}

@@ -15,6 +15,7 @@ export default function TripEvent() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const screenWidth = window.innerWidth
+    const isLargeScreen = window.innerWidth > 450
 
     return (
         <div className="container-fluid">
@@ -27,7 +28,7 @@ export default function TripEvent() {
                 }
             </div>
             <div className={`${styles.TripEventContainer}`}>
-                <Schedule screenWidth={screenWidth} tripId={Number(tripId)} tripName={tripInfo?.name as string} userName={userName as string} />
+                <Schedule isLargeScreen={isLargeScreen} screenWidth={screenWidth} tripId={Number(tripId)} tripName={tripInfo?.name as string} userName={userName as string} />
                 {
                     screenWidth <= 450 ?
                         <Offcanvas show={show} onHide={handleClose} placement="end">

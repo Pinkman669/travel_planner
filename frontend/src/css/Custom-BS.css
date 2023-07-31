@@ -8,3 +8,7 @@
     padding: 20px;
     border-radius: 5px;
 }
+
+.offcanvas-body{
+    padding: 0;
+}
