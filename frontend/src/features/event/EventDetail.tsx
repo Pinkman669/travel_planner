@@ -172,7 +172,7 @@ export default function EventDetail(props: EventDetailProps) {
                                 editMode ?
                                     <Form.Control type='text' placeholder={eventItem.website} {...register('website')}></Form.Control>
                                     :
-                                    <a href={eventItem.website} rel="noreferrer noopener" target="_blank">
+                                    <a className={styles.eventWebsite} href={eventItem.website} rel="noreferrer noopener" target="_blank">
                                         {
                                             eventItem.website.length > 100 ? `${eventItem.website.slice(0, 100)}...` : eventItem.website
                                         }

@@ -8,7 +8,6 @@ import { AuthGuard } from './features/auth/AuthGuard';
 import { FacebookCallback } from './features/auth/FacebookCallback';
 import { ToastContainer } from 'react-toastify';
 import TripEvent from './features/event/TripEvent';
-import Feature from './features/featureContainer/Feature';
 
 
 function App() {
