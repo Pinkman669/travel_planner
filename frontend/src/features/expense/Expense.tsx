@@ -13,6 +13,7 @@ export function Expense() {
   const detail = expenseResult?.detail;
   const allCategoryBudget = expenseResult?.allCategoryBudget;
   const allCategoryExpense = expenseResult?.allCategoryExpense;
+  const tripTotal = Number(expenseResult?.totalExpense) + Number(expenseResult?.totalBudget)
   const isClickedBudget = showBudgetSubTab ? styles.isClickedTab : null
   const isClickedExpense = showExpenseSubTab ? styles.isClickedTab : null
 
@@ -48,7 +49,7 @@ export function Expense() {
 
       <div className={styles.totalContainer}>
         <div>Trip total:</div>
-        <div> ${expenseResult?.totalExpense}</div>
+        <div> ${tripTotal}</div>
       </div>
     </div>
   );
