@@ -1,4 +1,4 @@
-.expensePage{
+.expensePage {
     height: 100%;
     background-color: #dee0e3;
     padding: 10px;
@@ -7,45 +7,46 @@
     align-items: center;
 }
 
-.expenseContainer{
+.expenseContainer {
     height: 5vh;
-    padding:0.5rem  ;
+    padding: 0.5rem;
     border-radius: 10px;
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
     margin: 1vh 2vh;
-    left:2%;
+    left: 2%;
     width: 90%;
     box-shadow: 0 1px 3px grey;
 }
 
-.expenseContainer:hover{
+.expenseContainer:hover {
     background-color: #b4b1b1;
 }
 
-.totalContainer{
-    position:absolute;
-    bottom:10px;
+.totalContainer {
+    position: absolute;
+    bottom: 10px;
     background-color: #d3f35f;
     height: 5vh;
-    padding:0.5rem  ;
+    padding: 0.5rem;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
-    margin: 1vh 2vh;
-    left:2%;
     width: 90%;
 }
 
-.subTab{
+.subTablContainer {
+    width: 85%;
+}
+
+.subTab {
     height: 5vh;
-    padding:0.5rem  ;
+    padding: 0.5rem;
     border-radius: 10px;
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
-    margin: 1vh 3vh;
-    left:0%;
-    width: 75%;
+    margin: 10px 0;
+    width: 100%;
 }

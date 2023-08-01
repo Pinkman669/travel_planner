@@ -1,16 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
+import { ExpenseDetail } from "../utils/types"
 
-export interface ExpenseDetail{
-    detail: {
-        name: string,
-        category: string,
-        budget: number,
-        expense: number,
-    }[],
-    allCategoryBudget:{},
-    totalBudget: number, 
-    totalExpense: number
-}
+
 
 export function useExpenseInfo (tripId:string){
     const {isLoading, error, data, isFetching} = useQuery({

@@ -26,3 +26,20 @@ export interface UpdateEventInfo{
     phone: string;
     name: string;
 }
+
+export interface ExpenseDetail{
+    detail: {
+        name: string,
+        category: string,
+        budget: number,
+        expense: number,
+    }[];
+    allCategoryBudget:{
+        [key: string]: number
+    };
+    allCategoryExpense:{
+        [key: string]: number
+    };
+    totalBudget: number;
+    totalExpense: number;
+}
