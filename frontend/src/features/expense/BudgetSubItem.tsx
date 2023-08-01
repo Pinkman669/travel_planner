@@ -23,17 +23,17 @@ export function BudgetSubItem(props: BudgetSubItemProps) {
                 <div className={styles.subItemTotalContainer}>
                     {
                         props.detail.map((item, index) => (
-                            props.category === item.category &&
+                            (props.category === item.category &&
                             <div key={item.name + index} className={styles.subItemContainer}>
                                 <div>{item.name}</div>
                                 <div>${item.budget || 0}</div>
-                            </div>
+                            </div>)
                             ||
-                            props.category === 'others' && (!item.category || item.category === 'others') &&
+                            (props.category === 'others' && (!item.category || item.category === 'others') &&
                             <div key={item.name + index} className={styles.subItemContainer}>
                                 <div>{item.name}</div>
                                 <div>${item.budget || 0}</div>
-                            </div>
+                            </div>)
                         ))
                     }
                 </div>
