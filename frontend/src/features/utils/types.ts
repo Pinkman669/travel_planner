@@ -4,7 +4,7 @@ export interface EventItem {
     date: Date;
     time: string;
     location: string;
-    business_hours: string[]|string;
+    business_hours: string[] | string;
     phone: string;
     website: string;
     budget: number;
@@ -17,7 +17,7 @@ export interface EventItem {
     place_id: string;
 }
 
-export interface UpdateEventInfo{
+export interface UpdateEventInfo {
     time: string;
     budget: number;
     category: string;
@@ -27,19 +27,21 @@ export interface UpdateEventInfo{
     name: string;
 }
 
-export interface ExpenseDetail{
-    detail: {
-        name: string,
-        category: string,
-        budget: number,
-        expense: number,
-    }[];
-    allCategoryBudget:{
+export interface ExpenseDetail {
+    detail: ExpenseItem[];
+    allCategoryBudget: {
         [key: string]: number
     };
-    allCategoryExpense:{
+    allCategoryExpense: {
         [key: string]: number
     };
     totalBudget: number;
     totalExpense: number;
+}
+
+export interface ExpenseItem {
+    name: string,
+    category: string,
+    budget: number,
+    expense: number,
 }

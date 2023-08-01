@@ -13,38 +13,40 @@ export function Expense() {
   const detail = expenseResult?.detail;
   const allCategoryBudget = expenseResult?.allCategoryBudget;
   const allCategoryExpense = expenseResult?.allCategoryExpense;
+  const isClickedBudget = showBudgetSubTab ? styles.isClickedTab : null
+  const isClickedExpense = showExpenseSubTab ? styles.isClickedTab : null
 
   return (
     <div className={styles.expensePage}>
-      <div className={styles.expenseContainer} onClick={() => setBudgetSubTab(!showBudgetSubTab)}>
-        <div>Budget</div>
-        <div>
-          ${expenseResult?.totalBudget}
+      <div className={styles.expenseTotalContainer}>
+        <div className={`${styles.expenseContainer} ${isClickedBudget}`} onClick={() => setBudgetSubTab(!showBudgetSubTab)}>
+          <div>Budget: </div>
+          <div>SubTotal ${expenseResult?.totalBudget}</div>
         </div>
+        <BudgetSubTab
+          isShown={showBudgetSubTab}
+          result={detail!}
+          allCategoryBudget = {allCategoryBudget!}
+          onHide={() => setBudgetSubTab(false)}
+        />
       </div>
-      <BudgetSubTab
-        isShown={showBudgetSubTab}
-        result={detail!}
-        allCategoryBudget = {allCategoryBudget!}
-        onHide={() => setBudgetSubTab(false)}
-      />
 
-      <div className={styles.expenseContainer} onClick={() => setExpenseSubTab(!showExpenseSubTab)}>
-        <div>Expense</div>
-        <div onClick={() => setExpenseSubTab(true)}>
-          ${expenseResult?.totalExpense}
+      <div className={styles.expenseTotalContainer}>
+        <div className={`${styles.expenseContainer} ${isClickedExpense}`} onClick={() => setExpenseSubTab(!showExpenseSubTab)}>
+          <div>Expense :</div>
+          <div>SubTotal ${expenseResult?.totalExpense}</div>
         </div>
+        <ExpenseSubTab
+          isShown={showExpenseSubTab}
+          result={detail!}
+          allCategoryExpense ={allCategoryExpense!}
+          onHide={() => setExpenseSubTab(false)}
+        />
       </div>
-      <ExpenseSubTab
-        isShown={showExpenseSubTab}
-        result={detail!}
-        allCategoryExpense ={allCategoryExpense!}
-        onHide={() => setExpenseSubTab(false)}
-      />
 
-      <div className={`${styles.expenseContainer} ${styles.totalContainer}`}>
-        <div>Total</div>
-        <div>${expenseResult?.totalExpense}</div>
+      <div className={styles.totalContainer}>
+        <div>Trip total:</div>
+        <div> ${expenseResult?.totalExpense}</div>
       </div>
     </div>
   );

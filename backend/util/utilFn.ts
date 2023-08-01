@@ -25,8 +25,8 @@ export function sortingBudgetAndExpense(EventItems: BudgetAndExpenseItem[]) {
         totalBudget += EventItems[i].budget
 
         const categoryName = EventItems[i].category
-        const categoryBudget = EventItems[i].budget || 0
-        const categoryExpense = EventItems[i].expense || 0
+        const categoryBudget = EventItems[i].budget
+        const categoryExpense = EventItems[i].expense
 
         if (categoryName) {
             if (allCategoryBudgetMap.has(categoryName)) {

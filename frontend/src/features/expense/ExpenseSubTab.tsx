@@ -1,5 +1,6 @@
 import { Collapse } from 'react-bootstrap';
 import styles from '../../css/Expense.module.css';
+import { ExpenseSubItem } from './ExpenseSubItem';
 
 export interface subTabProps {
     isShown: boolean;
@@ -20,12 +21,9 @@ export function ExpenseSubTab(props: subTabProps) {
                 <div className={styles.subTablContainer}>
                     {
                         allCategoryExpense &&
-                        Object.keys(allCategoryExpense).sort().map((category) => (
-                            <div>
-                                <div className={styles.subTab}>
-                                    <div> {category} </div>
-                                    <div>${allCategoryExpense[category]}</div>
-                                </div>
+                        Object.keys(allCategoryExpense).sort().map((category, index) => (
+                            <div key={category + index + 'expense'}>
+                                <ExpenseSubItem detail={props.result} category={category} categoryExpense={allCategoryExpense[category]} />
                             </div>
                         ))
                     }
