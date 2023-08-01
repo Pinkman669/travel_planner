@@ -18,30 +18,32 @@ export function Expense() {
 
   return (
     <div className={styles.expensePage}>
-      <div className={styles.expenseTotalContainer}>
-        <div className={`${styles.expenseContainer} ${isClickedBudget}`} onClick={() => setBudgetSubTab(!showBudgetSubTab)}>
-          <div>Budget: </div>
-          <div>SubTotal ${expenseResult?.totalBudget}</div>
+      <div className={styles.expensePageSubContainer}>
+        <div className={styles.expenseTotalContainer}>
+          <div className={`${styles.expenseContainer} ${isClickedBudget}`} onClick={() => setBudgetSubTab(!showBudgetSubTab)}>
+            <div>Budget: </div>
+            <div>SubTotal ${expenseResult?.totalBudget}</div>
+          </div>
+          <BudgetSubTab
+            isShown={showBudgetSubTab}
+            result={detail!}
+            allCategoryBudget = {allCategoryBudget!}
+            onHide={() => setBudgetSubTab(false)}
+          />
         </div>
-        <BudgetSubTab
-          isShown={showBudgetSubTab}
-          result={detail!}
-          allCategoryBudget = {allCategoryBudget!}
-          onHide={() => setBudgetSubTab(false)}
-        />
-      </div>
 
-      <div className={styles.expenseTotalContainer}>
-        <div className={`${styles.expenseContainer} ${isClickedExpense}`} onClick={() => setExpenseSubTab(!showExpenseSubTab)}>
-          <div>Expense :</div>
-          <div>SubTotal ${expenseResult?.totalExpense}</div>
+        <div className={styles.expenseTotalContainer}>
+          <div className={`${styles.expenseContainer} ${isClickedExpense}`} onClick={() => setExpenseSubTab(!showExpenseSubTab)}>
+            <div>Expense :</div>
+            <div>SubTotal ${expenseResult?.totalExpense}</div>
+          </div>
+          <ExpenseSubTab
+            isShown={showExpenseSubTab}
+            result={detail!}
+            allCategoryExpense ={allCategoryExpense!}
+            onHide={() => setExpenseSubTab(false)}
+          />
         </div>
-        <ExpenseSubTab
-          isShown={showExpenseSubTab}
-          result={detail!}
-          allCategoryExpense ={allCategoryExpense!}
-          onHide={() => setExpenseSubTab(false)}
-        />
       </div>
 
       <div className={styles.totalContainer}>

@@ -1,10 +1,16 @@
 .expensePage {
-    height: 100%;
+    height: 97.5%;
     background-color: #131921e9;
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto;
+}
+
+.expensePageSubContainer{
+    width: 100%;
+    flex: 1;
 }
 
 .expenseTotalContainer{
@@ -39,21 +45,22 @@
 }
 
 .totalContainer {
-    position: absolute;
-    bottom: 10px;
     background-color: #131921;
-    height: 5vh;
+    height: 70px;
     padding: 10px 30px;
     border-radius: 10px;
     width: 90%;
-    left: 50%;
-    transform: translate(-50%, -10px);
     color: white;
     font-family: 'Dancing Script', 'serif';
-    font-size: 35px;
     display: flex;
     justify-content: space-between;
     box-shadow: 0px 0px 3px 1px grey;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.totalContainer > div{
+    font-size: 35px;
 }
 
 .subTablContainer {
@@ -93,4 +100,15 @@
 
 .isClickedTab{
     background-color: #b4b1b1;
+}
+
+@media screen and (max-width: 450px){
+    .totalContainer{
+        height: 50px;
+        margin-bottom: 25px;
+    }
+
+    .totalContainer > div{
+        font-size: 30px;
+    }
 }
