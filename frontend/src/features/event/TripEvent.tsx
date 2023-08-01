@@ -19,9 +19,7 @@ export default function TripEvent() {
     return (
         <div className="container-fluid">
             <div className={styles.TripEventHeader}>
-                <Button variant="light">
-                    <Link to='/' id='sign-up-link'><IconCornerUpLeft /></Link>
-                </Button>
+                <Link className="btn btn-light" to='/' id='sign-up-link'><IconCornerUpLeft /></Link>
                 {
                     !isLargeScreen && <Button id={styles.mapBtn} variant="dark" onClick={handleShow}>Map</Button>
                 }
@@ -32,10 +30,10 @@ export default function TripEvent() {
                     !isLargeScreen ?
                         <Offcanvas show={show} onHide={handleClose} placement="end">
                             <Offcanvas.Body>
-                                <Feature onClose={handleClose} isLargeScreen={isLargeScreen}/>
+                                <Feature onClose={handleClose} isLargeScreen={isLargeScreen} />
                             </Offcanvas.Body>
                         </Offcanvas>
-                        : <Feature isLargeScreen={isLargeScreen}/>
+                        : <Feature isLargeScreen={isLargeScreen} />
                 }
             </div>
         </div>

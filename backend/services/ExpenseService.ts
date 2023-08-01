@@ -1,39 +1,19 @@
 import { Knex } from 'knex';
+import { sortingBudgetAndExpense } from '../util/utilFn';
 
-export class ExpenseService{
+export class ExpenseService {
     constructor(private knex: Knex) { }
 
     async getExpense(tripId: number) {
-        const detail= await this.knex
-            .select('name','category','budget','expense',)
+        const detail = await this.knex
+            .select('name', 'category', 'budget', 'expense',)
             .from('events')
             .where('trip_id', tripId)
             .andWhere('active', true)
             .orderBy('item_order', 'asc')
 
-        let totalExpense:number = 0
-        let totalBudget:number = 0
-        let allCategoryBudget = {}
+        const { allCategoryBudget, allCategoryExpense, totalExpense, totalBudget } = sortingBudgetAndExpense(detail)
 
-            for (let i = 0; i < detail.length; i++) {
-
-                totalExpense += detail[i].expense
-                totalBudget +=detail[i].budget
-
-                
-                let categoryName = detail[i].category
-                let categoryBudget= detail[i].budget
-                if (detail[i].category === detail[i-1].category ){
-                
-                    allCategoryBudget[categoryName]+= categoryBudget
-
-                }else {
-
-                    allCategoryBudget[categoryName]= categoryBudget
-
-                }
-            }
-        
-        return {detail,allCategoryBudget,totalBudget,totalExpense} 
+        return { detail, allCategoryBudget, allCategoryExpense, totalBudget, totalExpense }
     }
 }

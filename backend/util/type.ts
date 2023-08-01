@@ -43,3 +43,10 @@ export interface User{
     password: string;
     birthday: Date;
 }
+
+export interface BudgetAndExpenseItem{
+    name: string;
+    category: string;
+    budget: number;
+    expense: number;
+}
