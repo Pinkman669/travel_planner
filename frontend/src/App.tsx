@@ -18,8 +18,6 @@ function App() {
         <Route path='/sign-up' element={<SignUp />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/facebook-callback' element={<FacebookCallback />}></Route>
-        {/* todo: remove */}
-        <Route path='/feature' element={<Feature/>}></Route>
         <Route element={<AuthGuard />}>
           <Route path='/' element={<Home />}></Route>
           <Route path='/trip-event/:tripId' element={<TripEvent />}></Route>
