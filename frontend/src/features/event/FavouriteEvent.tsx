@@ -64,7 +64,7 @@ export default function FavouriteEvent() {
           {item.website && (
             <div className="info_detail_title">
               Website: {"  "}
-              <a href={item?.website} target="_blank" rel="noreferrer noopener">
+              <a className='info_detail' href={item?.website} target="_blank" rel="noreferrer noopener">
                 {item.website}
               </a>
             </div>

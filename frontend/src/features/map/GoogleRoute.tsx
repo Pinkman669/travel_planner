@@ -28,7 +28,6 @@ export function GoogleRoute(props: GoogleRouteProps) {
     const [directionResponseArr, setDirectionResponseArr] = useState<DirectionsResponse[] | null>(null)
 
     const [travelModeValue, setTravelModeValue] = useState<any | null>(null)
-    // const [location, setLocation] = useState<LatLngLiteral>();
     const [animation, setAnimation] = useState(false)
     const [showRouteForm, setShowRouteForm] = useState(true);
     const [showRouteInfo, setShowRouteInfo] = useState(false)
@@ -44,7 +43,6 @@ export function GoogleRoute(props: GoogleRouteProps) {
     const options = useMemo<MapOptions>(
         () => ({
             mapId: "cb967ffe6985ef4e", // the style of the map
-            //   disableDefaultUI: true, // the option to change the view of the map, it's set to street view right now
             streetViewControl: false,
             mapTypeControl: false,
             fullscreenControl: false

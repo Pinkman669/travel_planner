@@ -59,12 +59,15 @@
 
 .eventItemName{
     font-family: 'Edu SA Beginner', 'serif';
-    font-size: 23px;
+    font-size: 18px;
 }
 
 @media screen and (max-width: 450px) {
     .eventItemContainer {
         width: 150px;
         height: 80px;
+    }
+    .eventItemName{
+        font-size: 14px;
     }
 }
