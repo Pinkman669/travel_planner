@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 import { notify } from "../utils/utils";
 import { fetchEventByTrip } from "./newEventSlice";
+import { format } from "date-fns";
+
 
 interface newEventModalProps {
   isShown: boolean;
@@ -41,7 +43,7 @@ export function NewEventModal(props: newEventModalProps) {
   const { register, handleSubmit } = useForm<NewEventItem>({
     defaultValues: {
       name: "",
-      date: new Date(),
+      date: format(startDate, 'yyyy-MM-dd'),
       time: "",
       location: "",
       business_hours: [],

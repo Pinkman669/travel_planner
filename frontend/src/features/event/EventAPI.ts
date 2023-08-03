@@ -25,8 +25,21 @@ export interface favouriteLocation {
     place_id?: string
 }
 
-
-export type NewEventItem = Omit<EventItem, "id" | "day" | "trip_id">
+export interface NewEventItem{
+    name: string;
+    date: Date|string;
+    time: string;
+    location: string;
+    business_hours: string[] | string;
+    phone: string;
+    website: string;
+    budget: number;
+    expense: number;
+    category: string;
+    item_order: number;
+    active: boolean;
+    place_id: string;
+}
 
 export async function updateEventOrder(activeEventId: number, activeOrder: number, overOrder: number, eventList: EventItem[]) {
     const res = await fetch(`${process.env.REACT_APP_API_SERVER}/event/updateEventOrder`, {
