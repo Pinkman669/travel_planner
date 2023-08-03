@@ -76,6 +76,10 @@ export class AuthController {
             });
 
             const data = await fetchResponse.json()
+            logger.info('access_token: ' + data.access_token)
+            logger.info('client_id: ' + process.env.FACEBOOK_CLIENT_ID)
+            logger.info('client_secret: ' + process.env.FACEBOOK_CLIENT_SECRET)
+            logger.info('redirect_uri: ' + process.env.REACT_PUBLIC_HOSTNAME)
             if (!data.access_token) {
                 throw new Error('No access token')
             }
