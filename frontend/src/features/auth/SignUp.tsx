@@ -116,7 +116,7 @@ export default function SignUp() {
                             </Alert >
                         }
                     </Form.Group>
-                    <Button className='submit-btn' variant="dark" type="submit">
+                    <Button className='sign-up-btn' variant="dark" type="submit">
                         Sign up
                     </Button>
                 </Form>

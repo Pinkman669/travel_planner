@@ -42,10 +42,10 @@ export default function Login() {
         }
     }, [formState, reset]);
 
-    const submit = useCallback(async (data: FormState)=> {
+    const submit = useCallback(async (data: FormState) => {
         const result = await localLogin(data.email, data.password)
         if (result.success) {
-            dispatch(login({name: result.name, userId: result.userId}))
+            dispatch(login({ name: result.name, userId: result.userId }))
             notify(result.success, 'Login success!')
             navigate('/')
         } else {
@@ -55,31 +55,36 @@ export default function Login() {
 
     return (
         <div className='container-fluid login-page'>
-            <div className='login-form-div'>
-                <h2>Login</h2>
-                <Form id='login-form' onSubmit={handleSubmit(submit)}>
-                    <Form.Group>
-                        <Form.Label className='login-labels'>Email</Form.Label>
-                        <Form.Control type="text" {...register("email")} />
-                    </Form.Group>
-
-                    <Form.Group>
-                        <Form.Label className='login-labels'>Password</Form.Label>
-                        <Form.Control type="password" {...register("password")} />
-                    </Form.Group>
-
-                    <Button className='submit-btn' variant="dark" type="submit">
-                        Login
-                    </Button>
-                </Form>
-
-                <p className='makasar-font'>Login with</p>
-                <div id='social-login-div'>
-                    <button onClick={loginViaFacebook} className='social-login-btn'>
-                        <IconBrandFacebookFilled />
-                    </button>
+            <div className='login-container'>
+                <div>
+                <h2 id='login-title'>Travel Planner</h2>
                 </div>
-                <p className='margin-block makasar-font'>OR</p>
+                <div className='login-center-div'>
+                    <div className='local-login-div'>
+                        <div className='local-login-form'>
+                            <Form id='login-form' onSubmit={handleSubmit(submit)}>
+                                <Form.Group>
+                                    <Form.Label className='login-labels'>Email</Form.Label>
+                                    <Form.Control type="text" {...register("email")} />
+                                </Form.Group>
+
+                                <Form.Group>
+                                    <Form.Label className='login-labels'>Password</Form.Label>
+                                    <Form.Control type="password" {...register("password")} />
+                                </Form.Group>
+                            </Form>
+                            <Button form='login-form' className='submit-btn' variant="dark" type="submit">
+                                Login
+                            </Button>
+                        </div>
+                    </div>
+                    <div className='social-login-div'>
+                        <div className='social-login-inner-div'>
+                            <div className='empty-space-div'></div>
+                            <Button className='social-login-btn' onClick={loginViaFacebook}>Login with Facebook <IconBrandFacebookFilled /></Button>
+                        </div>
+                    </div>
+                </div>
                 <div id='sign-up-link-div'>
                     <Link to='/sign-up' id='sign-up-link'>Create an account now</Link>
                 </div>
