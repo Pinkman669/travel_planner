@@ -15,7 +15,7 @@ env:
 jobs:
   test-server:
     runs-on: ubuntu-latest
-    container: node:lts-alpine
+    container: node:latest
     services:
       postgres:
         image: postgres
