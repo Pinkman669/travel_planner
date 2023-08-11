@@ -10,12 +10,11 @@ env:
   TESTDB_NAME: travel_planner_test
   DB_USERNAME: postgres
   DB_PASSWORD: postgres
-  POSTGRES_HOST: postgres
 
 jobs:
   test-server:
     runs-on: ubuntu-latest
-    container: node:latest
+    container: node:lts-alpine
     services:
       postgres:
         image: postgres
@@ -29,7 +28,6 @@ jobs:
       - working-directory: backend
         run: |
           yarn install
-          yarn knex migrate:latest --env test
           yarn test
 
   build-server:
