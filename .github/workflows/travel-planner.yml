@@ -6,6 +6,11 @@ on:
       - "main"
   workflow_dispatch:
 
+env:
+  TESTDB_NAME: travel_planner_test
+  DB_USERNAME: postgres
+  DB_PASSWORD: postgres
+
 jobs:
   test-server:
     runs-on: ubuntu-latest
@@ -14,9 +19,8 @@ jobs:
       postgres:
         image: postgres
         env:
-          TESTDB_NAME: travel_planner_dev
-          DB_USERNAME: postgres
-          DB_PASSWORD: postgres
+          TESTDB_NAME: ${{ env.TESTDB_NAME }}
+          DB_PASSWORD: ${{ env.DB_USERNAME }}
         ports:
           - 5432:5432
     steps:
