@@ -13,8 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - working-directory: backend
+        env:
+          TESTDB_NAME: travel_planner_dev
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
         run: |
           yarn install
+          yarn knex migrate:latest --env test
           yarn test
 
   build-server:
