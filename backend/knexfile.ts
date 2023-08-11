@@ -26,6 +26,7 @@ const config: { [key: string]: Knex.Config } = {
 			database: process.env.TESTDB_NAME,
 			user: process.env.DB_USERNAME,
 			password: process.env.DB_PASSWORD,
+      host: process.env.POSTGRES_HOST,
 		},
 		pool: {
 			min: 2,

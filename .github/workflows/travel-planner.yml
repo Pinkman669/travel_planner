@@ -10,6 +10,7 @@ env:
   TESTDB_NAME: travel_planner_test
   DB_USERNAME: postgres
   DB_PASSWORD: postgres
+  POSTGRES_HOST: postgres
 
 jobs:
   test-server:
@@ -20,7 +21,7 @@ jobs:
         image: postgres
         env:
           TESTDB_NAME: ${{ env.TESTDB_NAME }}
-          DB_PASSWORD: ${{ env.DB_USERNAME }}
+          DB_PASSWORD: ${{ env.DB_PASSWORD }}
         ports:
           - 5432:5432
     steps:
