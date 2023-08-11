@@ -36,6 +36,10 @@
     font-family: 'Quicksand', 'serif';
 }
 
+#tripForm{
+    padding: 15px;
+}
+
 .addTripItems{
     box-shadow: 0 1px 3px grey;
     width: 220px;

@@ -140,7 +140,7 @@ export default function Home() {
                 </div>
                 <Modal.Body>
                     <div>
-                        <Form id='login-form' onSubmit={handleSubmit(submit)}>
+                        <Form id={styles.tripForm} onSubmit={handleSubmit(submit)}>
                             <Form.Group>
                                 <Form.Label className='login-labels'>Trip</Form.Label>
                                 <Form.Control className={styles.addTripInputs} type="text" {...register("tripName")} />
@@ -161,7 +161,7 @@ export default function Home() {
                                 <Form.Control className={styles.addTripInputs} type="text" {...register("location")} />
                             </Form.Group>
 
-                            <Button className='submit-btn' variant="dark" type="submit">
+                            <Button variant="dark" type="submit">
                                 Submit
                             </Button>
                         </Form>
