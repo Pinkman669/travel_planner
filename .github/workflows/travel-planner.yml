@@ -8,8 +8,8 @@ on:
 
 env:
   TESTDB_NAME: travel_planner_test
-  DB_USERNAME: postgres
-  DB_PASSWORD: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: postgres
 
 jobs:
   test-server:
@@ -20,7 +20,7 @@ jobs:
         image: postgres
         env:
           TESTDB_NAME: ${{ env.TESTDB_NAME }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
         ports:
           - 5432:5432
     steps:
@@ -28,6 +28,7 @@ jobs:
       - working-directory: backend
         run: |
           yarn install
+          yarn knex migrate:latest --env test
           yarn test
 
   build-server:
@@ -48,6 +49,7 @@ jobs:
           docker push pinkman667/travel_planner:latest
 
   build-react:
+    needs: test-server
     runs-on: ubuntu-latest
     container: node:lts-alpine
     steps:

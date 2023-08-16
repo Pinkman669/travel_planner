@@ -24,7 +24,7 @@ describe('authService', () => {
         }
     })
 
-    xit('should get userInfo', async () => {
+    it('should get userInfo', async () => {
         const userInfo = await authService.userInfo('test_user@gmail.com')
 
         expect(userInfo).toMatchObject({
@@ -35,7 +35,7 @@ describe('authService', () => {
         })
     })
 
-    xit('should sign up', async () => {
+    it('should sign up', async () => {
         const jest_testUser = await authService.signUp(
             'jest_test',
             'jest_test@gmail.com',
