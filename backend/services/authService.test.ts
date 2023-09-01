@@ -3,7 +3,7 @@ import { AuthService } from "./authService";
 
 
 const knexConfig = require('../knexfile')
-export const knex = Knex(knexConfig['test'])
+const knex = Knex(knexConfig['test'])
 
 describe('authService', () => {
     let authService: AuthService
@@ -11,16 +11,13 @@ describe('authService', () => {
     beforeEach(async () => {
         authService = new AuthService(knex)
 
-        // const isTestUserExist = await authService.userInfo('test_user@gmail.com')
-        // if (!isTestUserExist) {
-            await knex.insert({
-                'name': 'test_user',
-                'email': 'test_user@gmail.com',
-                'password': 'test_user@gmail.com',
-                'birthday': new Date('10-10-1990')
-            })
-                .into('users')
-        // }
+        await knex.insert({
+            'name': 'test_user',
+            'email': 'test_user@gmail.com',
+            'password': 'test_user@gmail.com',
+            'birthday': new Date('10-10-1990')
+        })
+            .into('users')
     })
 
     afterEach(async () => {
