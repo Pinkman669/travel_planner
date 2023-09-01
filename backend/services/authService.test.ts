@@ -11,8 +11,8 @@ describe('authService', () => {
     beforeEach(async () => {
         authService = new AuthService(knex)
 
-        const isTestUserExist = await authService.userInfo('test_user@gmail.com')
-        if (!isTestUserExist) {
+        // const isTestUserExist = await authService.userInfo('test_user@gmail.com')
+        // if (!isTestUserExist) {
             await knex.insert({
                 'name': 'test_user',
                 'email': 'test_user@gmail.com',
@@ -20,8 +20,13 @@ describe('authService', () => {
                 'birthday': new Date('10-10-1990')
             })
                 .into('users')
-                .returning('*')
-        }
+        // }
+    })
+
+    afterEach(async () => {
+        await knex.delete()
+            .where('name', 'test_user')
+            .from('users')
     })
 
     it('should get userInfo', async () => {
@@ -51,7 +56,11 @@ describe('authService', () => {
         expect(jest_testUser).toMatchObject(isJestTestUserExist)
     })
 
-    afterAll(() => {
+    afterAll(async () => {
+        await knex.delete()
+            .where('name', 'jest_test')
+            .from('users')
+
         knex.destroy()
     })
 })
