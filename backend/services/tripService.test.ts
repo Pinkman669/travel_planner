@@ -9,6 +9,7 @@ describe('tripService', () => {
     let testUser: {
         id: number
     }
+    let testTripId: number
 
     beforeEach(async () => {
         tripService = new TripService(knex)
@@ -25,19 +26,20 @@ describe('tripService', () => {
             .into('users')
             .returning('id'))[0]
 
-        await knex.insert({
+        testTripId = (await knex.insert({
             'name': 'test_trip',
-            'location': 'test_loaction',
+            'location': 'test_location',
             'start_date': new Date('10-10-1990'),
-            'end_date': new Date('12-10-1990'),
+            'end_date': new Date('10-12-1990'),
             'user_id': testUser.id,
             'active': true
         })
             .into('trips')
+            .returning('id'))[0].id
     })
 
     it('should add trip', async () => {
-        await tripService.addTrip('add_trip', 'add_location', new Date('10-10-1990'), new Date('12-10-1990'), testUser.id)
+        await tripService.addTrip('add_trip', 'add_location', new Date('10-10-1990'), new Date('10-12-1990'), testUser.id)
 
         const addedTrip = (await knex
             .select('*')
@@ -49,16 +51,26 @@ describe('tripService', () => {
             'name': 'add_trip',
             'location': 'add_location',
             'start_date': new Date('10-10-1990'),
-            'end_date': new Date('12-10-1990'),
+            'end_date': new Date('10-12-1990'),
             'user_id': testUser.id,
             'active': true
         })
     })
 
-    afterAll(async () => {
+    it('should get trip', async () => {
+        const addedTrip = await tripService.getTrip(testUser.id)
+
+        expect(addedTrip.length).toBe(1)
+        expect(addedTrip[0].id).toBe(testTripId)
+    })
+
+    afterEach(async () => {
         await knex.delete()
             .from('trips')
             .where('name', 'add_trip')
+    })
+
+    afterAll(async () => {
         await knex.delete()
             .from('trips')
             .where('name', 'test_trip')
