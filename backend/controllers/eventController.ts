@@ -5,6 +5,7 @@ import errorCode from '../error-code.json'
 import { isSameDay, differenceInDays } from 'date-fns'
 import { calculateNumberOfDays } from "../util/utilFn";
 import { tripService } from "../main";
+import { FavouriteEvent } from "../util/type";
 
 export class EventController {
     constructor(private eventService: EventService) { }
@@ -118,6 +119,12 @@ export class EventController {
             const { data, tripId } = req.body
             if (!data || !tripId) {
                 throw new Error('Missing favourite event info')
+            }
+
+            const favouriteEvents: FavouriteEvent[] = await this.eventService.getFavouriteEvent(tripId)
+            const duplicateEvent = favouriteEvents.find((event) => event.place_id === data.place_id)
+            if (duplicateEvent !== undefined) {
+                throw new Error('Cannot add duplicate event')
             }
 
             await this.eventService.addFavouriteEvent(data, tripId)

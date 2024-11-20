@@ -51,10 +51,10 @@ export interface BudgetAndExpenseItem {
     expense: number;
 }
 
-export interface favouriteEvents {
+export interface FavouriteEvent {
     name: string;
     address: string;
-    business_hours: string;
+    business_hours: string[];
     phone: string;
     website: string;
     trip_id: number;
