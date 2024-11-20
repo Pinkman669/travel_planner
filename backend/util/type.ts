@@ -1,4 +1,4 @@
-export interface TripItem{
+export interface TripItem {
     id: number;
     name: string;
     start_date: Date;
@@ -9,7 +9,7 @@ export interface TripItem{
     DatesOfTrip?: string[];
 }
 
-export interface UpdateEventInfo{
+export interface UpdateEventInfo {
     time: string;
     budget: number;
     category: string;
@@ -36,7 +36,7 @@ export interface LocationInfo {
     website: string | null;
 }
 
-export interface User{
+export interface User {
     id: number;
     name: string;
     email: string;
@@ -44,9 +44,21 @@ export interface User{
     birthday: Date;
 }
 
-export interface BudgetAndExpenseItem{
+export interface BudgetAndExpenseItem {
     name: string;
     category: string;
     budget: number;
     expense: number;
+}
+
+export interface favouriteEvents {
+    name: string;
+    address: string;
+    business_hours: string;
+    phone: string;
+    website: string;
+    trip_id: number;
+    user_id: number;
+    active: boolean;
+    place_id: string;
 }
