@@ -45,19 +45,14 @@ export default function RouteInfo(props: RouteInfoProps) {
                         props.directionResponse.map((directionRes, index) => {
                             const { legs } = directionRes.routes[0]
                             return legs.map((routeInfo: google.maps.DirectionsLeg) => {
-                                return <div key={index + 'secret456789'} className={styles.routeInfoDiv}>
+                                return <div key={index + 'secret456789'} className={styles.waypointInfoDiv}>
                                     <OverlayTrigger
-                                        trigger={'click'}
+                                        trigger={'focus'}
                                         key={index}
                                         placement='bottom'
                                         overlay={
                                             <Popover id={`popover-positioned-routeInfo-${index}`} show={showPopover}>
-                                                <PopoverHeader>
-                                                    {/* <div className={styles.closeBtnContainer}>
-                                                        <CloseButton onClick={handlePopover} className={styles.popoverCloseBtn} />
-                                                    </div>
-                                                    <div>From: {routeInfo.start_address}</div>
-                                                    <div>To: {routeInfo.end_address}</div> */}
+                                                <PopoverHeader className={styles.wayPointHeader}>
                                                     <div>
                                                         <div><strong>From: </strong></div>
                                                         <div className={styles.routeInfoDates}>
