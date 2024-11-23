@@ -20,7 +20,6 @@ export interface FavouriteDetail {
 export default function FavouriteEvent() {
   const { tripId } = useParams();
   const [showNewEventModal, setShowNewEventModal] = useState(false);
-  // const queryClient = useQueryClient();
   const favouriteEvent = useFavouriteEvent(tripId!);
 
   return (

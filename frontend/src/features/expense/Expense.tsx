@@ -28,7 +28,7 @@ export function Expense() {
           <BudgetSubTab
             isShown={showBudgetSubTab}
             result={detail!}
-            allCategoryBudget = {allCategoryBudget!}
+            allCategoryBudget={allCategoryBudget!}
             onHide={() => setBudgetSubTab(false)}
           />
         </div>
@@ -41,7 +41,7 @@ export function Expense() {
           <ExpenseSubTab
             isShown={showExpenseSubTab}
             result={detail!}
-            allCategoryExpense ={allCategoryExpense!}
+            allCategoryExpense={allCategoryExpense!}
             onHide={() => setExpenseSubTab(false)}
           />
         </div>
